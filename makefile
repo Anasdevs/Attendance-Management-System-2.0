@@ -4,8 +4,8 @@ FSetup:
 		@echo Setup Successfull
 
 FRun:
-		@echo running frontend at port 8000
-		cd frontend && npm start --port 8000
+		@echo running frontend at port 7000
+		cd frontend && npm start --port 7000
 
 # Backend setup and run commands
 BSetup:
@@ -13,7 +13,7 @@ BSetup:
 		@echo setup successfull
 
 BRun:
-		@echo "running backend at port 7000"
+		@echo "running backend at port 8000"
 		cd backend && python manage.py runserver 
 
 # Combined setup and run commands

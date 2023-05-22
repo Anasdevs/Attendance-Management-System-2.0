@@ -13,30 +13,35 @@ make setup
 make run
 ```
 
-for `frontend only` | port - 8000
+for `frontend only` | port - 7000
 
 ``` shell
-make frontend-setup
-make frontend-run
+make FSetup
+make FRun
 ``` 
 
-for `backend only` | port - 7000
+for `backend only` | port - 8000
 
 ``` shell
-make backend-setup
-make backend-run
+make BSetup
+make BRun
+```
+for `database migerations`
+
+``` shell
+make db-mig
 ```
 
 ## Docker setup [not working]
 
-for `frontend` | port - 8000
+for `frontend` | port - 7000
 
 ``` shell
 docker build -t frontend-image -f Dockerfile .
-docker run -d -p 3000:3000 frontend-image
+docker run -d -p 7000:7000 frontend-image
 ```
 
-for `backend` | port - 7000
+for `backend` | port - 8000
 
 ``` shell
 docker build -t backend-image -f Dockerfile .

@@ -2,3 +2,4 @@ Django
 djangorestframework
 pymongo
 djongo
+django-cors-headers

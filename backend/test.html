@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>test</title>
+</head>
+<body>
+    <button >test</button>
+    <h1>status</h1>
+    <p></p>
+    <script>
+        const username = 'your_username';
+        const password = 'your_password';
+        document.querySelector('button').addEventListener(
+            'click',
+            () => {
+                test()
+            }
+        )
+        function test(){
+            fetch('http://localhost:8000',{
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Handle the response data
+                document.querySelector("p").innerText = data;
+                console.log(data);
+            })
+            .catch(error => {
+                // Handle any errors
+                document.querySelector("p").innerText = error;
+                console.error('Error:', error);
+            });
+        }
+
+        function login(){
+            fetch('http://localhost:8000/api/login/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ username, password }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Handle the response data
+                document.querySelector("p").innerText = data;
+                console.log(data);
+            })
+            .catch(error => {
+                // Handle any errors
+                document.querySelector("p").innerText = error;
+                console.error('Error:', error);
+            });
+        }
+    </script>
+</body>
+</html>

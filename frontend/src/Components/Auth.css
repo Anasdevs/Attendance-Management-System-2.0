@@ -1,0 +1,158 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+
+html,
+      body {
+        height: 100%;
+        margin:0;
+        padding:0;
+        background-color:black;
+      }
+
+    
+.main{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.box{
+    height:600px;
+    width:1000px;
+    background: linear-gradient(to right, #0b486b, #f56217);
+    /* margin:0; */
+    /* padding:0; */
+    display: flex;
+    border-radius: 20px;
+    margin-top: 50px;
+
+    
+}
+
+.box-left{
+    margin:0;
+    width: 41%;
+  height: 100%;
+  padding: 0px 25px;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  background-color: aliceblue;
+  border-radius: 20px 0px 0px 20px;
+}
+
+.submit {
+    box-shadow: 0 3px 5px #777777, inset 0 0 0px #777777;
+    transition: transform 200ms, border-color 300ms;
+    border: none;
+    padding: 15px 70px;
+    border-radius: 8px;
+    display: block;
+    margin: auto;
+    margin-top: 120px;
+    background: #583672;
+    color: #fff;
+    font-weight: bold;
+    border-color: #583672;
+    cursor: pointer;
+  }
+  
+  .submit:hover {
+    background: #310c4e;
+    box-shadow: 0 0px 0px #777777, inset 0 0 10px #777777;
+    border-color: #310c4e;
+  }
+  
+  .submit:active {
+    transform: scale(0.98);
+  }
+
+.box-right{
+    width: 59%;
+  height: 100% ;
+  padding: 25px 25px;
+
+}
+
+h4{
+    margin:0;
+}
+
+.box-left .contact{
+	display: flex;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+    width: 73%;
+    /* margin: auto; */
+}
+.contact h3{
+    font-size: 30px;
+    font-family: 'Poppins', sans-serif;
+    margin-bottom: 40px;
+}
+
+.box-left input{
+    border: none;
+    width: 80%;
+    margin: 15px 0px;
+    border-bottom: 1px solid #4f30677d;
+    padding: 7px 9px;
+    width: 100%;
+    overflow: hidden;
+    background: transparent;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.contact h3{
+    text-align: center;
+}
+
+
+.box-right{
+	/* background: linear-gradient(212.38deg, rgba(161, 150, 154, 0.7) 0%, rgba(205, 191, 207, 0.71) 100%),url(https://www.msijanakpuri.com/wp-content/uploads/2019/06/logo2x.png), no-repeat, center; */
+  background: url(https://www.msijanakpuri.com/wp-content/uploads/2019/06/logo2x.png);
+  background-repeat: no-repeat;
+  background-position: center;
+	color: #fff;
+	position: relative;
+}
+
+.right-text h2{
+    display: block;
+    width: 100%;
+    text-align: center;
+    font-size: 50px;
+    font-weight: 500;
+    margin:0;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .right-text h5{
+    display: block;
+    width: 100%;
+    text-align: center;
+    font-size: 25px;
+    margin:0;
+    font-weight: 400;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  @media only screen and (max-width: 767px) {
+    .box {
+      flex-direction: column;
+      height: auto;
+      width: 100%;
+    }
+    .box-left, .box-right {
+      width: 100%;
+      height: auto;
+      padding: 160px 0px 0px 0px;
+    }
+
+    .box-right{
+        margin-top: 50px;
+    }
+    .right-text h2{
+        margin-top: 160px;
+    }
+  }

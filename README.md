@@ -1,4 +1,4 @@
-# Attendence management project
+# Attendance management project
 
 > __frontend__ by `Anas Safi`
 >

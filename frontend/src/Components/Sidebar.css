@@ -1,89 +1,91 @@
 .sidebar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 200px;
-    height: 100vh;
-    background-color: #333;
-    padding: 20px;
-    color: #fff;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 200px;
+  height: 100vh;
+  background-color: #333;
+  padding: 20px;
+  color: #fff;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 120px 0 0 0;
+}
+
+.ams {
+  font-size: 35px;
+}
+
+.sidebar li {
+  margin-bottom: 30px;
+}
+
+.sidebar li:last-child {
+  margin-bottom: 0;
+}
+
+.sidebar li a {
+  color: #fff;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.sidebar li a:hover {
+  color: #ffd700;
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100%;
+    height: auto;
+    padding: 20px 10px;
   }
-  
+
   .sidebar ul {
-    list-style: none;
-    padding: 0;
-    margin: 120px 0 0 0;
-  }
-  
-  .ams {
-    font-size: 35px;
-  }
-  
-  .sidebar li {
-    margin-bottom: 30px;
-  }
-  
-  .sidebar li:last-child {
-    margin-bottom: 0;
-  }
-  
-  .sidebar li a {
-    color: #fff;
-    text-decoration: none;
-    transition: color 0.3s ease;
-  }
-  
-  .sidebar li a:hover {
-    color: #ffd700;
-  }
-  
-  @media (max-width: 768px) {
-    .sidebar {
-      width: 100%;
-      height: auto;
-      padding: 20px 10px;
-    }
-  
-    .sidebar ul {
-      display: flex;
-      flex-direction: column;
-    }
-  
-    .sidebar li {
-      margin-bottom: 15px;
-    }
-  }
-  
-  .rightbar .image {
-    position: relative;
-    display: flex;
-    align-items: center;
-  }
-  
-  .rightbar .image img {
-    height: 70px;
-    width: 70px;
-    border-radius: 50%;
-  }
-  
-  .rightbar .image .faculty-info {
     display: flex;
     flex-direction: column;
-    margin-left: 10px;
-  }
-  
-  .rightbar .image .faculty-info p {
-    margin: 3px 0;
-    font-weight: bold;
-  }
-  .faculty-info .faculty-qualification {
-    color:rgb(54, 54, 54);
-
-  }
-  .faculty-info .faculty-email{
-    color:rgb(54, 54, 54);
   }
 
-div.image{
-    margin: 50px 600px 0px 0px
+  .sidebar li {
+    margin-bottom: 15px;
+  }
+}
+
+.rightbar .image {
+  display: flex;
+  align-items: center;
+}
+
+.rightbar .image img {
+  height: 70px;
+  width: 70px;
+  border-radius: 50%;
+}
+
+.rightbar .image .faculty-info p {
+  margin: 3px 0;
+  font-weight: bold;
+}
+
+.faculty-info .faculty-qualification {
+  color:rgb(54, 54, 54);
+}
+
+.faculty-info .faculty-email{
+  color:rgb(54, 54, 54);
+}
+
+div.image {
+  margin: 50px 600px 0px 0px;
+}
+
+.rightbar .image .date {
+  position: absolute;
+  right: 50px;
+  color: rgb(6, 6, 6);
+  font-size: 25px;
+  font-weight: bolder;
 }

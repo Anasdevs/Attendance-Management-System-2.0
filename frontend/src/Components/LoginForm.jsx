@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 import './Auth.css';
 
@@ -115,7 +116,9 @@ function LoginForm() {
                 </button>
               </div>
 
-              <button className="submit">LOGIN</button>
+              <button className="submit">
+                  <Link to="/dashboard/">LOGIN</Link>
+                  </button>
             </form>
           </div>
         </div>

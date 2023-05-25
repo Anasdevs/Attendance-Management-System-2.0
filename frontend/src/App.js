@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import LoginForm from './Components/LoginForm';
 import Dashboard from './Components/Dashboard';
 import Sidebar from './Components/Sidebar';
+import Attendance from './Components/Attendance';
 
 const App = () => {
   return (
@@ -11,6 +12,7 @@ const App = () => {
         <Route path="/login" element={<LoginForm />} />
         <Route path="/dashboard/*" element={<DashboardWithSidebar />} />
         <Route path="*" element={<Navigate to="/login" />} />
+        <Route path="/dashboard/take-attendance" element={<Attendance/>}/>
       </Routes>
     </Router>
   );

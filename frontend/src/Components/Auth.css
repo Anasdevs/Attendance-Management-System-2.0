@@ -53,6 +53,11 @@ html,
     border-color: #583672;
     cursor: pointer;
   }
+
+.submit a{
+  text-decoration: none;
+  color: inherit;
+}
   
   .submit:hover {
     background: #310c4e;

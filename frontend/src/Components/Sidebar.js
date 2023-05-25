@@ -1,7 +1,9 @@
-import React from 'react';
+
+import React, {useState} from 'react';
 import './Sidebar.css';
 import facultyImage from './Images/faculty.png';
 import { format } from 'date-fns';
+import { Link } from 'react-router-dom';
 
 const Sidebar = () => {
   const facultyName = 'Mr. Manpreet ';
@@ -10,19 +12,41 @@ const Sidebar = () => {
 
   const today = format(new Date(), "EEE, dd-MMM-yyyy"); // Get the current date with the day
 
+
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value.toLowerCase());
+  };
+
+  const rows = [
+    { course: 'BCA', semester: '4', section: 'A', subject: 'Django' , id: 34568},
+    { course: 'BBA', semester: '2', section: 'B', subject: 'Marketing', id: 34569},
+    { course: 'BCOM', semester: '3', section: 'A', subject: 'Accounting', id: 34570},
+    { course: 'BEd', semester: '1', section: 'B', subject: 'English', id: 34571 },
+    { course: 'BEd', semester: '2', section: 'B', subject: 'English', id: 34572 },
+    { course: 'MBA', semester: '1', section: 'A', subject: 'Marketing', id: 34573 },
+
+
+    // Add more rows as needed
+  ];
+
+  const filteredRows = rows.filter((row) =>
+    Object.values(row).some((value) => value.toLowerCase().includes(searchTerm))
+  );
+
   return (
-    <div className='main'>
+    <div className="page-container">
       <div className="sidebar">
-        <h2 className='ams'>AMS</h2>
+        <h2 className="ams">AMS</h2>
         <ul>
           <li>Main Menu</li>
           <li>Dashboard</li>
           <li>Holidays</li>
           <li>Calendar</li>
         </ul>
-        
       </div>
-      <div className='rightbar'>
+      <div className="rightbar">
         <div className="image">
           <img src={facultyImage} alt="Faculty" />
           <div className="faculty-info">
@@ -30,11 +54,51 @@ const Sidebar = () => {
             <p className="faculty-qualification">{facultyQualification}</p>
             <p className="faculty-email">{facultyEmail}</p>
           </div>
-        <div className="date">
-
-          <div className="today-date">Today</div>
-        <div className="today-date">{today}</div> 
+          <div className="date">
+            <div className="today-date">Today</div>
+            <div className="today-date">{today}</div>
+          </div>
         </div>
+        <div className="classInfo">
+          <h1>Your Classes</h1>
+          <input
+            type="text"
+            placeholder="Search..."
+            value={searchTerm}
+            onChange={handleSearch}
+          />
+        </div>
+        <div className="table-container">
+          <table className="table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Course</th>
+                <th>Semester</th>
+                <th>Section</th>
+                <th>Subject</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+            {filteredRows.map((row, index) => (
+              <tr key={index}>
+                  <td>{row.id}</td>
+                  <td>{row.course}</td>
+                  <td>{row.semester}</td>
+                  <td>{row.section}</td>
+                  <td>{row.subject}</td>
+                  <td>
+                   
+                  <button className="action-button">
+                  <Link to="/dashboard/take-attendance">TAKE ATTENDANCE</Link>
+                  </button>
+                  </td>
+                </tr>
+              ))}
+              
+            </tbody>
+          </table>
         </div>
       </div>
     </div>

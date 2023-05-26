@@ -73,6 +73,18 @@ export default function Attendance() {
     return attendance.filter((student) => student.status === 'Absent').length;
   };
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const handleSubmitAttendance = () => {
+    setIsSubmitting(true);
+    // Simulating API call or processing delay
+    setTimeout(() => {
+      setIsSubmitting(false);
+      setIsSubmitted(true);
+    }, 2000);
+  };
+
   return (
     <div className="page-container">
       <div className="sidebar">
@@ -144,6 +156,17 @@ export default function Attendance() {
             </tfoot>
           </table>
         </div>
+        {isSubmitted && (
+          <div className="success-message">
+            Attendance has been successfully submitted!
+          </div>
+        )}
+        <button
+          className={`submit-button${isSubmitting ? ' submitting' : ''}`}
+          onClick={handleSubmitAttendance}
+        >
+          {isSubmitting ? 'Submitting...' : 'Submit Attendance'}
+        </button>
       </div>
     </div>
   );

@@ -1,5 +1,6 @@
 .page-container {
     display: flex;
+    justify-content: space-between;
   }
   
   .sidebar {
@@ -171,3 +172,36 @@
     font-weight: bold;
   }
   
+  /* Add your existing CSS code here */
+  .submit-button {
+    display: block;
+    margin: 0 auto;
+    padding: 10px 20px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .submitting {
+    background-color: #999999;
+    cursor: not-allowed;
+  }
+  
+  .submit-button:hover {
+    background-color: #45a049;
+  }
+  
+  .success-message {
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: #4caf50;
+    color: white;
+    font-size: 16px;
+    text-align: center;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }

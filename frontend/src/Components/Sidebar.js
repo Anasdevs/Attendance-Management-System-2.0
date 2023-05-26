@@ -31,9 +31,15 @@ const Sidebar = () => {
     // Add more rows as needed
   ];
 
+  // const filteredRows = rows.filter((row) =>
+  //   Object.values(row).some((value) => value.toLowerCase().includes(searchTerm))
+  // );
+
   const filteredRows = rows.filter((row) =>
-    Object.values(row).some((value) => value.toLowerCase().includes(searchTerm))
-  );
+  Object.values(row).some((value) =>
+    typeof value === 'string' && value.toLowerCase().includes(searchTerm)
+  )
+);
 
   return (
     <div className="page-container">

@@ -10,6 +10,25 @@ const students = [
   { eno: '10121202021', name: 'Amit' },
   { eno: '10221202021', name: 'Aryan' },
   { eno: '10321202021', name: 'Ayush' },
+  { eno: '10021202021', name: 'Amanjot' },
+  { eno: '10121202021', name: 'Amit' },
+  { eno: '10221202021', name: 'Aryan' },
+  { eno: '10321202021', name: 'Ayush' },
+  { eno: '10221202021', name: 'Aryan' },
+  { eno: '10321202021', name: 'Ayush' },
+  { eno: '10021202021', name: 'Amanjot' },
+  { eno: '10121202021', name: 'Amit' },
+  { eno: '10221202021', name: 'Aryan' },
+  { eno: '10321202021', name: 'Ayush' },
+  { eno: '10121202021', name: 'Amit' },
+  { eno: '10221202021', name: 'Aryan' },
+  { eno: '10321202021', name: 'Ayush' },
+  { eno: '10221202021', name: 'Aryan' },
+  { eno: '10321202021', name: 'Ayush' },
+  { eno: '10021202021', name: 'Amanjot' },
+  { eno: '10121202021', name: 'Amit' },
+  { eno: '10221202021', name: 'Aryan' },
+  { eno: '10321202021', name: 'Ayush' },
   // Add more student objects here
 ];
 
@@ -76,14 +95,21 @@ export default function Attendance() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
+
   const handleSubmitAttendance = () => {
     setIsSubmitting(true);
     // Simulating API call or processing delay
     setTimeout(() => {
       setIsSubmitting(false);
       setIsSubmitted(true);
+      // Clear the submitted state and hide the alert after 3 seconds
+      setTimeout(() => {
+        setIsSubmitted(false);
+      }, 1500);
     }, 2000);
   };
+
+
 
   return (
     <div className="page-container">
@@ -112,6 +138,25 @@ export default function Attendance() {
         <div className="classInfo">
           <h1>BCA 4th B</h1>
           <input type="text" placeholder="Search..." value={searchTerm} onChange={handleSearch} />
+        </div>
+        {isSubmitted && (
+          <div className="success-message">
+            Attendance has been successfully submitted!
+          </div>
+        )}
+        <div className="statistics-container">
+          <div className="statistics-card">
+            <h3>Total Students</h3>
+            <p className="statistics-value">{students.length}</p>
+          </div>
+          <div className="statistics-card">
+            <h3>Total Present</h3>
+            <p className="statistics-value">{getTotalPresent()}</p>
+          </div>
+          <div className="statistics-card">
+            <h3>Total Absent</h3>
+            <p className="statistics-value">{getTotalAbsent()}</p>
+          </div>
         </div>
         <div className="attendance-container">
           <table className="attendance-table">
@@ -144,7 +189,7 @@ export default function Attendance() {
                 </tr>
               ))}
             </tbody>
-            <tfoot>
+            {/* <tfoot>
               <tr>
                 <td colSpan="2">Total Present:</td>
                 <td>{getTotalPresent()}</td>
@@ -153,14 +198,10 @@ export default function Attendance() {
                 <td colSpan="2">Total Absent:</td>
                 <td>{getTotalAbsent()}</td>
               </tr>
-            </tfoot>
+            </tfoot> */}
           </table>
         </div>
-        {isSubmitted && (
-          <div className="success-message">
-            Attendance has been successfully submitted!
-          </div>
-        )}
+        
         <button
           className={`submit-button${isSubmitting ? ' submitting' : ''}`}
           onClick={handleSubmitAttendance}

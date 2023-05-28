@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { format } from 'date-fns';
+import { format, addDays, subDays, isToday, isSameDay } from 'date-fns';
 import './Attendance.css';
 import facultyImage from './Images/faculty.png';
 
@@ -10,74 +10,105 @@ const students = [
   { eno: '10121202021', name: 'Amit' },
   { eno: '10221202021', name: 'Aryan' },
   { eno: '10321202021', name: 'Ayush' },
-  { eno: '10021202021', name: 'Amanjot' },
-  { eno: '10121202021', name: 'Amit' },
-  { eno: '10221202021', name: 'Aryan' },
-  { eno: '10321202021', name: 'Ayush' },
-  { eno: '10221202021', name: 'Aryan' },
-  { eno: '10321202021', name: 'Ayush' },
-  { eno: '10021202021', name: 'Amanjot' },
-  { eno: '10121202021', name: 'Amit' },
-  { eno: '10221202021', name: 'Aryan' },
-  { eno: '10321202021', name: 'Ayush' },
-  { eno: '10121202021', name: 'Amit' },
-  { eno: '10221202021', name: 'Aryan' },
-  { eno: '10321202021', name: 'Ayush' },
-  { eno: '10221202021', name: 'Aryan' },
-  { eno: '10321202021', name: 'Ayush' },
-  { eno: '10021202021', name: 'Amanjot' },
-  { eno: '10121202021', name: 'Amit' },
-  { eno: '10221202021', name: 'Aryan' },
-  { eno: '10321202021', name: 'Ayush' },
+  { eno: '09821222021', name: 'Anas' },
+  { eno: '09921222021', name: 'Harsh' },
+  { eno: '10021222021', name: 'Amanjot' },
+  { eno: '10121232021', name: 'Amit' },
+  { eno: '10221232021', name: 'Aryan' },
+  { eno: '10321232021', name: 'Ayush' },
+  { eno: '09821232021', name: 'Anas' },
+  { eno: '09921232021', name: 'Harsh' },
+  { eno: '10021232021', name: 'Amanjot' },
+  { eno: '10121232021', name: 'Amit' },
+  { eno: '10221232021', name: 'Aryan' },
+  { eno: '10321212021', name: 'Ayush' },
+  { eno: '09821212021', name: 'Anas' },
+  { eno: '09921212021', name: 'Harsh' },
+  { eno: '10021212021', name: 'Amanjot' },
+  { eno: '10121212021', name: 'Amit' },
+  { eno: '10221212021', name: 'Aryan' },
+  { eno: '10321212021', name: 'Ayush' },
   // Add more student objects here
 ];
 
 export default function Attendance() {
-  const today = format(new Date(), 'EEE, dd-MMM-yyyy'); // Get the current date with the day
-
+  const [currentDate, setCurrentDate] = useState(new Date());
+  const formattedDate = format(currentDate, 'EEE, dd-MMM-yyyy');
+  const isCurrentDate = isToday(currentDate);
   const [searchTerm, setSearchTerm] = useState('');
+  const [attendanceData, setAttendanceData] = useState({});
+
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
   };
 
-  const facultyName = 'Mr. Manpreet ';
+  const facultyName = 'Mr. Manpreet';
   const facultyQualification = 'M.Tech';
   const facultyEmail = 'manpreet@msijanakpuri.com';
 
-  const [attendance, setAttendance] = useState([]);
-
   useEffect(() => {
-    // Initialize attendance state with default values
-    const initialAttendance = students.map((student) => ({
-      eno: student.eno,
-      name: student.name,
-      status: 'Absent',
-    }));
-    setAttendance(initialAttendance);
+    // Initialize attendance state with default values for each date
+    const initialAttendanceData = {};
+    const startDate = subDays(new Date(), 30); // Consider attendance for the past 30 days
+    const currentDate = new Date();
+
+    for (let date = startDate; !isSameDay(date, currentDate); date = addDays(date, 1)) {
+      const formattedDate = format(date, 'yyyy-MM-dd');
+      initialAttendanceData[formattedDate] = students.map((student) => ({
+        eno: student.eno,
+        name: student.name,
+        status: 'Absent',
+      }));
+    }
+
+    setAttendanceData(initialAttendanceData);
   }, []);
 
-  const handleKeyPress = (event, index) => {
+  const handleKeyPress = (event, eno) => {
     if (event.key === 'p' || event.key === 'P') {
-      markAttendance(index, 'Present');
-      moveNext(index);
+      markAttendance(eno, 'Present');
+      moveNext(eno);
     } else if (event.key === 'a' || event.key === 'A') {
-      markAttendance(index, 'Absent');
-      moveNext(index);
+      markAttendance(eno, 'Absent');
+      moveNext(eno);
     }
   };
 
-  const markAttendance = (index, status) => {
-    setAttendance((prevAttendance) => {
-      const updatedAttendance = [...prevAttendance];
-      updatedAttendance[index].status = status;
-      return updatedAttendance;
+  const markAttendance = (eno, status) => {
+    setAttendanceData((prevAttendanceData) => {
+      const formattedDate = format(currentDate, 'yyyy-MM-dd');
+      const updatedAttendanceData = { ...prevAttendanceData };
+  
+      if (formattedDate in updatedAttendanceData) {
+        const updatedAttendance = updatedAttendanceData[formattedDate].map((student) => {
+          if (student.eno === eno) {
+            return { ...student, status };
+          }
+          return student;
+        });
+  
+        updatedAttendanceData[formattedDate] = updatedAttendance;
+      } else {
+        // Create a new attendance entry for the current date
+        updatedAttendanceData[formattedDate] = students.map((student) => ({
+          eno: student.eno,
+          name: student.name,
+          status: student.eno === eno ? status : 'Absent',
+        }));
+      }
+  
+      return updatedAttendanceData;
     });
   };
+  
 
-  const moveNext = (currentIndex) => {
-    const nextIndex = currentIndex + 1;
+  const moveNext = (eno) => {
+    const studentIndex = students.findIndex((student) => student.eno === eno);
+    const nextIndex = studentIndex + 1;
+
     if (nextIndex < students.length) {
-      const inputElement = document.getElementById(`attendance-input-${nextIndex}`);
+      const nextStudent = students[nextIndex];
+      const inputElement = document.getElementById(`attendance-input-${nextStudent.eno}`);
       if (inputElement) {
         inputElement.focus();
       }
@@ -85,16 +116,25 @@ export default function Attendance() {
   };
 
   const getTotalPresent = () => {
-    return attendance.filter((student) => student.status === 'Present').length;
+    const formattedDate = format(currentDate, 'yyyy-MM-dd');
+    const attendance = attendanceData[formattedDate];
+    if (attendance) {
+      return attendance.filter((student) => student.status === 'Present').length;
+    }
+    return 0;
   };
 
   const getTotalAbsent = () => {
-    return attendance.filter((student) => student.status === 'Absent').length;
+    const formattedDate = format(currentDate, 'yyyy-MM-dd');
+    const attendance = attendanceData[formattedDate];
+    if (attendance) {
+      return attendance.filter((student) => student.status === 'Absent').length;
+    }
+    return 0;
   };
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
-
 
   const handleSubmitAttendance = () => {
     setIsSubmitting(true);
@@ -109,6 +149,38 @@ export default function Attendance() {
     }, 2000);
   };
 
+  const navigatePreviousDay = () => {
+    setCurrentDate((prevDate) => subDays(prevDate, 1));
+  };
+
+  const navigateNextDay = () => {
+    setCurrentDate((prevDate) => addDays(prevDate, 1));
+  };
+
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
+  const [studentId, setStudentId] = useState('');
+
+
+  const handleStartDateChange = (event) => {
+    setStartDate(event.target.value);
+  };
+
+  const handleEndDateChange = (event) => {
+    setEndDate(event.target.value);
+  };
+
+  const handleStudentIdChange = (event) => {
+    setStudentId(event.target.value);
+  };
+
+  const handleDownloadReports = () => {
+    // Construct the URL or make API request with the filter values
+    const url = `/api/attendance/reports?startDate=${startDate}&endDate=${endDate}&studentId=${studentId}`;
+
+    // Redirect to the generated URL or use a download library
+    window.location.href = url;
+  };
 
 
   return (
@@ -132,18 +204,38 @@ export default function Attendance() {
           </div>
           <div className="date">
             <div className="today-date">Today</div>
-            <div className="today-date">{today}</div>
+            <div className="today-date">{formattedDate}</div>
+            <div className="date-navigation">
+              <button className="navigation-button" onClick={navigatePreviousDay}>
+                &lt; Prev
+              </button>
+              {!isCurrentDate && (
+                <button className="navigation-button" onClick={navigateNextDay}>
+                  Next &gt;
+                </button>
+              )}
+            </div>
           </div>
         </div>
+        
         <div className="classInfo">
           <h1>BCA 4th B</h1>
           <input type="text" placeholder="Search..." value={searchTerm} onChange={handleSearch} />
         </div>
         {isSubmitted && (
-          <div className="success-message">
-            Attendance has been successfully submitted!
-          </div>
+          <div className="success-message">Attendance has been successfully submitted!</div>
         )}
+        <div className="filters-container">
+          <label htmlFor="start-date">Start Date:</label>
+          <input type="date" id="start-date" value={startDate} onChange={handleStartDateChange} />
+
+          <label htmlFor="end-date">End Date:</label>
+          <input type="date" id="end-date" value={endDate} onChange={handleEndDateChange} />
+
+          <button className="download-button" onClick={handleDownloadReports}>
+            Download Reports
+          </button>
+          </div>
         <div className="statistics-container">
           <div className="statistics-card">
             <h3>Total Students</h3>
@@ -168,40 +260,35 @@ export default function Attendance() {
               </tr>
             </thead>
             <tbody>
-              {students.map((student, index) => (
+              {students.map((student) => (
                 <tr key={student.eno}>
                   <td>{student.eno}</td>
                   <td>{student.name}</td>
                   <td>
                     <input
-                      id={`attendance-input-${index}`}
+                      id={`attendance-input-${student.eno}`}
                       type="checkbox"
-                      checked={attendance[index]?.status === 'Present'}
+                      checked={
+                        attendanceData[format(currentDate, 'yyyy-MM-dd')]?.find(
+                          (s) => s.eno === student.eno
+                        )?.status === 'Present'
+                      }
                       onChange={() =>
                         markAttendance(
-                          index,
-                          attendance[index]?.status === 'Present' ? 'Absent' : 'Present'
+                          student.eno,
+                          attendanceData[format(currentDate, 'yyyy-MM-dd')]?.find(
+                            (s) => s.eno === student.eno
+                          )?.status === 'Present' ? 'Absent' : 'Present'
                         )
                       }
-                      onKeyPress={(event) => handleKeyPress(event, index)}
+                      onKeyPress={(event) => handleKeyPress(event, student.eno)}
                     />
                   </td>
                 </tr>
               ))}
             </tbody>
-            {/* <tfoot>
-              <tr>
-                <td colSpan="2">Total Present:</td>
-                <td>{getTotalPresent()}</td>
-              </tr>
-              <tr>
-                <td colSpan="2">Total Absent:</td>
-                <td>{getTotalAbsent()}</td>
-              </tr>
-            </tfoot> */}
           </table>
         </div>
-        
         <button
           className={`submit-button${isSubmitting ? ' submitting' : ''}`}
           onClick={handleSubmitAttendance}

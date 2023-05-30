@@ -75,7 +75,13 @@ class admin:
         self.username = "test_admin"
         self.password = "test_admin"
 
-    def create_teacher(self,id, email, password, name, title, branch, assigned_classs)
+    def create_teacher(self,id, email, password, name, title, branch, assigned_classs):
+        if id in self.instructors.keys():
+            return [False, "already exist"]
+        
+        new_teacher = Teacher(id, email, password, name, title, branch, assigned_classs)
+        self.instructors[id] = new_teacher
+        return ["succsss", id]
 
     def __str__(self) -> str:
         return self.username

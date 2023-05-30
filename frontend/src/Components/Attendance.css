@@ -13,6 +13,8 @@
   flex-grow: 1;
   padding: 20px;
   overflow-y: auto;
+ 
+  /* background: linear-gradient(rgb(255, 255, 255), rgb(255, 255, 255)); */
 }
 
 .ams {
@@ -59,6 +61,27 @@ li {
   font-size: 14px;
 }
 
+.rightbar .image {
+  display: flex;
+  align-items: center;
+  border-radius: 10px;
+
+}
+
+.rightbar .image .date {
+  position: relative;
+  top: 0;
+  left:45rem;
+  color: rgb(6, 6, 6);
+  font-size: 25px;
+  font-weight: bolder;
+  /* background: #a0c49f; */
+  padding: 10px;
+  border-radius: 10px;
+  z-index: 999; /* Set a higher z-index value */
+  /* border: 2px solid rgb(89, 154, 89); */
+}
+
 .today-date {
   font-size: 18px;
   font-weight: bold;
@@ -73,12 +96,20 @@ li {
   padding: 6px 12px;
   border: none;
   border-radius: 4px;
-  background-color: #4caf50;
+  background-color: #060dfa;
   color: #ffffff;
   font-size: 14px;
   font-weight: bold;
   cursor: pointer;
   margin-right: 5px;
+}
+
+
+
+/* .classInfo{
+  border: 2px solid green;
+  margin-bottom: 20px;
+  padding: 20px;
 }
 
 .classInfo h1 {
@@ -93,13 +124,48 @@ li {
   margin-bottom: 20px;
   border-radius: 4px;
   border: 1px solid #ccc;
+} */
+
+.classInfo {
+  margin-bottom: 20px;
+  text-align: center; 
+}
+
+.classInfo h1 {
+  margin-top: 0;
+  font-size: 35px;
+  font-weight: bold;
+  text-align: center !important;
+  color: #333; 
+  text-transform: uppercase; 
+  letter-spacing: 2px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); 
+  padding: 10px; 
+  border-radius: 8px; 
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+  transition: background-color 0.3s ease; 
+
+  cursor: pointer;
+}
+
+.classInfo h1:hover {
+  background-color: #e0e0e0; /* Change the background color on hover */
+}
+
+
+.classInfo input {
+  display: none; /* Hide the search box */
 }
 
 .success-message {
-  background-color: #4caf50;
-  color: #ffffff;
+  position: fixed;
+  top: 20px;
+  left: 55%;
+  transform: translateX(-50%);
+  background-color: rgb(61, 152, 61);
+  color: white;
   padding: 10px;
-  margin-bottom: 20px;
+  z-index: 9999;/* Ensure the success message appears above other elements */
 }
 
 .statistics-container {
@@ -113,26 +179,44 @@ li {
   background-color: #e0e0e0;
   padding: 10px;
   text-align: center;
+  border-radius: 8px;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+  transition: transform 0.3s ease-in-out;
+  background-color: #ffffff;
+}
+
+.statistics-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .statistics-card h3 {
   font-size: 16px;
   font-weight: bold;
   margin-top: 0;
+  color: rgb(0, 0, 0);
 }
 
 .statistics-value {
   font-size: 24px;
   font-weight: bold;
+  color: rgb(0, 0, 0);
 }
+
 
 .attendance-container {
   overflow-x: auto;
+  max-height: calc(100vh - 250px); /* Adjust the value based on your requirements */
 }
 
 .attendance-table {
   width: 100%;
   border-collapse: collapse;
+}
+
+.attendance-table thead tr th{
+  background-color: #e6e6f4;
+  padding: 15px;
 }
 
 .attendance-table th,
@@ -165,14 +249,17 @@ li {
 }
 
 .submit-button {
+  position:relative;
   padding: 10px 20px;
+  left:30rem;
   border: none;
   border-radius: 4px;
-  background-color: #4caf50;
+  background-color: #060dfa;
   color: #ffffff;
   font-size: 16px;
   font-weight: bold;
   cursor: pointer;
+  margin-top: 30px;
 }
 
 .submitting {
@@ -191,7 +278,7 @@ li {
 
 .filters-container label {
   font-weight: bold;
-  margin-left:10px;
+  margin-left: 10px;
 }
 
 .filters-container input[type="date"] {
@@ -204,7 +291,7 @@ li {
 }
 
 .filters-container button.download-button {
-  background-color: #4caf50;
+  background-color: #060dfa;
   color: #fff;
   padding: 8px 16px;
   border: none;
@@ -214,7 +301,7 @@ li {
 }
 
 .filters-container button.download-button:hover {
-  background-color: #45a049;
+  background-color: #151aad;
 }
 
 .filters-container button.download-button:disabled {

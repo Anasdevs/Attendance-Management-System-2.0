@@ -10,24 +10,24 @@ const students = [
   { eno: '10121202021', name: 'Amit' },
   { eno: '10221202021', name: 'Aryan' },
   { eno: '10321202021', name: 'Ayush' },
-  { eno: '09821222021', name: 'Anas' },
-  { eno: '09921222021', name: 'Harsh' },
-  { eno: '10021222021', name: 'Amanjot' },
-  { eno: '10121232021', name: 'Amit' },
-  { eno: '10221232021', name: 'Aryan' },
-  { eno: '10321232021', name: 'Ayush' },
-  { eno: '09821232021', name: 'Anas' },
-  { eno: '09921232021', name: 'Harsh' },
-  { eno: '10021232021', name: 'Amanjot' },
-  { eno: '10121232021', name: 'Amit' },
-  { eno: '10221232021', name: 'Aryan' },
-  { eno: '10321212021', name: 'Ayush' },
-  { eno: '09821212021', name: 'Anas' },
-  { eno: '09921212021', name: 'Harsh' },
-  { eno: '10021212021', name: 'Amanjot' },
-  { eno: '10121212021', name: 'Amit' },
-  { eno: '10221212021', name: 'Aryan' },
-  { eno: '10321212021', name: 'Ayush' },
+  { eno: '10421222021', name: 'Anas' },
+  { eno: '10521222021', name: 'Harsh' },
+  { eno: '10621222021', name: 'Amanjot' },
+  { eno: '10721232021', name: 'Amit' },
+  { eno: '10821232021', name: 'Aryan' },
+  { eno: '10921232021', name: 'Ayush' },
+  { eno: '11021232021', name: 'Anas' },
+  { eno: '11121232021', name: 'Harsh' },
+  { eno: '11221232021', name: 'Amanjot' },
+  { eno: '11321232021', name: 'Amit' },
+  { eno: '11421232021', name: 'Aryan' },
+  { eno: '11521212021', name: 'Ayush' },
+  { eno: '11621212021', name: 'Anas' },
+  { eno: '11721212021', name: 'Harsh' },
+  { eno: '11821212021', name: 'Amanjot' },
+  { eno: '11921212021', name: 'Amit' },
+  { eno: '12021212021', name: 'Aryan' },
+  { eno: '12121212021', name: 'Ayush' },
   // Add more student objects here
 ];
 
@@ -185,6 +185,7 @@ export default function Attendance() {
 
   return (
     <div className="page-container">
+
       <div className="sidebar">
         <h2 className="ams">AMS</h2>
         <ul>
@@ -194,6 +195,7 @@ export default function Attendance() {
           <li>Calendar</li>
         </ul>
       </div>
+
       <div className="rightbar">
         <div className="image">
           <img src={facultyImage} alt="Faculty" />

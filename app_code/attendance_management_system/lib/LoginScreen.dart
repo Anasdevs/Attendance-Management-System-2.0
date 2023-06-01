@@ -14,10 +14,9 @@ class _LoginScreenState extends State<LoginScreen> {
       body: SingleChildScrollView(
         child: SafeArea(
           child: Container(
-            constraints: BoxConstraints(
-              maxHeight: MediaQuery.of(context).
-            ),
-          )
+              // constraints: BoxConstraints(
+              //   maxHeight: MediaQuery.of(context).
+              ),
         ),
       ),
     );

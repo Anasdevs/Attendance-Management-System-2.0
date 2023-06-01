@@ -1,59 +1,35 @@
 from pymongo import MongoClient
 from datetime import date, datetime,timedelta
 
+# __________ save student's daily attendence ____________
 def save_attendence(data_list, collection_name='attendence',Date="null", db_name = 'test'):
-    client = MongoClient('localhost:27017')
-    db = client[db_name]
-    collection = db[collection_name]
+    try:   
+        client = MongoClient('localhost:27017')
+        db = client[db_name]
+        collection = db[collection_name]
+        if Date == "null":
+            current_date = date.today().isoformat()
+        else:
+            current_date = Date
 
-    if Date == "null":
-        current_date = date.today().isoformat()
-    else:
-        current_date = Date
+        document = {current_date: data_list}
+        collection.insert_one(document)
 
-    document = {current_date: data_list}
-    collection.insert_one(document)
+        client.close()
+        return True
+    except:
+        return False
 
-    client.close()
-
-data_list = [
-    {"eno": 1, "name": "John", "presence": True},
-    {"eno": 2, "name": "Jane", "presence": False},
-    {"eno": 3, "name": "Jake", "presence": False},
-    {"eno": 4, "name": "Jamie", "presence": False},
-    {"eno": 5, "name": "Jasmin", "presence": False},
-    # Add more objects to the list as needed
-]
-
+# test
+# data_list = [
+#     {"eno": 1, "name": "John", "presence": True},
+#     {"eno": 2, "name": "Jane", "presence": False},
+#     {"eno": 3, "name": "Jake", "presence": False},
+#     {"eno": 4, "name": "Jamie", "presence": False},
+#     {"eno": 5, "name": "Jasmin", "presence": False},
+#     # Add more objects to the list as needed
+# ]
 # save_attendence(data_list=data_list)
-
-def get_entries_by_month(year, month, collection_name='attendence', database_name = 'test'):
-    # MongoDB connection details
-    host = 'localhost:27017'
-
-    # Connect to the MongoDB server
-    client = MongoClient(host)
-
-    # Access the database and collection
-    db = client[database_name]
-    collection = db[collection_name]
-
-    # Create the start and end date range for the specified month
-    start_date = datetime(year, month, 1)
-    if month == 12:
-        end_date = datetime(year + 1, 1, 1)
-    else:
-        end_date = datetime(year, month + 1, 1)
-
-    # Query the collection for entries within the date range
-    query = {"date": {"$gte": start_date, "$lt": end_date}}
-    entries = collection.find(query)
-
-    # Close the MongoDB connection
-    client.close()
-
-    # Return the retrieved entries
-    return list(entries)
 
 def get_attendence_by_date(year, month, collection_name='attendence', db_name='test'):
     client = MongoClient('localhost:27017')
@@ -75,20 +51,54 @@ def get_attendence_by_date(year, month, collection_name='attendence', db_name='t
                 data_list.extend(doc[list(date.keys())[0]])
     client.close()
     return data_list
+# test
+# print(get_attendence_by_date(2023, 5))
 
-def save_string_to_file(string, file_path):
+# ___________ to save college object id _____________
+import json
+def write_key_to_json(key, value, file_path):
+    try:
+        with open(file_path, 'r') as file:
+            data = json.load(file)
+    except FileNotFoundError:
+        data = {}
+    data[key] = value
     with open(file_path, 'w') as file:
-        file.write(string)
+        json.dump(data, file)
+
+def read_key_from_json(key, file_path):
+    try:
+        with open(file_path, 'r') as file:
+            data = json.load(file)
+            if key in data:
+                return data[key]
+            else:
+                return False
+    except FileNotFoundError:
+        return False
+    
+# _________ test _________-
+# key_to_write = "msit"
+# value_to_write = "efasdeofan231rn2312"
+# file_path = "data.json"
+
+# # Write the key-value pair to the JSON file
+# write_key_to_json(key_to_write, value_to_write, file_path)
+
+# # Read the key from the JSON file
+# retrieved_value = read_key_from_json(key_to_write, file_path)
+
+# if retrieved_value:
+#     # Print the retrieved value
+#     print(retrieved_value)
+# else:
+#     print("Key not found.")
 
 
-def retrieve_string_from_file(file_path):
-    with open(file_path, 'r') as file:
-        string = file.read()
-        return string
+# _____________ Retrive saved object, (here college) _____________________
+# _____________ and create a new object instance of same stats ___________
 
-from pymongo import MongoClient
 from bson.objectid import ObjectId
-
 def retrieve_college_from_mongodb(college_id):
     # MongoDB connection details
     host = 'localhost'
@@ -127,8 +137,8 @@ def retrieve_college_from_mongodb(college_id):
         return college
     else:
         return None
-from pymongo import MongoClient
 
+# ____________ save object as json in database _______________________
 def save_college_to_mongodb(college):
     # MongoDB connection details
     host = 'localhost'
@@ -150,5 +160,3 @@ def save_college_to_mongodb(college):
 
     # Close the MongoDB connection
     client.close()
-
-print(get_attendence_by_date(2023, 5))

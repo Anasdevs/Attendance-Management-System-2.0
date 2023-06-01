@@ -1,32 +1,88 @@
-students 
-- enrollment number
-- email
-- password
-- authenticated
-- course
-- semester
-- section
-- total attendence % [calculate on runtime]
+1. admin endpoints
 
-subject-classes
+    - POST create teacher cred 
+        - req
+            - username/id
+            - email
+            - password
+            - name
+            - title
+            - branch
+            - assigned classes (class code)
+        - res:
+            - true
+    - GET delete-teacher/<username/id>
+        - res
+            - username/id
 
-- sub_code
-- subject name
-- cource name
-- semester
-- section
-- students name
-- attendence records
-- teacher_incharge
 
-teachers
+    - POST create class
+        - request
+            - cource name
+            - semester
+            - section
+            - subject
+            - teacher-assigned(teacher username)
+            - students:
+            ```
+            {
+                student name, eno
+                student name
+                student name
+                student name
+            }
+            ````
 
-- id
-- name
-- title
-- branch
-- college
-- permited_subjects
-- to be approved subjects
+    - POST change-class-teacher
+        - request
+            ```
+            {   
+                class id
+                past teacher username
+                present teacher username
+            }
+            ```
+
+2. teacher endpoint
+    - login   
+      - request
+        ```
+        {
+            username
+            email
+            password
+        }   # create a local session saved in local storage
+        ```
     
-admin
+    - logout
+        - delete local session
+
+1. POST Attendence endpoint
+      - request:-
+        ```
+        {
+            id:5-digit class code,
+            attendence:{
+                {e_no:int, name:string, presence:bool},
+                {e_no:int, name:string, presence:bool},
+                {e_no:int, name:string, presence:bool},
+            }
+        }
+        ```
+    - response:
+        - success
+
+1. GET searchAttendence/\<class-id>
+    - response:-
+        ```
+        {
+            id:5-digit class code,
+            attendence:{
+                {eno:121, name:haefea, presence:ea3f},
+                {eno:121, name:haefea, presence:ea3f},
+                {eno:121, name:haefea, presence:ea3f},
+                {eno:121, name:haefea, presence:ea3f},
+                {eno:121, name:haefea, presence:ea3f},
+            }
+        }
+        ```

@@ -1,6 +1,6 @@
 # Attendance management project
 
-> __frontend__ by `Anas Safi`
+> __frontend__ by `Anas Saifi`
 >
 > __backend__ by `Harsh Agnihotri`
 

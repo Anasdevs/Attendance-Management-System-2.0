@@ -1,5 +1,5 @@
 import 'package:attendance_management_system/LoginScreen.dart';
-import 'package:attendance_management_system/WalkthroughScreen.dart';
+import 'package:attendance_management_system/Walkthrough%20Screens/WalkthroughScreen.dart';
 import 'package:attendance_management_system/demoLogin.dart';
 import 'package:flutter/material.dart';
 

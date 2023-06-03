@@ -1,8 +1,10 @@
 # Attendance management project
 
-> __frontend__ by `Anas Saifi`
+> __Frontend__ by `Anas Saifi`
 >
-> __backend__ by `Harsh Agnihotri`
+> __Backend__ by `Harsh Agnihotri`
+>
+> __Android App__ by `Amanjot Singh`
 
 ## makefile setup
 

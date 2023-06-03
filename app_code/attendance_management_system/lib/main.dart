@@ -1,4 +1,6 @@
 import 'package:attendance_management_system/LoginScreen.dart';
+import 'package:attendance_management_system/WalkthroughScreen.dart';
+import 'package:attendance_management_system/demoLogin.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -15,9 +17,11 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: LoginScreen(),
+      home: Scaffold(
+        body: walkthrough(),
+      ),
     );
   }
 }

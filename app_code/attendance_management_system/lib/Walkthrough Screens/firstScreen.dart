@@ -32,7 +32,7 @@ class _firstScreenState extends State<firstScreen>
               Padding(
                 padding: const EdgeInsets.only(top: 70, left: 30, right: 30),
                 child: Image.asset(
-                  'assets/images/1finall.gif',
+                  'assets/images/1final.gif',
                   // scale: 0,
                 ),
               ),

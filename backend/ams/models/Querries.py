@@ -19,17 +19,16 @@ def save_attendence(data_list, collection_name='attendence',Date="null", db_name
         return True
     except:
         return False
-
-# test
-# data_list = [
-#     {"eno": 1, "name": "John", "presence": True},
-#     {"eno": 2, "name": "Jane", "presence": False},
-#     {"eno": 3, "name": "Jake", "presence": False},
-#     {"eno": 4, "name": "Jamie", "presence": False},
-#     {"eno": 5, "name": "Jasmin", "presence": False},
-#     # Add more objects to the list as needed
-# ]
-# save_attendence(data_list=data_list)
+## ---------------- test ------------------
+data_list = [
+    {"eno": 1, "name": "John", "presence": True},
+    {"eno": 2, "name": "Jane", "presence": False},
+    {"eno": 3, "name": "Jake", "presence": False},
+    {"eno": 4, "name": "Jamie", "presence": False},
+    {"eno": 5, "name": "Jasmin", "presence": False},
+    # Add more objects to the list as needed
+]
+save_attendence(data_list=data_list)
 
 def get_attendence_by_date(year, month, collection_name='attendence', db_name='test'):
     client = MongoClient('localhost:27017')
@@ -56,17 +55,20 @@ def get_attendence_by_date(year, month, collection_name='attendence', db_name='t
 
 # ___________ to save college object id _____________
 import json
-def write_key_to_json(key, value, file_path):
+def write_key_to_json(key,value, file_path = "CREDENTIALS.json"):
     try:
         with open(file_path, 'r') as file:
             data = json.load(file)
     except FileNotFoundError:
         data = {}
+        return {"Status":False,"desc":"failed"}
     data[key] = value
     with open(file_path, 'w') as file:
         json.dump(data, file)
+        return {"Status":True,"desc":"success"}
 
-def read_key_from_json(key, file_path):
+
+def read_key_from_json(key, file_path = "CREDENTIALS.json"):
     try:
         with open(file_path, 'r') as file:
             data = json.load(file)
@@ -80,7 +82,7 @@ def read_key_from_json(key, file_path):
 # _________ test _________-
 # key_to_write = "msit"
 # value_to_write = "efasdeofan231rn2312"
-# file_path = "data.json"
+# file_path = "CREDENTIALS.json"
 
 # # Write the key-value pair to the JSON file
 # write_key_to_json(key_to_write, value_to_write, file_path)
@@ -156,7 +158,40 @@ def save_college_to_mongodb(college):
     college_dict = college.__dict__
 
     # Save the College object in the collection
-    collection.insert_one(college_dict)
+    result = collection.insert_one(college_dict)
+
+     # Get the ObjectId of the inserted document
+    object_id = str(result.inserted_id)
 
     # Close the MongoDB connection
     client.close()
+    
+    return object_id
+
+def append_teacher_email(teacher_email):
+    try:
+        # Connect to MongoDB
+        client = MongoClient('localhost', 27017)
+        db = client['test']
+        collection = db['ams_admin']
+
+        # Append teacher's email to the "registered-teachers" array
+        result = collection.update_one({}, {'$push': {'registered-teachers': teacher_email}})
+
+        # Check if the update was successful
+        if result.modified_count > 0:
+            return {'success': True, 'message': 'Teacher email appended successfully'}
+        else:
+            return {'success': False, 'message': 'Failed to append teacher email'}
+
+    except Exception as e:
+        return {'success': False, 'message': str(e)}
+
+    finally:
+        # Close the MongoDB connection
+        client.close()
+
+# Usage example
+teacher_email = 'teacher@example.com'
+response = append_teacher_email(teacher_email)
+print(response)

@@ -1,4 +1,3 @@
-import 'package:attendance_management_system/LoginScreen.dart';
 import 'package:attendance_management_system/Walkthrough%20Screens/firstScreen.dart';
 import 'package:attendance_management_system/Walkthrough%20Screens/fourthScreen.dart';
 import 'package:attendance_management_system/Walkthrough%20Screens/secondScreen.dart';
@@ -6,6 +5,7 @@ import 'package:attendance_management_system/Walkthrough%20Screens/thirdScreen.d
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:attendance_management_system/Screens/loginScreen.dart';
 
 class walkthrough extends StatefulWidget {
   const walkthrough({super.key});
@@ -16,7 +16,7 @@ class walkthrough extends StatefulWidget {
 
 class _walkthroughState extends State<walkthrough> {
   //Controller defined to keep the track of pages
-  PageController _pagecontroller = PageController();
+  final PageController _pagecontroller = PageController();
   bool onLastPage = false;
   @override
   Widget build(BuildContext context) {
@@ -43,7 +43,7 @@ class _walkthroughState extends State<walkthrough> {
             Container(
               // height: 10,
               // width: 3,
-              alignment: Alignment(0, 0.5),
+              alignment: const Alignment(0, 0.5),
               child: SmoothPageIndicator(
                 controller: _pagecontroller,
                 count: 4,
@@ -65,7 +65,7 @@ class _walkthroughState extends State<walkthrough> {
                     width: 80,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xFF5e66e0),
+                        backgroundColor: const Color(0xFF5e66e0),
                         elevation: 7,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20),
@@ -81,11 +81,12 @@ class _walkthroughState extends State<walkthrough> {
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
                           fontSize: 20,
+                          fontFamily: 'PoppinsSemi',
                         ),
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 50,
                   ),
                   onLastPage
@@ -94,7 +95,7 @@ class _walkthroughState extends State<walkthrough> {
                           width: 80,
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: Color(0xFF5e66e0),
+                              backgroundColor: const Color(0xFF5e66e0),
                               elevation: 7,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20),
@@ -105,7 +106,7 @@ class _walkthroughState extends State<walkthrough> {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) {
-                                    return loginScreen();
+                                    return const loginScreen();
                                   },
                                 ),
                               );
@@ -117,6 +118,7 @@ class _walkthroughState extends State<walkthrough> {
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 20,
+                                fontFamily: 'PoppinsSemi',
                               ),
                             ),
                           ),
@@ -126,7 +128,7 @@ class _walkthroughState extends State<walkthrough> {
                           width: 80,
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: Color(0xFF5e66e0),
+                              backgroundColor: const Color(0xFF5e66e0),
                               elevation: 7,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20),
@@ -134,7 +136,7 @@ class _walkthroughState extends State<walkthrough> {
                             ),
                             onPressed: () {
                               _pagecontroller.nextPage(
-                                  duration: Duration(milliseconds: 200),
+                                  duration: const Duration(milliseconds: 200),
                                   curve: Curves.easeIn);
                             },
                             child: const Text(

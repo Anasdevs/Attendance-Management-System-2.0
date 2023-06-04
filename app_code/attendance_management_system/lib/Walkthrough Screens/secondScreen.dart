@@ -11,6 +11,7 @@ class _secondScreenState extends State<secondScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: Center(
           child: Column(
@@ -48,6 +49,7 @@ class _secondScreenState extends State<secondScreen> {
                         color: Colors.black,
                         fontSize: 17,
                         fontWeight: FontWeight.bold,
+                        fontFamily: 'PoppinsSemi',
                       ),
                     ),
                   ],

@@ -25,6 +25,7 @@ class _firstScreenState extends State<firstScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: Center(
           child: Column(
@@ -57,13 +58,15 @@ class _firstScreenState extends State<firstScreen>
                 text: const TextSpan(
                   children: [
                     TextSpan(
-                        text:
-                            "Check Attendance. Calculate missed\nclasses. See nearing holidays.\n",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 17,
-                          fontWeight: FontWeight.bold,
-                        )),
+                      text:
+                          "Check Attendance. Calculate missed\nclasses. See nearing holidays.\n",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 17,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'PoppinsSemi',
+                      ),
+                    ),
                     // TextSpan(
                     //     text: "See nearing holidays. \n",
                     //     style: TextStyle(color: Colors.black)),
@@ -73,6 +76,7 @@ class _firstScreenState extends State<firstScreen>
                           color: Colors.black,
                           fontSize: 17,
                           fontWeight: FontWeight.bold,
+                          fontFamily: 'PoppinsSemi',
                         )),
                   ],
                 ),

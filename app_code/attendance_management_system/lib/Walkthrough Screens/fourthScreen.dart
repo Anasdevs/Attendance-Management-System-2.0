@@ -11,6 +11,7 @@ class _fourthScreenState extends State<fourthScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: Center(
           child: Column(
@@ -35,6 +36,7 @@ class _fourthScreenState extends State<fourthScreen> {
                         color: Colors.black,
                         fontSize: 17,
                         fontWeight: FontWeight.bold,
+                        fontFamily: 'PoppinsSemi',
                       ),
                     ),
                   ],

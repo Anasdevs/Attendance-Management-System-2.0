@@ -19,16 +19,17 @@ def save_attendence(data_list, collection_name='attendence',Date="null", db_name
         return True
     except:
         return False
-## ---------------- test ------------------
-data_list = [
-    {"eno": 1, "name": "John", "presence": True},
-    {"eno": 2, "name": "Jane", "presence": False},
-    {"eno": 3, "name": "Jake", "presence": False},
-    {"eno": 4, "name": "Jamie", "presence": False},
-    {"eno": 5, "name": "Jasmin", "presence": False},
-    # Add more objects to the list as needed
-]
-save_attendence(data_list=data_list)
+
+# test
+# data_list = [
+#     {"eno": 1, "name": "John", "presence": True},
+#     {"eno": 2, "name": "Jane", "presence": False},
+#     {"eno": 3, "name": "Jake", "presence": False},
+#     {"eno": 4, "name": "Jamie", "presence": False},
+#     {"eno": 5, "name": "Jasmin", "presence": False},
+#     # Add more objects to the list as needed
+# ]
+# save_attendence(data_list=data_list)
 
 def get_attendence_by_date(year, month, collection_name='attendence', db_name='test'):
     client = MongoClient('localhost:27017')
@@ -55,20 +56,17 @@ def get_attendence_by_date(year, month, collection_name='attendence', db_name='t
 
 # ___________ to save college object id _____________
 import json
-def write_key_to_json(key,value, file_path = "CREDENTIALS.json"):
+def write_key_to_json(key, value, file_path):
     try:
         with open(file_path, 'r') as file:
             data = json.load(file)
     except FileNotFoundError:
         data = {}
-        return {"Status":False,"desc":"failed"}
     data[key] = value
     with open(file_path, 'w') as file:
         json.dump(data, file)
-        return {"Status":True,"desc":"success"}
 
-
-def read_key_from_json(key, file_path = "CREDENTIALS.json"):
+def read_key_from_json(key, file_path):
     try:
         with open(file_path, 'r') as file:
             data = json.load(file)
@@ -82,7 +80,7 @@ def read_key_from_json(key, file_path = "CREDENTIALS.json"):
 # _________ test _________-
 # key_to_write = "msit"
 # value_to_write = "efasdeofan231rn2312"
-# file_path = "CREDENTIALS.json"
+# file_path = "data.json"
 
 # # Write the key-value pair to the JSON file
 # write_key_to_json(key_to_write, value_to_write, file_path)
@@ -158,10 +156,7 @@ def save_college_to_mongodb(college):
     college_dict = college.__dict__
 
     # Save the College object in the collection
-    result = collection.insert_one(college_dict)
-
-     # Get the ObjectId of the inserted document
-    object_id = str(result.inserted_id)
+    collection.insert_one(college_dict)
 
     # Close the MongoDB connection
     client.close()

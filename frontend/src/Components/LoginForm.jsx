@@ -1,57 +1,35 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
+import attendanceTracking from './Images/noteslist.svg';
+import attendanceTaking from './Images/onlinecalendar.svg';
+import attendanceCompiling from './Images/segmentanalysis.svg';
+
 import './Auth.css';
 
 function LoginForm() {
   const [formData, setFormData] = useState({
     username: '',
     email: '',
-    otp: '',
+    password: '',
+    createPassword: '',
+    confirmPassword: '',
   });
 
   const [errors, setErrors] = useState([]);
   const [isOtpSent, setIsOtpSent] = useState(false);
   const [isOtpVerified, setIsOtpVerified] = useState(false);
-  const [otpTimer, setOtpTimer] = useState(30);
+  const [otpTimer, setOtpTimer] = useState(120);
+  const [isSignUp, setIsSignUp] = useState(false); // Added state for signup
+  const [isPasswordCreated, setIsPasswordCreated] = useState(false); // Added state for password creation
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    // Check if the email is from the college domain
-    if (!formData.email.endsWith('@msijanakpuri.com')) {
-      setErrors([{ msg: 'Please enter a valid college email address' }]);
-      return;
-    }
-
-    try {
-      const response = await fetch('/api/verify-otp', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-
-      const data = await response.json();
-
-      if (data.success) {
-        setIsOtpVerified(true);
-      } else {
-        setErrors([{ msg: 'Invalid OTP' }]);
-      }
-    } catch (error) {
-      console.error(error);
-      setErrors([{ msg: 'Something went wrong' }]);
-    }
-  };
-
   const handleOtpSubmit = () => {
-    alert("OTP has sent to your email!")
+    // Simulate sending OTP to email
+    alert('Password has been sent to your email!');
     setIsOtpSent(true);
 
     // Start the timer
@@ -62,71 +40,216 @@ function LoginForm() {
 
       if (countDown === 0) {
         setIsOtpSent(false);
-        setOtpTimer(30);
+        setOtpTimer(120);
         clearInterval(timer);
       }
     }, 1000);
   };
 
-  // Disable the button and show the countdown when OTP is sent
-  const isButtonDisabled = isOtpSent || isOtpVerified;
-  const buttonText = isOtpSent ? `Resend OTP in ${otpTimer}s` : 'Get Code';
+  const handleCreatePassword = () => {
+    setIsPasswordCreated(true);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    // Perform authentication or further processing
+    // Here, we are just displaying the form data
+    console.log(formData);
+  };
+
+  // Carousel images and descriptions
+  const carouselItems = [
+    {
+      image: `url(${attendanceTracking})`,
+      description: 'Attendance Tracking',
+    },
+    {
+      image: `url(${attendanceTaking})`,
+      description: 'Attendance Taking',
+    },
+    {
+      image: `url(${attendanceCompiling})`,
+      description: 'Attendance Compiling',
+    },
+  ];
+
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const buttonText = isOtpSent
+    ? `Resend Password in ${Math.floor(otpTimer / 60)}:${otpTimer % 60
+        .toString()
+        .padStart(2, '0')}`
+    : 'Get Password';
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSlide((prevSlide) => (prevSlide + 1) % carouselItems.length);
+    }, 2000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const handleSignUp = () => {
+    setIsSignUp(true);
+    setIsPasswordCreated(false);
+    setFormData({
+      username: '',
+      email: '',
+      password: '',
+      createPassword: '',
+      confirmPassword: '',
+    });
+    setErrors([]);
+  };
+
+  const handleSignIn = () => {
+    setIsSignUp(false);
+    setIsPasswordCreated(false);
+    setFormData({
+      email: '',
+      password: '',
+      createPassword: '',
+      confirmPassword: '',
+    });
+    setErrors([]);
+  };
 
   return (
     <div className="main">
       <div className="box">
         <div className="box-left">
-          <div className="contact">
-            <form onSubmit={handleSubmit}>
-              <h3>SIGN IN</h3>
-              <input
-                type="text"
-                id="username"
-                name="username"
-                placeholder="Enter your name"
-                value={formData.username}
-                onChange={handleChange}
-                required
-              />
-              <input
-                type="email"
-                id="email"
-                name="email"
-                placeholder="Enter your email"
-                value={formData.email}
-                onChange={handleChange}
-                required
-              />
-
-              <div className="otp-container">
-                <input
-                  type="number"
-                  id="otp"
-                  name="otp"
-                  placeholder="OTP"
-                  value={formData.otp}
-                  onChange={handleChange}
-                />
-                <button
-                  className="get-code"
-                  onClick={handleOtpSubmit}
-                  disabled={isButtonDisabled}
-                >
-                  {buttonText}
-                </button>
+          <div className="carousel-container">
+            {carouselItems.map((item, index) => (
+              <div
+                key={index}
+                className={`carousel-item ${
+                  index === currentSlide ? 'active' : ''
+                }`}
+                style={{ backgroundImage: item.image }}
+              >
+                <div className="carousel-description">
+                  {item.description}
+                </div>
               </div>
-
-              <button className="submit">
-                  <Link to="/dashboard/">LOGIN</Link>
-                  </button>
-            </form>
+            ))}
           </div>
         </div>
         <div className="box-right">
-
-          <div className="right-text">
-            <h2>AMS</h2>
-            <h5>Attendance Management System</h5>
+          <div className="contact">
+            {isSignUp ? (
+              <>
+                {isPasswordCreated ? (
+                  <form onSubmit={handleSubmit}>
+                    <h3>Create Password</h3>
+                    <input
+                      type="password"
+                      id="createPassword"
+                      name="createPassword"
+                      placeholder="Create password"
+                      value={formData.createPassword}
+                      onChange={handleChange}
+                      required
+                    />
+                    <input
+                      type="password"
+                      id="confirmPassword"
+                      name="confirmPassword"
+                      placeholder="Confirm password"
+                      value={formData.confirmPassword}
+                      onChange={handleChange}
+                      required
+                    />
+                    <button type="submit" className="submit">
+                      Submit
+                    </button>
+                  </form>
+                ) : (
+                  <form onSubmit={handleSubmit}>
+                    <h3>SIGN UP</h3>
+                    <input
+                      type="text"
+                      id="username"
+                      name="username"
+                      placeholder="Enter your name"
+                      value={formData.username}
+                      onChange={handleChange}
+                      required
+                    />
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      placeholder="Enter your email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      required
+                    />
+                    <input
+                      type="password"
+                      id="passwordSent"
+                      name="passwordSent"
+                      placeholder="Enter password sent to your email"
+                      value={formData.passwordSent}
+                      onChange={handleChange}
+                      required
+                    />
+                    <div className="otp-container">
+                      <button
+                        className="get-code"
+                        onClick={handleOtpSubmit}
+                        disabled={isOtpSent}
+                      >
+                        {buttonText}
+                      </button>
+                    </div>
+                    <button
+                      className="submit"
+                      onClick={handleCreatePassword}
+                      disabled={!isOtpSent}
+                    >
+                      Create Password
+                    </button>
+                    <p>
+                      Already have an account?{' '}
+                      <button className="link-button" onClick={handleSignIn}>
+                        Sign In
+                      </button>
+                    </p>
+                  </form>
+                )}
+              </>
+            ) : (
+              <form onSubmit={handleSubmit}>
+                <h3>SIGN IN</h3>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  placeholder="Enter your email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
+                />
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  placeholder="Enter your password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  required
+                />
+                <button type="submit" className="submit">
+                  Sign In
+                </button>
+                <p>
+                  Don't have an account?{' '}
+                  <button className="link-button" onClick={handleSignUp}>
+                    Sign Up
+                  </button>
+                </p>
+              </form>
+            )}
           </div>
         </div>
       </div>

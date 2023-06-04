@@ -168,6 +168,8 @@ def save_college_to_mongodb(college):
     
     return object_id
 
+
+# __________ admin function _________
 def append_teacher_email(teacher_email):
     try:
         # Connect to MongoDB
@@ -192,6 +194,95 @@ def append_teacher_email(teacher_email):
         client.close()
 
 # Usage example
-teacher_email = 'teacher@example.com'
-response = append_teacher_email(teacher_email)
-print(response)
+# teacher_email = 'teacher@example.com'
+# response = append_teacher_email(teacher_email)
+# print(response)
+
+
+
+# _____________ SAVE AND GET CLASSES FROM DB ____________
+from admin import *
+def save_class_to_mongodb(class_name, class_obj, db_name='test', collection_name='classes'):
+    host = 'localhost'
+    client = MongoClient(host)
+    db = client[db_name]
+    collection = db[collection_name]
+    class_dict ={class_name:class_obj.__dict__} 
+    collection.insert_one(class_dict)
+    client.close()
+
+def get_class_from_mongodb(class_name, db_name='test', collection_name='classes'):
+    host = 'localhost'
+
+    client = MongoClient(host)
+
+    db = client[db_name]
+    collection = db[collection_name]
+
+    result = collection.find_one({class_name: {"$exists": True}})
+
+    client.close()
+
+    if result:
+        class_obj_data = result[class_name]
+
+        class_obj = Class(class_obj_data['cource_name'], class_obj_data['sem'], class_obj_data['section'],
+                          class_obj_data['sub'], class_obj_data['teacher_assigned'], class_obj_data['students'])
+
+        return class_obj
+    else:
+        return None
+
+# __________________ save and get teacher object _____________
+
+def save_teacher_to_mongodb(teacher):
+    # MongoDB connection details
+    host = 'localhost'
+    db_name = 'test'
+    collection_name = 'teachers'
+
+    # Connect to the MongoDB server
+    client = MongoClient(host)
+
+    # Access the database and collection
+    db = client[db_name]
+    collection = db[collection_name]
+
+    # Convert the Teacher object to a dictionary
+    teacher_dict = teacher.__dict__
+
+    # Save the Teacher object in the collection using the username as the key
+    collection.update_one({'username': teacher.username}, {"$set": teacher_dict}, upsert=True)
+
+    # Close the MongoDB connection
+    client.close()
+
+
+def load_teacher_from_mongodb(username):
+    # MongoDB connection details
+    host = 'localhost'
+    db_name = 'test'
+    collection_name = 'teachers'
+
+    # Connect to the MongoDB server
+    client = MongoClient(host)
+
+    # Access the database and collection
+    db = client[db_name]
+    collection = db[collection_name]
+
+    # Retrieve the document with the provided username
+    result = collection.find_one({'username': username})
+
+    # Close the MongoDB connection
+    client.close()
+
+    if result:
+        # Recreate the Teacher object from the retrieved data
+        teacher = Teacher(result['username'], result['email'], result['password'],
+                          result['name'], result['title'], result['special_subject'])
+        teacher.Cources = result['Cources']
+        return teacher
+    else:
+        return None
+

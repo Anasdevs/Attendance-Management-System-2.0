@@ -37,9 +37,6 @@ def sendMail(request):
             return JsonResponse({'status': 'error', 'message': 'Invalid JSON payload'})
     return JsonResponse({'status': 'error', 'message': 'Invalid request method'})
 
-
-
-
 def signup(request):
     if request.method == 'POST':
         email = request.POST.get('email')
@@ -78,13 +75,13 @@ def user_logout(request):
     logout(request)
     return JsonResponse({'message': 'Logout successful'})
 
-
-
 from models import MSI
+from admin import *
+
 
 def Dashboard(request):
     # get teacher's profile
-
+    teacherIDs = MSI.
     # get class list
 
 

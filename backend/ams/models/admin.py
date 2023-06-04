@@ -1,18 +1,18 @@
+import Querries
+
 class College:
-    def __init__(self, college_name, college_id, college_city, college_state, college_country, 
-                 college_zip, college_phone, college_email, college_website, 
-                 college_description, college_address):
+    def __init__(self, college_name):
         self.name = college_name
-        self.id = college_id
-        self.city = college_city
-        self.state = college_state
-        self.country = college_country
-        self.zip = college_zip
-        self.phone = college_phone
-        self.email = college_email
-        self.website = college_website
-        self.description = college_description
-        self.address = college_address
+        # self.id = college_id
+        # self.city = college_city
+        # self.state = college_state
+        # self.country = college_country
+        # self.zip = college_zip
+        # self.phone = college_phone
+        # self.email = college_email
+        # self.website = college_website
+        # self.description = college_description
+        # self.address = college_address
         self.students_class = {}
         self.courses = {}
         self.instructors = {}
@@ -37,6 +37,10 @@ class College:
         self.instructors[teacher_id] = new_teacher
         return ["succsss", teacher_id]
 
+    def save(self):
+        result = Querries.save_college_to_mongodb(self)
+        return Querries.write_key_to_json(key=self.name, value=result)
+    
 class Teacher:
     def __init__(self, username, email, password, name, title, special_subject):
         self.username = username
@@ -46,7 +50,7 @@ class Teacher:
         self.title = title
         self.special_subject = special_subject
         self.students = {}
-    
+        
     def login(self, username, password):
         if username == self.username and password == self.password:
             return ["succsss", self.username]

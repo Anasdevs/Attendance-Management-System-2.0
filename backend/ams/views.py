@@ -2,6 +2,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.http import JsonResponse
 import random
+
 def home(request):
     data = {
         'message': 'Hello, World!'
@@ -11,7 +12,6 @@ def home(request):
 # def send_mail(request):
 #     from django.conf import settings
 #     from django.core.mail import send_mail
-
 #     if request.method == 'POST':
 #         name = request.POST.get('name')
 #         email = request.POST.get('email')
@@ -70,7 +70,7 @@ def signup(request):
 
         # Create a new user
         user = User.objects.create_user(username=username, password=password)
-        login(request, user)+
+        login(request, user)
 
         return JsonResponse({'message': 'Signup successful'})
     else:
@@ -96,92 +96,14 @@ def user_logout(request):
     logout(request)
     return JsonResponse({'message': 'Logout successful'})
 
-'''
-        
-'''
-
-'''
-admin endpoints
-    POST create teacher cred 
-        req
-            username/id
-            email
-            password
-            name
-            title
-            branch
-            assigned classes (class code)
-        res:
-            true
-    GET delete-teacher/<username/id>
-        res
-            username/id
 
 
-    POST create class
-        request
-            cource name
-            semester
-            section
-            subject
-            teacher-assigned(teacher username)
-            students:{
-                student name, eno
-                student name
-                student name
-                student name
-            }
+from models import MSI
 
-    POST change-class-teacher
-        request
-            {   
-                class id
-                past teacher username
-                present teacher username
-            }
-
-teacher endpoint
-    login   
-    request
-        {
-            username
-            email
-            password
-        }   # create a local session saved in local storage
+def Dashboard(request):
+    # get teacher's profile
     
-    logout
-        # delete local session
-
-POST Attendence endpoint
-    request:-
-        {
-            id:5-digit class code,
-            attendence:{
-                {eno:121, name:haefea, presence:ea3f},
-                {eno:121, name:haefea, presence:ea3f},
-                {eno:121, name:haefea, presence:ea3f},
-                {eno:121, name:haefea, presence:ea3f},
-                {eno:121, name:haefea, presence:ea3f},
-            }
-        }
-    response:
-        success
-
-GET searchAttendence/<class-id
-    response:-
-        {
-            id:5-digit class code,
-            attendence:{
-                {eno:121, name:haefea, presence:ea3f},
-                {eno:121, name:haefea, presence:ea3f},
-                {eno:121, name:haefea, presence:ea3f},
-                {eno:121, name:haefea, presence:ea3f},
-                {eno:121, name:haefea, presence:ea3f},
-            }
-        }
-
-    
-'''
+    # get class list
 
 
 '''

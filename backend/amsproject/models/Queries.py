@@ -21,15 +21,15 @@ def save_attendence(data_list, collection_name='attendence',Date="null", db_name
         return False
 
 # test
-# data_list = [
-#     {"eno": 1, "name": "John", "presence": True},
-#     {"eno": 2, "name": "Jane", "presence": False},
-#     {"eno": 3, "name": "Jake", "presence": False},
-#     {"eno": 4, "name": "Jamie", "presence": False},
-#     {"eno": 5, "name": "Jasmin", "presence": False},
-#     # Add more objects to the list as needed
-# ]
-# save_attendence(data_list=data_list)
+data_list = [
+    {"eno": 1, "name": "John", "presence": True},
+    {"eno": 2, "name": "Jane", "presence": False},
+    {"eno": 3, "name": "Jake", "presence": False},
+    {"eno": 4, "name": "Jamie", "presence": False},
+    {"eno": 5, "name": "Jasmin", "presence": False},
+    # Add more objects to the list as needed
+]
+save_attendence(data_list=data_list)
 
 def get_attendence_by_date(year, month, collection_name='attendence', db_name='test'):
     client = MongoClient('localhost:27017')

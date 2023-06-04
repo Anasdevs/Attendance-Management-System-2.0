@@ -9,24 +9,6 @@ def home(request):
     }
     return JsonResponse(data)
 
-# def send_mail(request):
-#     from django.conf import settings
-#     from django.core.mail import send_mail
-#     if request.method == 'POST':
-#         name = request.POST.get('name')
-#         email = request.POST.get('email')
-#         message = request.POST.get('message')
-#         send_mail(
-#             'Contact Form Submission',
-#             'Name: {0} \n Email: {1} \n Message: {2}'.format(name, email, message),
-#             'sudoharsh404@gmail.com',
-#             [settings.EMAIL_HOST_USER],
-#             fail_silently=False
-#             )
-#         return JsonResponse({'status': 'success'})
-#     return JsonResponse({'status': 'error'})
-
-
 import json
 from django.conf import settings
 from django.core.mail import send_mail
@@ -102,7 +84,7 @@ from models import MSI
 
 def Dashboard(request):
     # get teacher's profile
-    
+
     # get class list
 
 

@@ -1,4 +1,4 @@
-import Querries
+import Queries
 
 class College:
     def __init__(self, college_name):
@@ -38,8 +38,8 @@ class College:
         return ["succsss", teacher_id]
 
     def save(self):
-        result = Querries.save_college_to_mongodb(self)
-        return Querries.write_key_to_json(key=self.name, value=result)
+        result = Queries.save_college_to_mongodb(self)
+        return Queries.write_key_to_json(key=self.name, value=result)
     
 class Teacher:
     def __init__(self, username, email, password, name, title, special_subject):

@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 import database
 from Queries import *
 from admin import *
@@ -19,3 +20,24 @@ else:
             college_name="MSI",
             )
         MSI.save()
+=======
+# import database
+# from Querries import *
+# from admin import *
+# college_id = read_key_from_json("MSI")
+# if college_id == None:
+#     MSI = College(
+#         college_name="MSI",
+#         )
+#     MSI.save()
+
+# else:
+#     try:
+#         MSI = retrieve_college_from_mongodb(college_id=college_id)
+#     except:
+#         print("unable to extract college detail, creating new ones")
+#         MSI = College(
+#             college_name="MSI",
+#             )
+#         MSI.save()
+>>>>>>> Stashed changes

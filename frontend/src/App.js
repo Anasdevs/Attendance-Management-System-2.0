@@ -4,6 +4,9 @@ import LoginForm from './Components/LoginForm';
 import Dashboard from './Components/Dashboard';
 import Sidebar from './Components/Sidebar';
 import Attendance from './Components/Attendance';
+import Admin from './Components/Admin'
+import AdminDashboard from './Components/AdminDashboard'
+
 
 const App = () => {
   return (
@@ -13,6 +16,10 @@ const App = () => {
         <Route path="/dashboard/*" element={<DashboardWithSidebar />} />
         <Route path="*" element={<Navigate to="/login" />} />
         <Route path="/dashboard/take-attendance" element={<Attendance/>}/>
+        <Route path="/admin" element={<Admin/>}/>
+        <Route path="/admin/admin-dashboard" element={<AdminDashboard/>}/>
+
+
       </Routes>
     </Router>
   );

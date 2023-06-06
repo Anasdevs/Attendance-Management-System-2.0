@@ -13,4 +13,7 @@ urlpatterns = [
     # path('get_month_attendence/', views.sendMail, name='send_mail'),
     # path('get_attendence_report/', views.sendMail, name='send_mail'),
      path('api/adminlogin', views.adminlogin, name='adminlogin'),
+     path('api/add-faculty', views.add_faculty, name='add-faculty'),
+     path('api/remove-faculty', views.remove_faculty, name='remove-faculty'),
+     path('api/edit-faculty', views.edit_faculty, name='edit-faculty'),
 ]

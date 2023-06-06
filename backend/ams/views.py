@@ -37,20 +37,10 @@
 #             return JsonResponse({'status': 'error', 'message': 'Invalid JSON payload'})
 #     return JsonResponse({'status': 'error', 'message': 'Invalid request method'})
 
-<<<<<<< Updated upstream
-def signup(request):
-    if request.method == 'POST':
-        email = request.POST.get('email')
-        # password = request.POST.get('password')
-=======
-
-
-
 # def signup(request):
 #     if request.method == 'POST':
 #         email = request.POST.get('email')
-#         # password = request.POST.get('password')
->>>>>>> Stashed changes
+        # password = request.POST.get('password')
 
 #         if User.objects.filter(email=email).exists():
 #             return JsonResponse({'error': 'Username is already taken'}, status=400)
@@ -85,20 +75,14 @@ def signup(request):
 #     logout(request)
 #     return JsonResponse({'message': 'Logout successful'})
 
-<<<<<<< Updated upstream
-from models import MSI
-from admin import *
-
-=======
 
 
 # from models import MSI
->>>>>>> Stashed changes
 
 # def Dashboard(request):
 #     return 
     # get teacher's profile
-    teacherIDs = MSI.
+    # teacherIDs = MSI.
     # get class list
 
 
@@ -120,11 +104,14 @@ from admin import *
 
 # view for admin login
 from django.http import JsonResponse, HttpResponse
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 
 import json
 
+@api_view(['POST'])
 def adminlogin(request):
-    if request.method == 'POST':
+    # if request.method == 'POST':
         data = json.loads(request.body)
         login_id = data.get('loginId')
         password = data.get('password')
@@ -136,4 +123,4 @@ def adminlogin(request):
             # Return error response
             return JsonResponse({'message': 'Invalid login credentials'}, status=400)
 
-    return JsonResponse({'message': 'Invalid request'}, status=400)
+    # return JsonResponse({'message': 'Invalid request'}, status=400)

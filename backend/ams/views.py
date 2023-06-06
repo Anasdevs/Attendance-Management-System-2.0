@@ -13,30 +13,6 @@ def home(request):
 # from django.conf import settings
 # from django.core.mail import send_mail
 
-<<<<<<< HEAD
-# def sendMail(request):
-#     if request.method == 'POST':
-#         try:
-#             data = json.loads(request.body)
-#             name = data.get('name')
-#             email = data.get('email')
-#             message = data.get('message')
-#             to = data.get('to')
-            
-#             if name and email and message and to:
-#                 send_mail(
-#                     'Contact Form Submission',
-#                     'Name: {0} \nEmail: {1} \nMessage: {2}'.format(name, email, message),
-#                     settings.DEFAULT_FROM_EMAIL,
-#                     list(to)
-#                 )
-#                 return JsonResponse({'status': 'success'})
-#             else:
-#                 return JsonResponse({'status': 'error', 'message': 'Missing required fields'})
-#         except json.JSONDecodeError:
-#             return JsonResponse({'status': 'error', 'message': 'Invalid JSON payload'})
-#     return JsonResponse({'status': 'error', 'message': 'Invalid request method'})
-=======
 def sendMail(request):
     if request.method == 'POST':
         try:
@@ -59,16 +35,11 @@ def sendMail(request):
         except json.JSONDecodeError:
             return JsonResponse({'status': 'error', 'message': 'Invalid JSON payload'})
     return JsonResponse({'status': 'error', 'message': 'Invalid request method'})
->>>>>>> 0d96dfbcfba7efe15062e95bcf776765f613f136
 
 # def signup(request):
 #     if request.method == 'POST':
 #         email = request.POST.get('email')
-<<<<<<< HEAD
-        # password = request.POST.get('password')
-=======
 #         # password = request.POST.get('password')
->>>>>>> 0d96dfbcfba7efe15062e95bcf776765f613f136
 
 #         if User.objects.filter(email=email).exists():
 #             return JsonResponse({'error': 'Username is already taken'}, status=400)
@@ -103,13 +74,7 @@ def sendMail(request):
 #     logout(request)
 #     return JsonResponse({'message': 'Logout successful'})
 
-<<<<<<< HEAD
-
-
-# from models import MSI
-=======
 from .models import MSI
->>>>>>> 0d96dfbcfba7efe15062e95bcf776765f613f136
 
 # def Dashboard(request):
 #     return 
@@ -136,29 +101,17 @@ from .models import MSI
 
 # view for admin login
 from django.http import JsonResponse, HttpResponse
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 import json
-<<<<<<< HEAD
-
-@api_view(['POST'])
-def adminlogin(request):
-    # if request.method == 'POST':
-        data = json.loads(request.body)
-        login_id = data.get('loginId')
-        password = data.get('password')
-=======
 @api_view(['POST'])
 def adminlogin(request):
     # if request.method == 'POST':
     data = json.loads(request.body)
     login_id = data.get('loginId')
     password = data.get('password')
->>>>>>> 0d96dfbcfba7efe15062e95bcf776765f613f136
 
     if login_id == 'anass' and password == 'anass':
         # Return success response

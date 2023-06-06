@@ -56,7 +56,7 @@ def get_attendence_by_date(year, month, collection_name='attendence', db_name='t
 
 # ___________ to save college object id _____________
 import json
-def write_key_to_json(key, value, file_path):
+def write_key_to_json(key, value, file_path= "data.json"):
     try:
         with open(file_path, 'r') as file:
             data = json.load(file)
@@ -66,7 +66,7 @@ def write_key_to_json(key, value, file_path):
     with open(file_path, 'w') as file:
         json.dump(data, file)
 
-def read_key_from_json(key, file_path):
+def read_key_from_json(key, file_path= "data.json"):
     try:
         with open(file_path, 'r') as file:
             data = json.load(file)
@@ -161,7 +161,6 @@ def save_college_to_mongodb(college):
     # Close the MongoDB connection
     client.close()
     
-    return object_id
 
 
 # __________ admin function _________
@@ -196,7 +195,7 @@ def append_teacher_email(teacher_email):
 
 
 # _____________ SAVE AND GET CLASSES FROM DB ____________
-from admin import *
+from .admin import *
 def save_class_to_mongodb(class_name, class_obj, db_name='test', collection_name='classes'):
     host = 'localhost'
     client = MongoClient(host)

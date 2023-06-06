@@ -1,19 +1,19 @@
-# from django.contrib.auth import authenticate, login, logout
-# from django.contrib.auth.models import User
-# from django.http import JsonResponse
-# import random
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
+from django.http import JsonResponse
+import random
 
-# def home(request):
-#     data = {
-#         'message': 'Hello, World!'
-#     }
-#     return JsonResponse(data)
+def home(request):
+    data = {
+        'message': 'Hello, World!'
+    }
+    return JsonResponse(data)
 
 # import json
 # from django.conf import settings
 # from django.core.mail import send_mail
-# from django.http import JsonResponse
 
+<<<<<<< HEAD
 # def sendMail(request):
 #     if request.method == 'POST':
 #         try:
@@ -36,11 +36,39 @@
 #         except json.JSONDecodeError:
 #             return JsonResponse({'status': 'error', 'message': 'Invalid JSON payload'})
 #     return JsonResponse({'status': 'error', 'message': 'Invalid request method'})
+=======
+def sendMail(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            name = data.get('name')
+            email = data.get('email')
+            message = data.get('message')
+            to = data.get('to')
+            
+            if name and email and message and to:
+                send_mail(
+                    'Contact Form Submission',
+                    'Name: {0} \nEmail: {1} \nMessage: {2}'.format(name, email, message),
+                    settings.DEFAULT_FROM_EMAIL,
+                    list(to)
+                )
+                return JsonResponse({'status': 'success'})
+            else:
+                return JsonResponse({'status': 'error', 'message': 'Missing required fields'})
+        except json.JSONDecodeError:
+            return JsonResponse({'status': 'error', 'message': 'Invalid JSON payload'})
+    return JsonResponse({'status': 'error', 'message': 'Invalid request method'})
+>>>>>>> 0d96dfbcfba7efe15062e95bcf776765f613f136
 
 # def signup(request):
 #     if request.method == 'POST':
 #         email = request.POST.get('email')
+<<<<<<< HEAD
         # password = request.POST.get('password')
+=======
+#         # password = request.POST.get('password')
+>>>>>>> 0d96dfbcfba7efe15062e95bcf776765f613f136
 
 #         if User.objects.filter(email=email).exists():
 #             return JsonResponse({'error': 'Username is already taken'}, status=400)
@@ -75,9 +103,13 @@
 #     logout(request)
 #     return JsonResponse({'message': 'Logout successful'})
 
+<<<<<<< HEAD
 
 
 # from models import MSI
+=======
+from .models import MSI
+>>>>>>> 0d96dfbcfba7efe15062e95bcf776765f613f136
 
 # def Dashboard(request):
 #     return 
@@ -107,7 +139,11 @@ from django.http import JsonResponse, HttpResponse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+
 import json
+<<<<<<< HEAD
 
 @api_view(['POST'])
 def adminlogin(request):
@@ -115,12 +151,20 @@ def adminlogin(request):
         data = json.loads(request.body)
         login_id = data.get('loginId')
         password = data.get('password')
+=======
+@api_view(['POST'])
+def adminlogin(request):
+    # if request.method == 'POST':
+    data = json.loads(request.body)
+    login_id = data.get('loginId')
+    password = data.get('password')
+>>>>>>> 0d96dfbcfba7efe15062e95bcf776765f613f136
 
-        if login_id == 'anass' and password == 'anass':
-            # Return success response
-            return JsonResponse({'message': 'Login successful'}, status=200)
-        else:
-            # Return error response
-            return JsonResponse({'message': 'Invalid login credentials'}, status=400)
+    if login_id == 'anass' and password == 'anass':
+        # Return success response
+        return JsonResponse({'message': 'Login successful'}, status=200)
+    else:
+        # Return error response
+        return JsonResponse({'message': 'Invalid login credentials'}, status=400)
 
     # return JsonResponse({'message': 'Invalid request'}, status=400)

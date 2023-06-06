@@ -1,4 +1,4 @@
-from Queries import *
+from .Queries import *
 
 class College:
     def __init__(self, college_name):

@@ -139,22 +139,60 @@ class _signupScreenState extends State<signupScreen> {
                   width: 120,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                        backgroundColor:
-                            onPressed ? Color(0xFF5e66e0) : Colors.green,
+                        backgroundColor: const Color(0xFF5e66e0),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10))),
                     onPressed: () {
-                      setState(
-                        () {
-                          onPressed = !onPressed;
-                        },
-                      );
+                      // setState(
+                      //   () {
+                      //     onPressed = !onPressed;
+                      //   },
+                      // );
+                      // showModalBottomSheet(
+                      //   isScrollControlled: true,
+                      //   context: context,
+                      //   builder: (context) {
+                      //     return Stack(
+                      //       children: [
+                      //         Positioned(
+                      //             top: -20,
+                      //             child: Container(
+                      //               padding: EdgeInsets.all(10),
+                      //               color: Colors.black,
+                      //               child: Icon(
+                      //                 Icons.mark_email_read_outlined,
+                      //                 color: Colors.white,
+                      //               ),
+                      //             ))
+                      //       ],
+                      //     );
+                      //   },
+                      // );
+                      showModalBottomSheet(
+                          context: context,
+                          builder: (context) {
+                            return Container(
+                              color: Colors.transparent,
+                              child: Column(
+                                children: [
+                                  Container(
+                                    color: Colors.white,
+                                    padding: EdgeInsets.all(10),
+                                    child: Icon(
+                                      Icons.mark_email_read_outlined,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          });
                     },
-                    child: Text(
+                    child: const Text(
                       "Get Password",
                       style: TextStyle(
                           fontSize: 15,
-                          color: onPressed ? Colors.white : Colors.black,
+                          color: Colors.white,
                           fontFamily: 'PoppinsSemi'),
                     ),
                   ),
@@ -175,7 +213,7 @@ class _signupScreenState extends State<signupScreen> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => homeScreen(),
+                        builder: (context) => const homeScreen(),
                       ),
                     );
                   },

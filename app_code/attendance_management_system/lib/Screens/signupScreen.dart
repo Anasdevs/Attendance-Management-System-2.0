@@ -1,3 +1,4 @@
+import 'package:attendance_management_system/Screens/homeScreen.dart';
 import 'package:flutter/material.dart';
 
 class signupScreen extends StatefulWidget {
@@ -170,7 +171,14 @@ class _signupScreenState extends State<signupScreen> {
                       backgroundColor: const Color(0xFF5e66e0),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(17))),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => homeScreen(),
+                      ),
+                    );
+                  },
                   child: const Text(
                     "Sign Up",
                     style: TextStyle(

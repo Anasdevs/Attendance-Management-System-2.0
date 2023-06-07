@@ -23,11 +23,11 @@ class _homeScreenState extends State<homeScreen> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => signupScreen(),
+                      builder: (context) => const signupScreen(),
                     ),
                   );
                 },
-                child: Icon(
+                child: const Icon(
                   Icons.arrow_back_ios_new_rounded,
                 ),
               ),

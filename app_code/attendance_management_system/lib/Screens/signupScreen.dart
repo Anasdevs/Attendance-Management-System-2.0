@@ -112,7 +112,7 @@ class _signupScreenState extends State<signupScreen> {
                             color: Colors.grey,
                           ),
                           label: Text(
-                            'Enter Password (Will be sent to your mail).',
+                            'Enter Password',
                             style: TextStyle(color: Colors.grey, fontSize: 18),
                           ),
                           border: UnderlineInputBorder(
@@ -169,19 +169,106 @@ class _signupScreenState extends State<signupScreen> {
                       //   },
                       // );
                       showModalBottomSheet(
+                          shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(30),
+                            topRight: Radius.circular(30),
+                          )),
+                          isDismissible: true,
+                          isScrollControlled: true,
                           context: context,
                           builder: (context) {
                             return Container(
                               color: Colors.transparent,
                               child: Column(
+                                mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  Container(
-                                    color: Colors.white,
-                                    padding: EdgeInsets.all(10),
-                                    child: Icon(
-                                      Icons.mark_email_read_outlined,
-                                      color: Colors.black,
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                  GestureDetector(
+                                    onTap: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: const Icon(
+                                      Icons.keyboard_arrow_down_rounded,
+                                      color: Colors.grey,
+                                      size: 60,
                                     ),
+                                  ),
+                                  const SizedBox(
+                                    height: 30,
+                                  ),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(12),
+                                        color: const Color(0xFF5e66e0)),
+                                    padding: const EdgeInsets.all(23),
+                                    child: const Icon(
+                                      Icons.mark_email_read_outlined,
+                                      color: Colors.white,
+                                      size: 40,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 25,
+                                  ),
+                                  const Text(
+                                    "Check your email",
+                                    style: TextStyle(
+                                        fontFamily: 'PoppinsSemi',
+                                        fontSize: 25),
+                                  ),
+                                  const SizedBox(
+                                    height: 15,
+                                  ),
+                                  const Column(
+                                    children: [
+                                      Center(
+                                        child: Text(
+                                          "We have sent an Auto-generated password ",
+                                          style: TextStyle(
+                                              color: Colors.grey,
+                                              fontFamily: 'PoppinsReg',
+                                              fontSize: 18),
+                                        ),
+                                      ),
+                                      Text(
+                                        "on your email.",
+                                        style: TextStyle(
+                                            color: Colors.grey,
+                                            fontFamily: 'PoppinsReg',
+                                            fontSize: 18),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: 25,
+                                  ),
+                                  SizedBox(
+                                    height: 58,
+                                    width: 280,
+                                    child: ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                          backgroundColor:
+                                              const Color(0xFF5e66e0),
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(17))),
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: const Text(
+                                        "Continue",
+                                        style: TextStyle(
+                                            fontSize: 23,
+                                            color: Colors.white,
+                                            fontFamily: 'PoppinsSemi'),
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 50,
                                   ),
                                 ],
                               ),

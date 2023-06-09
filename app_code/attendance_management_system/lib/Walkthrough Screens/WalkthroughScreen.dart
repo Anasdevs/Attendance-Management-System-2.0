@@ -56,7 +56,7 @@ class _walkthroughState extends State<walkthrough> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 640),
+              padding: const EdgeInsets.only(top: 770),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [

@@ -17,9 +17,9 @@ class _fourthScreenState extends State<fourthScreen> {
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.only(top: 50, left: 20, right: 20),
+                padding: const EdgeInsets.only(top: 30, left: 20, right: 20),
                 child: Image.asset(
-                  'assets/images/4.gif',
+                  'assets/images/4a.gif',
                   // scale: 0.5,
                 ),
               ),
@@ -34,7 +34,7 @@ class _fourthScreenState extends State<fourthScreen> {
                       text: "Monthly Report Generation",
                       style: TextStyle(
                         color: Colors.black,
-                        fontSize: 17,
+                        fontSize: 20,
                         fontWeight: FontWeight.bold,
                         fontFamily: 'PoppinsSemi',
                       ),

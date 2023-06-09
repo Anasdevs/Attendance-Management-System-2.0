@@ -1,113 +1,140 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
-from django.http import JsonResponse
 import random
+from django.http import JsonResponse, HttpResponse
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+import json
 
-def home(request):
+
+# ====================== Test View ==================
+def test(request):
     data = {
-        'message': 'Hello, World!'
+        'message': 'AMS Server Online!'
     }
     return JsonResponse(data)
 
-# import json
-# from django.conf import settings
-# from django.core.mail import send_mail
-
-def sendMail(request):
-    if request.method == 'POST':
-        try:
-            data = json.loads(request.body)
-            name = data.get('name')
-            email = data.get('email')
-            message = data.get('message')
-            to = data.get('to')
-            
-            if name and email and message and to:
-                send_mail(
-                    'Contact Form Submission',
-                    'Name: {0} \nEmail: {1} \nMessage: {2}'.format(name, email, message),
-                    settings.DEFAULT_FROM_EMAIL,
-                    list(to)
-                )
-                return JsonResponse({'status': 'success'})
-            else:
-                return JsonResponse({'status': 'error', 'message': 'Missing required fields'})
-        except json.JSONDecodeError:
-            return JsonResponse({'status': 'error', 'message': 'Invalid JSON payload'})
-    return JsonResponse({'status': 'error', 'message': 'Invalid request method'})
-
-# def signup(request):
-#     if request.method == 'POST':
-#         email = request.POST.get('email')
-#         # password = request.POST.get('password')
-
-#         if User.objects.filter(email=email).exists():
-#             return JsonResponse({'error': 'Username is already taken'}, status=400)
-#         # Check if the username is already taken
-#         otp = random.randrange(1000,9999)
-
-#         # Create a new user
-#         user = User.objects.create_user(username=username, password=password)
-#         login(request, user)
-
-#         return JsonResponse({'message': 'Signup successful'})
-#     else:
-#         return JsonResponse({'error': 'Invalid request method'}, status=400)
-
-# def user_login(request):
-#     if request.method == 'POST':
-#         username = request.POST.get('username')
-#         password = request.POST.get('password')
-
-#         # Authenticate the user
-#         user = authenticate(request, username=username, password=password)
-
-#         if user is not None:
-#             login(request, user)
-#             return JsonResponse({'message': 'Login successful'})
-#         else:
-#             return JsonResponse({'error': 'Invalid credentials'}, status=401)
-#     else:
-#         return JsonResponse({'error': 'Invalid request method'}, status=400)
-
-# def user_logout(request):
-#     logout(request)
-#     return JsonResponse({'message': 'Logout successful'})
-
 from .models import MSI
 
-# def Dashboard(request):
-#     return 
+############################# TEACHER's View #####################
+
+# =========== teacher's functions =============
+
+@api_view(['POST'])
+def teacher_dashboard(request):
+    data = json.loads(request.body)
+    UID = data.get('user_id')
+    # onload fetch
+    #     teacher profile
+    #     total class
+
     # get teacher's profile
-    # teacherIDs = MSI.
-    # get class list
+    # teacherIDs from MSI
+    # get class list (by teacher's classes assigned)
+
+    return JsonResponse({"Status":False,'message': 'server error'}, status=501)
+
+@api_view(['POST'])
+def create_class(request):
+    data = json.loads(request.body)
+    email = data.get('email')
+    cource_name = data.get('cource_name')
+    sem = data.get('semester')
+    section = data.get('section')
+    subject = data.get('subject')
+    students = data.get('students')
+
+    MSI.add_new_class(cource_name,sem,section,subject, email, students)
+
+    return JsonResponse({"Status":True,'message': 'Success'}, status=200)
 
 
+# ======================== TEACHER LOGIN ROUTES =======================
 
-# onload fetch
-#     teacher profile
-#     total class
+# if we wanted to do email only type
+'''
+# ---- Admin verifing teacher's email (1st step of teacher add)
+@api_view(['POST'])
+def admin_teacher_Add(request):
+    data = json.loads(request.body)
+    email = data.get('email')
+    
+    if not MSI.verify_registered_email(email):
+        response = admin_teacher_Add(email)
+        if not response:
+            return JsonResponse({"Status":False,'message': 'server error'}, status=501)
+        else:
+            MSI.save()
+            return JsonResponse({"Status":True,'message': 'Successfully added'}, status=200)
+    else:
+
+        return JsonResponse({"status":True, 'message': 'already exist'}, status=200)
+
+# --------- check for verify
+@api_view(['POST'])
+def verify_teacher(request):
+    data = json.loads(request.body)
+    email = data.get('email')
+    if not MSI.verify_registered_email(email):
+        return JsonResponse({"Status":False,'message': 'email not found'}, status=200)
+    else:
+        exist = MSI.check_teacher_user(email)
+        if exist["status"] == True:
+            return JsonResponse({"Status":True,"userCreated":True,"password":exist["password"],'message': 'User Found'}, status=200)
+        else:
+            return JsonResponse({"Status":True,"userCreated":False,"password":None,'message': 'email verified But user not created'}, status=200)
+'''
 
 
+# ---------------- login ---------------------
+@api_view(['POST'])
+def teacher_login(request):
 
-################ VIEWS BY ANAS ####################
+    data = json.loads(request.body)
+    email = data.get('email')
+    password = data.get('password')
+    exist = MSI.teacherLogin(email,password)
 
-# from django.http import JsonResponse
-# from django.middleware.csrf import get_token
+    if exist["status"] == True:
+        return  JsonResponse({"status":"success","email":"email"}, status=200)
+    return JsonResponse(exist)
 
-# def csrf_token_view(request):
-#     csrf_token = get_token(request)
-#     return JsonResponse({'csrfToken': csrf_token})
+    '''
+    {
+        "email" : "harsh@email.com",
+        "password":"harshharsh"
+    }
+    '''
 
-# view for admin login
-from django.http import JsonResponse, HttpResponse
+# ------------ register teacher who's verified
+from django.views.decorators.csrf import csrf_exempt
 
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
+@csrf_exempt
+@api_view(['POST'])
+def teacher_register(request):
+    data = json.loads(request.body)
+    email = data.get('email')
+    name = data.get('name')
+    title = data.get('title')
 
+    # try:
+    res = MSI.add_new_teacher(email=email, name= name, title= title)
+    return JsonResponse(res)
+
+    '''
+    {
+        "email":"test.teacher@gmail.com",
+        "name":"test teacher",
+        "title":"Assitant professor"
+    }
+    '''
+
+<<<<<<< HEAD
 import json
 
 #API for admin login
+=======
+>>>>>>> f68243061b513434017bb686e5993cd096045fb6
 @api_view(['POST'])
 def adminlogin(request):
     # if request.method == 'POST':
@@ -116,12 +143,22 @@ def adminlogin(request):
     password = data.get('password')
 
     if login_id == 'anass' and password == 'anass':
-        # Return success response
-        return JsonResponse({'message': 'Login successful'}, status=200)
+        if (MSI.classes).keys():
+            data = {
+                "classes":(MSI.classes).keys(),
+                "teachers":(MSI.instructors).keys(),
+            }
+        else:
+            data = {
+                "classes":(MSI.classes),
+                "teachers":(MSI.instructors),
+            }
+        return JsonResponse({'message': 'Login successful', "data":data}, status=200)
     else:
         # Return error response
         return JsonResponse({'message': 'Invalid login credentials'}, status=400)
 
+<<<<<<< HEAD
     # return JsonResponse({'message': 'Invalid request'}, status=400)
 
 
@@ -167,3 +204,11 @@ def edit_faculty(request):
     return Response({'message': 'Faculty email updated successfully'})
 
 
+=======
+    '''
+    {
+        "loginId":"anass",
+        "password":"anass"
+    }
+    '''
+>>>>>>> f68243061b513434017bb686e5993cd096045fb6

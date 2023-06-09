@@ -280,3 +280,28 @@ def load_teacher_from_mongodb(username):
     else:
         return None
 
+# ======== SEND MAIL ============
+
+from django.core.mail import send_mail
+from django.conf import settings
+
+def send_contact_email(name, email, message, to):
+    subject = 'Contact Form Submission'
+    body = f"Name: {name}\nEmail: {email}\nMessage: {message}"
+    sender = settings.DEFAULT_FROM_EMAIL
+    recipients = [to]
+
+    send_mail(subject, body, sender, recipients)
+
+# ------ generate password --------
+import random
+import string
+
+def generate_random_password():
+    # Define the characters and numbers to choose from
+    characters = string.ascii_letters + string.digits
+    
+    # Generate a random password
+    password = ''.join(random.choice(characters) for _ in range(8))
+    
+    return password

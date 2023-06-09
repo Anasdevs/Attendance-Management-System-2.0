@@ -4,37 +4,76 @@ class College:
     def __init__(self, college_name):
         self.name = college_name
         self.classes = {}
+        # self.instructors_mail = []
         self.instructors = {}
 
     # ___________ teachers _____________________
-    def add_new_class(self, cource_name:str, sem:int, section:str, sub:str, teacher_assigned:int, students:dict):
-        new_class = Class(cource_name,sem,section, sub, teacher_assigned, students)
-        cource_id = (cource_name.replace(' ', '_')+"-"+sub+"-"+str(sem)+"-"+section)
-        if cource_id in self.classes.keys():
+    def add_new_class(self,email:str, course_name:str, sem:int, section:str, sub:str, teacher_assigned:int, students:dict):
+
+        new_class = Class(course_name,sem,section, sub, teacher_assigned=email, students=students)
+        course_id = (course_name.replace(' ', '_')+"-"+sub+"-"+str(sem)+"-"+section)
+        if course_id in self.classes.keys():
             cource_id+="#"
-        new_class.setClassID(cource_id)
-        save_class_to_mongodb(class_name=cource_id, class_obj=new_class)
-        self.classes[cource_id] = new_class
-        return ["succsss", cource_id]
+        new_class.setClassID(course_id)
+        new_class.save()
+
+        # add class to teacher's classes
+        self.instructors[email].add_cource(course_id,new_class)
+        self.instructors[email].save()
+
+        # add class to college's classes
+        self.classes[course_id] = new_class
+        self.save()
+
+        return ["succsss", course_id]
 
     def get_all_class(self):
         return self.classes.keys()
 
+    # def add_teacher_email(self,email):
+    #     self.instructors_mail.append(email)
+    #     return True
+
+    # def verify_registered_email(self, email):
+    #     if email in self.instructors_mail:
+    #         return True
+    #     return False
+
+    # def check_teacher_user(self, email):
+        if email in (self.instructors).keys():
+            return self.instructors[email].password
+        return False
+
+    def teacherLogin(self, email,password):
+        if email in (self.instructors).keys():
+            if password == self.instructors[email].password:
+                return {"status":True}
+            else:
+                return {"status":False,"desc":"password incorrect"}
+        return {"status":False,"desc":"email not found"}
+
     def loadCourses(self):
         for i in self.classes.keys():
-            Cource = get_class_from_mongodb(i)
-            self.classes[i] = Cource
+            Course = get_class_from_mongodb(i)
+            self.classes[i] = Course
         return True
 
     # __________ teachers ____________
-    def add_new_teacher(self, username,email,password,
-                        name:str = "__blank__", title:str="__blank__", special_subject:str = "__blank__"):
-        if username in self.instructors.keys():
+    def add_new_teacher(self,email, name:str = "__blank__", title:str="__blank__"):
+        if email in self.instructors.keys():
             return [False, "already exist"]
-        new_teacher = Teacher(username, email, password, name, title, special_subject)
-        save_teacher_to_mongodb(new_teacher)        
-        self.instructors[username] = new_teacher
-        return ["succsss", username]
+        password = generate_random_password()
+        # generate a password and send it on mail
+        message = f"Password for your MSI Attendence Management System Account is \n {password} \n \nPlease save this password and delete this email\nUse {email} email along with given passowrd to login"
+        send_contact_email(name="MSI janakpuri", email="care@msijanakpuri.com", message=message, to = email)
+
+        new_teacher = Teacher(email, password, name, title)
+        # save to main
+        self.instructors[email] = new_teacher
+        # save to db
+        new_teacher.save()
+
+        return {"status":True, "email":email}
 
     def load_teachers(self):
         for i in self.instructors.keys():
@@ -49,21 +88,26 @@ class College:
         return write_key_to_json(key=self.name, value=result)
 
 class Teacher:
-    def __init__(self, username, email, password, name, title, special_subject):
-        self.username = username
+    def __init__(self,email, password, name, title):
         self.email = email
         self.password = password
         self.name = name
         self.title = title
-        self.special_subject = special_subject
-        self.Courses = []
-        
-    def login(self, username, password):
-        if username == self.username and password == self.password:
-            return ["succsss", self.username]
+        self.Courses = {}
+
+    def login(self, password):
+        if password == self.password:
+            return ["succsss", self.email]
         return ["fail", "wrong username or password"]
+    
+    def add_cource(self,classId, cource):
+        self.Courses[classId] = cource
+    
+    def save(self):
+        save_teacher_to_mongodb(self)
+
     def __str__(self) -> str:
-        return [self.username, self.name, self.email]
+        return [ self.name, self.email, self.title, self.Courses]
 
 class Class:
     def __init__(self, cource_name, sem, section, sub, teacher_assigned, students):
@@ -82,6 +126,9 @@ class Class:
         # make object {student_name: "present"/"absent"} and feed it to mongodb database with today's date
         pass
 
+    def save(self):
+        save_class_to_mongodb(class_name=self.classId, class_obj=self)
+
     def __str__(self) -> str:
         return (self.cource_name.replace(' ', '_')+"-"+self.sub+"-"+str(self.sem)+"-"+self.section)
 
@@ -94,7 +141,7 @@ class admin:
     def create_teacher(self,id, email, password, name, title, branch, assigned_classs):
         if id in self.instructors.keys():
             return [False, "already exist"]
-        
+
         new_teacher = Teacher(id, email, password, name, title, branch, assigned_classs)
         self.instructors[id] = new_teacher
         return ["succsss", id]

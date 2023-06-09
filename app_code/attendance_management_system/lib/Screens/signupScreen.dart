@@ -19,7 +19,7 @@ class _signupScreenState extends State<signupScreen> {
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.only(left: 40, right: 40),
+                padding: const EdgeInsets.only(left: 40, right: 40, top: 10),
                 child: Image.asset(
                   'assets/images/signup.png',
                   // scale: ,

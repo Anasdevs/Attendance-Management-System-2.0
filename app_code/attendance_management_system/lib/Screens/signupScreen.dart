@@ -1,3 +1,4 @@
+import 'package:attendance_management_system/Screens/demoHomeScreen.dart';
 import 'package:attendance_management_system/Screens/homeScreen.dart';
 import 'package:flutter/material.dart';
 
@@ -300,7 +301,7 @@ class _signupScreenState extends State<signupScreen> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const homeScreen(),
+                        builder: (context) => const demo(),
                       ),
                     );
                   },

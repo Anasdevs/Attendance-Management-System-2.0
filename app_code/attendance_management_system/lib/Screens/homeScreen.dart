@@ -1,5 +1,5 @@
-import 'package:attendance_management_system/Screens/signupScreen.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class homeScreen extends StatefulWidget {
   const homeScreen({super.key});
@@ -12,28 +12,48 @@ class _homeScreenState extends State<homeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SafeArea(
-        child: Column(
-          children: [
-            AppBar(
-              title: const Text("AMS"),
-              centerTitle: true,
-              leading: GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const signupScreen(),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              const Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 350, top: 20),
+                    child: CircleAvatar(
+                      foregroundImage: AssetImage('assets/images/profile.jpg'),
+                      backgroundColor: Color(0xff5e66e0),
                     ),
-                  );
-                },
-                child: const Icon(
-                  Icons.arrow_back_ios_new_rounded,
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 10, right: 180),
+                child: Text(
+                  "Hello 👋 Amanjot ",
+                  style: TextStyle(fontFamily: 'PoppinsSemi', fontSize: 25),
                 ),
               ),
-              backgroundColor: const Color(0xFF5e66e0),
-            ),
-          ],
+              const SizedBox(
+                height: 10,
+              ),
+              Container(
+                decoration: BoxDecoration(
+                    color: Colors.black,
+                    borderRadius: BorderRadius.circular(20)),
+                padding: EdgeInsets.only(
+                    left: 150, right: 150, top: 150, bottom: 150),
+                child: Text(
+                  "Hello",
+                  style: GoogleFonts.rubik(color: Colors.white),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

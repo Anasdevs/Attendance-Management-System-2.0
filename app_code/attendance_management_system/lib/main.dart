@@ -1,3 +1,4 @@
+import 'package:attendance_management_system/Screens/demoHomeScreen.dart';
 import 'package:attendance_management_system/Screens/loginScreen.dart';
 import 'package:attendance_management_system/Walkthrough%20Screens/WalkthroughScreen.dart';
 import 'package:attendance_management_system/utils/routes.dart';
@@ -19,14 +20,14 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData.light().copyWith(
-        textTheme: GoogleFonts.adventProTextTheme(
-          Theme.of(context).textTheme,
-        ),
-      ),
+      // theme: ThemeData.light().copyWith(
+      //   textTheme: GoogleFonts.adventProTextTheme(
+      //     Theme.of(context).textTheme,
+      //   ),
+      // ),
       debugShowCheckedModeBanner: false,
       home: MaterialApp(
-        home: const loginScreen(),
+        home: const demo(),
         initialRoute: Routes.wts,
         routes: {
           // "/": (context) => loginScreen(),

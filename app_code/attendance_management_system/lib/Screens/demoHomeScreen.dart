@@ -1,6 +1,7 @@
 import 'package:attendance_management_system/Screens/attendanceScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
 
 class demo extends StatefulWidget {
   const demo({super.key});
@@ -13,14 +14,16 @@ class _demoState extends State<demo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
+      extendBody: true,
       floatingActionButtonLocation: ExpandableFab.location,
       floatingActionButton: ExpandableFab(
         collapsedFabSize: ExpandableFabSize.regular,
         expandedFabSize: ExpandableFabSize.regular,
-        closeButtonStyle: ExpandableFabCloseButtonStyle(
+        closeButtonStyle: const ExpandableFabCloseButtonStyle(
           backgroundColor: Color(0xff5e66e0),
         ),
-        backgroundColor: Color(0xff5e66e0),
+        backgroundColor: const Color(0xff5e66e0),
         distance: 100,
         // fanAngle: 80,
         collapsedFabShape: RoundedRectangleBorder(
@@ -32,7 +35,7 @@ class _demoState extends State<demo> {
         overlayStyle: ExpandableFabOverlayStyle(blur: 5),
         children: [
           FloatingActionButton(
-            backgroundColor: Color(0xff5e66e0),
+            backgroundColor: const Color(0xff5e66e0),
             onPressed: () {},
             heroTag: null,
             enableFeedback: true,
@@ -41,7 +44,7 @@ class _demoState extends State<demo> {
             child: const Icon(Icons.add),
           ),
           FloatingActionButton(
-            backgroundColor: Color(0xff5e66e0),
+            backgroundColor: const Color(0xff5e66e0),
             onPressed: () {},
             heroTag: null,
             enableFeedback: true,
@@ -50,7 +53,7 @@ class _demoState extends State<demo> {
             child: const Icon(Icons.settings),
           ),
           FloatingActionButton(
-            backgroundColor: Color(0xff5e66e0),
+            backgroundColor: const Color(0xff5e66e0),
             onPressed: () {},
             heroTag: null,
             enableFeedback: true,
@@ -60,7 +63,69 @@ class _demoState extends State<demo> {
           )
         ],
       ),
-      // bottomNavigationBar: Gnav(),
+      bottomNavigationBar:
+          // SafeArea(
+          //   child: Container(
+          //     padding: EdgeInsets.all(12),
+          //     margin: EdgeInsets.symmetric(horizontal: 20),
+          //     decoration: BoxDecoration(
+          //       color: Color(0xff5e66e0),
+          //       borderRadius: BorderRadius.all(
+          //         Radius.circular(24),
+          //       ),
+          //     ),
+          //     child: Row(
+          //       children: [
+          //         ImageIcon(
+          //           AssetImage(
+          //             'assets/images/login.png',
+          //           ),
+          //           size: 50,
+          //         ),
+          //       ],
+          //     ),
+          //   ),
+          // ),
+          const Padding(
+        padding: EdgeInsets.only(top: 0, left: 0, right: 0, bottom: 0),
+        child: Material(
+          elevation: 30,
+          child: GNav(
+            style: GnavStyle.google,
+            backgroundColor: Color(0xff5e66e0),
+            gap: 10,
+            rippleColor: const Color.fromARGB(150, 255, 255, 255),
+            haptic: true,
+            tabBorderRadius: 200,
+            activeColor: Colors.white,
+            tabBackgroundColor: Color.fromARGB(99, 255, 255, 255),
+            padding: EdgeInsets.symmetric(horizontal: 18, vertical: 17),
+            tabMargin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+            tabs: [
+              GButton(
+                icon: Icons.explore_outlined,
+                iconColor: Colors.white,
+                text: 'Home',
+              ),
+              GButton(
+                icon: Icons.calendar_month_rounded,
+                iconColor: Colors.white,
+                text: 'Calendar',
+              ),
+              GButton(
+                icon: Icons.file_present_outlined,
+                iconColor: Colors.white,
+                text: 'Report',
+              ),
+              GButton(
+                icon: Icons.person_outline_rounded,
+                iconColor: Colors.white,
+                text: 'Profile',
+              ),
+            ],
+          ),
+        ),
+      ),
       body: ListView(
         children: [
           //Profile picture
@@ -92,7 +157,7 @@ class _demoState extends State<demo> {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(left: 140, top: 20),
+                        padding: const EdgeInsets.only(left: 100, top: 20),
                         child: CircleAvatar(
                           foregroundImage:
                               AssetImage('assets/images/profile.jpg'),
@@ -174,8 +239,8 @@ class _demoState extends State<demo> {
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    border:
-                        Border.all(color: Color.fromARGB(134, 158, 158, 158)),
+                    border: Border.all(
+                        color: const Color.fromARGB(134, 158, 158, 158)),
                   ),
                   child: const Row(
                     children: [
@@ -244,7 +309,8 @@ class _demoState extends State<demo> {
               child: Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: Color.fromARGB(134, 158, 158, 158)),
+                  border: Border.all(
+                      color: const Color.fromARGB(134, 158, 158, 158)),
                 ),
                 child: const Row(
                   children: [
@@ -312,7 +378,8 @@ class _demoState extends State<demo> {
               child: Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: Color.fromARGB(134, 158, 158, 158)),
+                  border: Border.all(
+                      color: const Color.fromARGB(134, 158, 158, 158)),
                 ),
                 child: const Row(
                   children: [
@@ -380,7 +447,8 @@ class _demoState extends State<demo> {
               child: Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: Color.fromARGB(134, 158, 158, 158)),
+                  border: Border.all(
+                      color: const Color.fromARGB(134, 158, 158, 158)),
                 ),
                 child: const Row(
                   children: [
@@ -447,7 +515,8 @@ class _demoState extends State<demo> {
               child: Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: Color.fromARGB(134, 158, 158, 158)),
+                  border: Border.all(
+                      color: const Color.fromARGB(134, 158, 158, 158)),
                 ),
                 child: const Row(
                   children: [
@@ -514,7 +583,8 @@ class _demoState extends State<demo> {
               child: Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: Color.fromARGB(134, 158, 158, 158)),
+                  border: Border.all(
+                      color: const Color.fromARGB(134, 158, 158, 158)),
                 ),
                 child: const Row(
                   children: [

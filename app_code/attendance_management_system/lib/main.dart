@@ -1,4 +1,3 @@
-import 'package:attendance_management_system/Screens/demoHomeScreen.dart';
 import 'package:attendance_management_system/Screens/homeScreen.dart';
 import 'package:attendance_management_system/Screens/loginScreen.dart';
 import 'package:attendance_management_system/Walkthrough%20Screens/WalkthroughScreen.dart';

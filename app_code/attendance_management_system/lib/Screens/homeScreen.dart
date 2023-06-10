@@ -20,7 +20,7 @@ class _homeScreenState extends State<homeScreen> {
               const Row(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(left: 350, top: 20),
+                    padding: EdgeInsets.only(left: 350, top: 20),
                     child: CircleAvatar(
                       foregroundImage: AssetImage('assets/images/profile.jpg'),
                       backgroundColor: Color(0xff5e66e0),
@@ -31,8 +31,8 @@ class _homeScreenState extends State<homeScreen> {
               const SizedBox(
                 height: 10,
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 10, right: 180),
+              const Padding(
+                padding: EdgeInsets.only(top: 10, right: 180),
                 child: Text(
                   "Hello 👋 Amanjot ",
                   style: TextStyle(fontFamily: 'PoppinsSemi', fontSize: 25),
@@ -45,7 +45,7 @@ class _homeScreenState extends State<homeScreen> {
                 decoration: BoxDecoration(
                     color: Colors.black,
                     borderRadius: BorderRadius.circular(20)),
-                padding: EdgeInsets.only(
+                padding: const EdgeInsets.only(
                     left: 150, right: 150, top: 150, bottom: 150),
                 child: Text(
                   "Hello",

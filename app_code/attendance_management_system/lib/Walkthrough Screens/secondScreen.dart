@@ -37,7 +37,7 @@ class _secondScreenState extends State<secondScreen> {
               //       ),
               // ),
               const SizedBox(
-                height: 30,
+                height: 40,
               ),
               RichText(
                 textAlign: TextAlign.center,
@@ -47,7 +47,7 @@ class _secondScreenState extends State<secondScreen> {
                       text: "Track attendance",
                       style: TextStyle(
                         color: Colors.black,
-                        fontSize: 17,
+                        fontSize: 25,
                         fontWeight: FontWeight.bold,
                         fontFamily: 'PoppinsSemi',
                       ),

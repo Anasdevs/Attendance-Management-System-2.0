@@ -17,14 +17,14 @@ class _thirdScreenState extends State<thirdScreen> {
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.only(top: 50, left: 60, right: 60),
+                padding: const EdgeInsets.only(top: 60, left: 40, right: 40),
                 child: Image.asset(
-                  'assets/images/3.gif',
+                  'assets/images/3a.gif',
                   // scale: 0.59,
                 ),
               ),
               const SizedBox(
-                height: 30,
+                height: 40,
               ),
               RichText(
                 textAlign: TextAlign.center,
@@ -34,7 +34,7 @@ class _thirdScreenState extends State<thirdScreen> {
                       text: "See or Track your Holidays.",
                       style: TextStyle(
                         color: Colors.black,
-                        fontSize: 17,
+                        fontSize: 20,
                         fontWeight: FontWeight.bold,
                         fontFamily: 'PoppinsSemi',
                       ),

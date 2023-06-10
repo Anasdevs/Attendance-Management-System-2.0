@@ -1,3 +1,4 @@
+import 'package:attendance_management_system/Screens/demoHomeScreen.dart';
 import 'package:flutter/material.dart';
 
 class signupScreen extends StatefulWidget {
@@ -18,7 +19,7 @@ class _signupScreenState extends State<signupScreen> {
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.only(left: 40, right: 40),
+                padding: const EdgeInsets.only(left: 40, right: 40, top: 10),
                 child: Image.asset(
                   'assets/images/signup.png',
                   // scale: ,
@@ -111,7 +112,7 @@ class _signupScreenState extends State<signupScreen> {
                             color: Colors.grey,
                           ),
                           label: Text(
-                            'Enter Password (Will be sent to your mail).',
+                            'Enter Password',
                             style: TextStyle(color: Colors.grey, fontSize: 18),
                           ),
                           border: UnderlineInputBorder(
@@ -138,22 +139,147 @@ class _signupScreenState extends State<signupScreen> {
                   width: 120,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                        backgroundColor:
-                            onPressed ? Color(0xFF5e66e0) : Colors.green,
+                        backgroundColor: const Color(0xFF5e66e0),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10))),
                     onPressed: () {
-                      setState(
-                        () {
-                          onPressed = !onPressed;
-                        },
-                      );
+                      // setState(
+                      //   () {
+                      //     onPressed = !onPressed;
+                      //   },
+                      // );
+                      // showModalBottomSheet(
+                      //   isScrollControlled: true,
+                      //   context: context,
+                      //   builder: (context) {
+                      //     return Stack(
+                      //       children: [
+                      //         Positioned(
+                      //             top: -20,
+                      //             child: Container(
+                      //               padding: EdgeInsets.all(10),
+                      //               color: Colors.black,
+                      //               child: Icon(
+                      //                 Icons.mark_email_read_outlined,
+                      //                 color: Colors.white,
+                      //               ),
+                      //             ))
+                      //       ],
+                      //     );
+                      //   },
+                      // );
+                      showModalBottomSheet(
+                          shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(30),
+                            topRight: Radius.circular(30),
+                          )),
+                          isDismissible: true,
+                          isScrollControlled: true,
+                          context: context,
+                          builder: (context) {
+                            return Container(
+                              color: Colors.transparent,
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                  GestureDetector(
+                                    onTap: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: const Icon(
+                                      Icons.keyboard_arrow_down_rounded,
+                                      color: Colors.grey,
+                                      size: 60,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 30,
+                                  ),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(12),
+                                        color: const Color(0xFF5e66e0)),
+                                    padding: const EdgeInsets.all(23),
+                                    child: const Icon(
+                                      Icons.mark_email_read_outlined,
+                                      color: Colors.white,
+                                      size: 40,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 25,
+                                  ),
+                                  const Text(
+                                    "Check your email",
+                                    style: TextStyle(
+                                        fontFamily: 'PoppinsSemi',
+                                        fontSize: 25),
+                                  ),
+                                  const SizedBox(
+                                    height: 15,
+                                  ),
+                                  const Column(
+                                    children: [
+                                      Center(
+                                        child: Text(
+                                          "We have sent an Auto-generated password ",
+                                          style: TextStyle(
+                                              color: Colors.grey,
+                                              fontFamily: 'PoppinsReg',
+                                              fontSize: 18),
+                                        ),
+                                      ),
+                                      Text(
+                                        "on your email.",
+                                        style: TextStyle(
+                                            color: Colors.grey,
+                                            fontFamily: 'PoppinsReg',
+                                            fontSize: 18),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: 25,
+                                  ),
+                                  SizedBox(
+                                    height: 58,
+                                    width: 280,
+                                    child: ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                          backgroundColor:
+                                              const Color(0xFF5e66e0),
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(17))),
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: const Text(
+                                        "Continue",
+                                        style: TextStyle(
+                                            fontSize: 23,
+                                            color: Colors.white,
+                                            fontFamily: 'PoppinsSemi'),
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 50,
+                                  ),
+                                ],
+                              ),
+                            );
+                          });
                     },
-                    child: Text(
+                    child: const Text(
                       "Get Password",
                       style: TextStyle(
                           fontSize: 15,
-                          color: onPressed ? Colors.white : Colors.black,
+                          color: Colors.white,
                           fontFamily: 'PoppinsSemi'),
                     ),
                   ),
@@ -170,7 +296,14 @@ class _signupScreenState extends State<signupScreen> {
                       backgroundColor: const Color(0xFF5e66e0),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(17))),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const demo(),
+                      ),
+                    );
+                  },
                   child: const Text(
                     "Sign Up",
                     style: TextStyle(
@@ -181,7 +314,7 @@ class _signupScreenState extends State<signupScreen> {
                 ),
               ),
               const SizedBox(
-                height: 20,
+                height: 35,
               ),
               // Row(
               //   children: [

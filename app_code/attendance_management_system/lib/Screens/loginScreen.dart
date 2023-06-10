@@ -1,3 +1,4 @@
+import 'package:attendance_management_system/Screens/demoHomeScreen.dart';
 import 'package:attendance_management_system/Screens/signupScreen.dart';
 import 'package:flutter/material.dart';
 
@@ -104,7 +105,14 @@ class _loginScreenState extends State<loginScreen> {
                       backgroundColor: const Color(0xFF5e66e0),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(17))),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const demo(),
+                      ),
+                    );
+                  },
                   child: const Text(
                     "Login",
                     style: TextStyle(
@@ -134,7 +142,7 @@ class _loginScreenState extends State<loginScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => signupScreen(),
+                          builder: (context) => const signupScreen(),
                         ),
                       );
                     },

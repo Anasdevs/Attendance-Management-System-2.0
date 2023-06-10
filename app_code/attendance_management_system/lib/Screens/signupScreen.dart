@@ -1,5 +1,7 @@
 import 'package:attendance_management_system/Screens/demoHomeScreen.dart';
 import 'package:attendance_management_system/Screens/homeScreen.dart';
+import 'package:attendance_management_system/fab.dart';
+import 'package:attendance_management_system/main.dart';
 import 'package:flutter/material.dart';
 
 class signupScreen extends StatefulWidget {
@@ -301,7 +303,7 @@ class _signupScreenState extends State<signupScreen> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const demo(),
+                        builder: (context) => const fab(),
                       ),
                     );
                   },

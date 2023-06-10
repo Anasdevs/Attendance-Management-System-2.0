@@ -31,7 +31,7 @@ class _MyAppState extends State<MyApp> {
         home: const loginScreen(),
         initialRoute: Routes.wts,
         routes: {
-          "/": (context) => const loginScreen(),
+          // "/": (context) => const loginScreen(),
           "/home": (context) => const homeScreen(),
           "/wts": (context) => const walkthrough(),
         },

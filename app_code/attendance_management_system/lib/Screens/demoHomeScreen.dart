@@ -1,4 +1,6 @@
+import 'package:attendance_management_system/Screens/attendanceScreen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
 
 class demo extends StatefulWidget {
   const demo({super.key});
@@ -11,7 +13,54 @@ class _demoState extends State<demo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: Color(0xff5e66e0),
+      floatingActionButtonLocation: ExpandableFab.location,
+      floatingActionButton: ExpandableFab(
+        collapsedFabSize: ExpandableFabSize.regular,
+        expandedFabSize: ExpandableFabSize.regular,
+        closeButtonStyle: ExpandableFabCloseButtonStyle(
+          backgroundColor: Color(0xff5e66e0),
+        ),
+        backgroundColor: Color(0xff5e66e0),
+        distance: 100,
+        // fanAngle: 80,
+        collapsedFabShape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+        expandedFabShape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        type: ExpandableFabType.fan,
+        overlayStyle: ExpandableFabOverlayStyle(blur: 5),
+        children: [
+          FloatingActionButton(
+            backgroundColor: Color(0xff5e66e0),
+            onPressed: () {},
+            heroTag: null,
+            enableFeedback: true,
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            child: const Icon(Icons.add),
+          ),
+          FloatingActionButton(
+            backgroundColor: Color(0xff5e66e0),
+            onPressed: () {},
+            heroTag: null,
+            enableFeedback: true,
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            child: const Icon(Icons.settings),
+          ),
+          FloatingActionButton(
+            backgroundColor: Color(0xff5e66e0),
+            onPressed: () {},
+            heroTag: null,
+            enableFeedback: true,
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            child: const Icon(Icons.person),
+          )
+        ],
+      ),
+      // bottomNavigationBar: Gnav(),
       body: ListView(
         children: [
           //Profile picture
@@ -108,65 +157,77 @@ class _demoState extends State<demo> {
             height: 20,
           ),
           //Classes container
-          Padding(
-            padding: const EdgeInsets.only(left: 30, right: 30),
-            child: Material(
-              elevation: 5,
-              borderRadius: BorderRadius.circular(13),
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: Color.fromARGB(134, 158, 158, 158)),
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const attScreen(),
                 ),
-                child: const Row(
-                  children: [
-                    Column(
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(left: 20, top: 20),
-                          child: Text(
-                            "Web Dev with Django",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontFamily: 'PoppinsSemi',
+              );
+            },
+            child: Padding(
+              padding: const EdgeInsets.only(left: 30, right: 30),
+              child: Material(
+                elevation: 5,
+                borderRadius: BorderRadius.circular(13),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    border:
+                        Border.all(color: Color.fromARGB(134, 158, 158, 158)),
+                  ),
+                  child: const Row(
+                    children: [
+                      Column(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(left: 20, top: 20),
+                            child: Text(
+                              "Web Dev with Django",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontFamily: 'PoppinsSemi',
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(right: 115, top: 5),
+                            child: Text(
+                              "BCA",
+                              style: TextStyle(
+                                color: Colors.grey,
                                 fontSize: 20,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(right: 115, top: 5),
-                          child: Text(
-                            "BCA",
-                            style: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 20,
+                              ),
                             ),
                           ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(right: 60, top: 5, left: 10),
-                          child: Text(
-                            "4th Semester",
-                            style: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 20,
+                          Padding(
+                            padding:
+                                EdgeInsets.only(right: 60, top: 5, left: 10),
+                            child: Text(
+                              "4th Semester",
+                              style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 20,
+                              ),
                             ),
                           ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(
-                              right: 77, top: 5, left: 10, bottom: 20),
-                          child: Text(
-                            "Section - A",
-                            style: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 20,
+                          Padding(
+                            padding: EdgeInsets.only(
+                                right: 77, top: 5, left: 10, bottom: 20),
+                            child: Text(
+                              "Section - A",
+                              style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 20,
+                              ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -201,7 +262,7 @@ class _demoState extends State<demo> {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(right: 115, top: 5),
+                          padding: const EdgeInsets.only(right: 100, top: 5),
                           child: Text(
                             "BCA",
                             style: TextStyle(
@@ -211,7 +272,7 @@ class _demoState extends State<demo> {
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsets.only(right: 60, top: 5, left: 10),
+                          padding: EdgeInsets.only(right: 35, top: 5),
                           child: Text(
                             "4th Semester",
                             style: TextStyle(
@@ -221,10 +282,10 @@ class _demoState extends State<demo> {
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsets.only(
-                              right: 77, top: 5, left: 10, bottom: 20),
+                          padding:
+                              EdgeInsets.only(right: 54, top: 5, bottom: 20),
                           child: Text(
-                            "Section - A",
+                            "Section - B",
                             style: TextStyle(
                               color: Colors.grey,
                               fontSize: 20,
@@ -260,7 +321,7 @@ class _demoState extends State<demo> {
                         Padding(
                           padding: EdgeInsets.only(left: 20, top: 20),
                           child: Text(
-                            "Web Dev with Django",
+                            "Software Engineering",
                             style: TextStyle(
                                 color: Colors.black,
                                 fontFamily: 'PoppinsSemi',
@@ -328,7 +389,7 @@ class _demoState extends State<demo> {
                         Padding(
                           padding: EdgeInsets.only(left: 20, top: 20),
                           child: Text(
-                            "Web Dev with Django",
+                            "Digital Marketing",
                             style: TextStyle(
                                 color: Colors.black,
                                 fontFamily: 'PoppinsSemi',
@@ -337,7 +398,7 @@ class _demoState extends State<demo> {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(right: 115, top: 5),
+                          padding: const EdgeInsets.only(right: 80, top: 5),
                           child: Text(
                             "BCA",
                             style: TextStyle(
@@ -347,7 +408,7 @@ class _demoState extends State<demo> {
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsets.only(right: 60, top: 5, left: 10),
+                          padding: EdgeInsets.only(right: 15, top: 5),
                           child: Text(
                             "4th Semester",
                             style: TextStyle(
@@ -357,10 +418,10 @@ class _demoState extends State<demo> {
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsets.only(
-                              right: 77, top: 5, left: 10, bottom: 20),
+                          padding:
+                              EdgeInsets.only(right: 35, top: 5, bottom: 20),
                           child: Text(
-                            "Section - A",
+                            "Section - B",
                             style: TextStyle(
                               color: Colors.grey,
                               fontSize: 20,
@@ -395,7 +456,7 @@ class _demoState extends State<demo> {
                         Padding(
                           padding: EdgeInsets.only(left: 20, top: 20),
                           child: Text(
-                            "Web Dev with Django",
+                            "Personality Dev. Skills",
                             style: TextStyle(
                                 color: Colors.black,
                                 fontFamily: 'PoppinsSemi',
@@ -404,7 +465,7 @@ class _demoState extends State<demo> {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(right: 115, top: 5),
+                          padding: const EdgeInsets.only(right: 114, top: 5),
                           child: Text(
                             "BCA",
                             style: TextStyle(
@@ -462,7 +523,7 @@ class _demoState extends State<demo> {
                         Padding(
                           padding: EdgeInsets.only(left: 20, top: 20),
                           child: Text(
-                            "Web Dev with Django",
+                            "Accountancy",
                             style: TextStyle(
                                 color: Colors.black,
                                 fontFamily: 'PoppinsSemi',
@@ -471,9 +532,9 @@ class _demoState extends State<demo> {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(right: 115, top: 5),
+                          padding: const EdgeInsets.only(right: 30, top: 5),
                           child: Text(
-                            "BCA",
+                            "B.Com",
                             style: TextStyle(
                               color: Colors.grey,
                               fontSize: 20,
@@ -481,9 +542,9 @@ class _demoState extends State<demo> {
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsets.only(right: 60, top: 5, left: 10),
+                          padding: EdgeInsets.only(left: 17, top: 5),
                           child: Text(
-                            "4th Semester",
+                            "6th Semester",
                             style: TextStyle(
                               color: Colors.grey,
                               fontSize: 20,
@@ -491,8 +552,8 @@ class _demoState extends State<demo> {
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsets.only(
-                              right: 77, top: 5, left: 10, bottom: 20),
+                          padding:
+                              EdgeInsets.only(right: 1, top: 5, bottom: 20),
                           child: Text(
                             "Section - A",
                             style: TextStyle(
@@ -509,139 +570,9 @@ class _demoState extends State<demo> {
             ),
           ),
           const SizedBox(
-            height: 20,
+            height: 40,
           ),
-          //Seventh class
-          Padding(
-            padding: const EdgeInsets.only(left: 30, right: 30),
-            child: Material(
-              elevation: 5,
-              borderRadius: BorderRadius.circular(13),
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: Color.fromARGB(134, 158, 158, 158)),
-                ),
-                child: const Row(
-                  children: [
-                    Column(
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(left: 20, top: 20),
-                          child: Text(
-                            "Web Dev with Django",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontFamily: 'PoppinsSemi',
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(right: 115, top: 5),
-                          child: Text(
-                            "BCA",
-                            style: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 20,
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(right: 60, top: 5, left: 10),
-                          child: Text(
-                            "4th Semester",
-                            style: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 20,
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(
-                              right: 77, top: 5, left: 10, bottom: 20),
-                          child: Text(
-                            "Section - A",
-                            style: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 20,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          //Eigth class
-          Padding(
-            padding: const EdgeInsets.only(left: 30, right: 30),
-            child: Material(
-              elevation: 5,
-              borderRadius: BorderRadius.circular(13),
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: Color.fromARGB(134, 158, 158, 158)),
-                ),
-                child: const Row(
-                  children: [
-                    Column(
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(left: 20, top: 20),
-                          child: Text(
-                            "Web Dev with Django",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontFamily: 'PoppinsSemi',
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(right: 115, top: 5),
-                          child: Text(
-                            "BCA",
-                            style: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 20,
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(right: 60, top: 5, left: 10),
-                          child: Text(
-                            "4th Semester",
-                            style: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 20,
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(
-                              right: 77, top: 5, left: 10, bottom: 20),
-                          child: Text(
-                            "Section - A",
-                            style: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 20,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
+
           // Container(
           //   child: Row(
           //     children: [

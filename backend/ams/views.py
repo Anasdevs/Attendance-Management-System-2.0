@@ -167,9 +167,50 @@ def adminlogin(request):
         # Return error response
         return JsonResponse({'message': 'Invalid login credentials'}, status=400)
 
-    '''
-    {
-        "loginId":"anass",
-        "password":"anass"
-    }
-    '''
+
+
+
+
+
+#API endpoints for admindashboard 
+
+#Add faculty
+
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+
+@api_view(['POST'])
+def add_faculty(request):
+    email = request.data.get('email')
+
+    # Perform necessary validation
+    # Add the faculty email to the database
+
+    return Response({'message': 'Faculty added successfully'})
+
+
+#Remove faculty 
+
+@api_view(['POST'])
+def remove_faculty(request):
+    email = request.data.get('email')
+
+    # Perform necessary validation 
+    # Remove the faculty email from the database
+
+    return Response({'message': 'Faculty removed successfully'})
+
+
+
+#Edit faculty
+
+@api_view(['POST'])
+def edit_faculty(request):
+    email = request.data.get('email')
+
+    # Perform necessary validation
+    # Update the faculty email in the database
+
+    return Response({'message': 'Faculty email updated successfully'})
+
+

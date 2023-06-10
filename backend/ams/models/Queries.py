@@ -195,7 +195,7 @@ def append_teacher_email(teacher_email):
 
 
 # _____________ SAVE AND GET CLASSES FROM DB ____________
-from .admin import *
+# from .admin import *
 def save_class_to_mongodb(class_name, class_obj, db_name='test', collection_name='classes'):
     host = 'localhost'
     client = MongoClient(host)
@@ -246,7 +246,7 @@ def save_teacher_to_mongodb(teacher):
     teacher_dict = teacher.__dict__
 
     # Save the Teacher object in the collection using the username as the key
-    collection.update_one({'username': teacher.username}, {"$set": teacher_dict}, upsert=True)
+    collection.update_one({'username': teacher.email}, {"$set": teacher_dict}, upsert=True)
 
     # Close the MongoDB connection
     client.close()

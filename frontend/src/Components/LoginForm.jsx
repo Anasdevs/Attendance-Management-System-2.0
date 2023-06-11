@@ -212,7 +212,7 @@ function LoginForm() {
                     <p>
                       Already have an account?{' '}
                       <button className="link-button" onClick={handleSignIn}>
-                        Sign In
+                        SignIn
                       </button>
                     </p>
                   </form>
@@ -245,7 +245,7 @@ function LoginForm() {
                 <p>
                   Don't have an account?{' '}
                   <button className="link-button" onClick={handleSignUp}>
-                    Sign Up
+                    SignUp
                   </button>
                 </p>
               </form>

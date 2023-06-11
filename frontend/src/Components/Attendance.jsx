@@ -185,17 +185,6 @@ export default function Attendance() {
 
   return (
     <div className="page-container">
-
-      <div className="sidebar">
-        <h2 className="ams">AMS</h2>
-        <ul>
-          <li>Main Menu</li>
-          <li>Dashboard</li>
-          <li>Holidays</li>
-          <li>Calendar</li>
-        </ul>
-      </div>
-
       <div className="rightbar">
         <div className="image">
           <img src={facultyImage} alt="Faculty" />
@@ -222,7 +211,7 @@ export default function Attendance() {
         
         <div className="classInfo">
           <h1>BCA 4th B</h1>
-          <input type="text" placeholder="Search..." value={searchTerm} onChange={handleSearch} />
+          {/* <input type="text" placeholder="Search..." value={searchTerm} onChange={handleSearch} /> */}
         </div>
         {isSubmitted && (
           <div className="success-message">Attendance has been successfully submitted!</div>

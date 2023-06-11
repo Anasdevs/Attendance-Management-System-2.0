@@ -10,7 +10,16 @@ class attScreen extends StatefulWidget {
 class _attScreenState extends State<attScreen> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text("Attendance"),
+        backgroundColor: Color(0xff5e66e0),
+        leading: Icon(
+          Icons.arrow_back_ios_new_rounded,
+          color: Colors.white,
+        ),
+      ),
       body: SafeArea(
         child: Column(
           children: [

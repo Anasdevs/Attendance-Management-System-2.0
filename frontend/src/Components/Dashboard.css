@@ -1,0 +1,159 @@
+.page-container {
+    display: flex;
+  }
+
+  .rightbar {
+    width: 85%;
+    padding: 20px;
+    margin-left: 12%;
+    overflow-y: auto;
+    background: #f5f4fa
+  }
+  
+  .rightbar .image {
+    display: flex;
+    align-items: center;
+    /* background: #d7ffdd; */
+    border-radius: 10px;
+  }
+  
+  .rightbar .image img {
+    height: 70px;
+    width: 70px;
+    border-radius: 50%;
+  }
+  
+  .rightbar .image .faculty-info p {
+    margin: 3px 0;
+    font-weight: bold;
+  }
+  
+  .faculty-info .faculty-qualification {
+    color: rgb(54, 54, 54);
+  }
+  
+  .faculty-info .faculty-email {
+    color: rgb(54, 54, 54);
+  }
+  
+  .rightbar .image .date {
+      position: absolute;
+      right: 50px;
+      color: rgb(6, 6, 6);
+      font-size: 25px;
+      font-weight: bolder;
+      /* background: #a0c49f; */
+      padding: 10px;
+      border-radius: 10px;
+  }
+  
+  .classInfo {
+    margin-top: 65px;
+    font-size: 25px;
+  }
+  
+  .table-container {
+    width: 95%;
+    overflow-x: auto;
+    margin-top: 20px;
+  }
+  
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  
+  .table th,
+  .table td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ddd;
+  }
+  
+  .table th {
+    background-color: #f5f5f5;
+    font-weight: bold;
+    font-size: 17px;
+  }
+  
+  .action-button {
+    position: relative;
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: px;
+    color: #fff;
+    background-color: #060dfa;
+    border: none;
+    border-radius: 4px;
+    overflow: hidden;
+    z-index: 1;
+    cursor: pointer;
+    transition: background-color 0.3s, box-shadow 0.3s;
+    text-decoration: none; /* Add this line to remove underline */
+  }
+  
+  .action-button:before,
+  .action-button:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: -1;
+    background-color: rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+    transform-origin: center;
+  }
+  
+  .action-button a {
+    text-decoration: none; 
+    color: inherit; 
+  }
+  
+  .action-button:before {
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+  
+  .action-button:after {
+    transform: scaleX(0);
+    transform-origin: right;
+  }
+  
+  .action-button:hover {
+    background-color: #050740;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .action-button:hover:before {
+    transform: scaleX(1);
+  }
+  
+  .action-button:hover:after {
+    transform: scaleX(1);
+  }
+  
+  .action-button:focus,
+  .action-button:active {
+    outline: none;
+    box-shadow: none;
+    color: #fff; /* Maintain the text color when clicked */
+    text-decoration: none; /* Remove underline when clicked */
+  }
+  
+  
+  .classInfo {
+    margin-top: 65px;
+    font-size: 25px;
+  }
+  
+  .classInfo input {
+    padding: 10px 10px;
+    border: 1px solid #b0afce;
+    border-radius: 4px;
+    font-size: 16px;
+    width: 200px;
+  }
+

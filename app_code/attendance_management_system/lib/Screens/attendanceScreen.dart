@@ -1,6 +1,9 @@
+import 'package:attendance_management_system/Constants/color.dart';
+import 'package:attendance_management_system/Screens/submit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:gradient_slide_to_act/gradient_slide_to_act.dart';
 import 'package:sizer/sizer.dart';
 
 class attScreen extends StatefulWidget {
@@ -773,7 +776,40 @@ class _attScreenState extends State<attScreen> {
                       ),
                     ),
                     const SizedBox(
-                      height: 15,
+                      height: 40,
+                    ),
+                    // ElevatedButton(
+                    //   style: ElevatedButton.styleFrom(
+                    //       backgroundColor: btColor,
+                    //       shape: RoundedRectangleBorder(
+                    //           borderRadius: BorderRadius.circular(20))),
+                    //   onPressed: () {},
+                    //   child: Text("Submit Attendance"),
+                    // ),
+                    GradientSlideToAct(
+                      text: 'Submit Attendance',
+                      width: 300,
+                      dragableIconBackgroundColor: Color(0xFF5e66e0),
+                      textStyle: TextStyle(color: Colors.white, fontSize: 15),
+                      backgroundColor: Color.fromARGB(167, 94, 103, 224),
+                      onSubmit: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => submit(),
+                          ),
+                        );
+                      },
+                      gradient: const LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: [
+                            Colors.green,
+                            Colors.green,
+                          ]),
+                    ),
+                    const SizedBox(
+                      height: 50,
                     ),
                   ],
                 ),

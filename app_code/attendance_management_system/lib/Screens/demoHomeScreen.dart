@@ -156,7 +156,7 @@ class _demoState extends State<demo> {
                             child: Padding(
                               padding: EdgeInsets.only(top: 27, left: 10),
                               child: Text(
-                                "Hello 👋 Amanjot ",
+                                "Hello 👋 Manpreet ",
                                 style: TextStyle(
                                     fontFamily: 'PoppinsSemi',
                                     fontSize: 25,
@@ -187,7 +187,7 @@ class _demoState extends State<demo> {
                             ),
                           ),
                           Text(
-                            "  amanjot02121202021@msijanakpuri.com",
+                            "  manpreetsingh@msijanakpuri.com",
                             style: TextStyle(color: Colors.white, fontSize: 17),
                           )
                         ],

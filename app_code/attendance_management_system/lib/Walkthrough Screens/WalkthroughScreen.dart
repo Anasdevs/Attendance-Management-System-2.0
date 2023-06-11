@@ -4,7 +4,6 @@ import 'package:attendance_management_system/Walkthrough%20Screens/secondScreen.
 import 'package:attendance_management_system/Walkthrough%20Screens/thirdScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:attendance_management_system/Screens/loginScreen.dart';
 
 class walkthrough extends StatefulWidget {

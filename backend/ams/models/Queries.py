@@ -56,7 +56,8 @@ def get_attendence_by_date(year, month, collection_name='attendence', db_name='t
 
 # ___________ to save college object id _____________
 import json
-def write_key_to_json(key, value, file_path= "data.json"):
+def write_key_to_json(key, value, file_path = "data.json"):
+    print(key,value)
     try:
         with open(file_path, 'r') as file:
             data = json.load(file)
@@ -65,8 +66,9 @@ def write_key_to_json(key, value, file_path= "data.json"):
     data[key] = value
     with open(file_path, 'w') as file:
         json.dump(data, file)
+    return True
 
-def read_key_from_json(key, file_path= "data.json"):
+def read_key_from_json(key, file_path = "data.json"):
     try:
         with open(file_path, 'r') as file:
             data = json.load(file)
@@ -95,11 +97,14 @@ def read_key_from_json(key, file_path= "data.json"):
 #     print("Key not found.")
 
 
+
+
 # _____________ Retrive saved object, (here college) _____________________
 # _____________ and create a new object instance of same stats ___________
 
 from bson.objectid import ObjectId
 def retrieve_college_from_mongodb(college_id):
+    from .admin import College
     # MongoDB connection details
     host = 'localhost'
     database_name = 'test'
@@ -112,8 +117,8 @@ def retrieve_college_from_mongodb(college_id):
     db = client[database_name]
     collection = db[collection_name]
 
-    # Retrieve the College object from the collection
-    college_data = collection.find_one({"_id": ObjectId(college_id)})
+    # Retrieve the College object from the collection based on the provided index
+    college_data = collection.find_one({"_id": college_id})
 
     # Close the MongoDB connection
     client.close()
@@ -122,24 +127,16 @@ def retrieve_college_from_mongodb(college_id):
     if college_data:
         college = College(
             college_name=college_data['name'],
-            college_id=college_data['id'],
-            college_city=college_data['city'],
-            college_state=college_data['state'],
-            college_country=college_data['country'],
-            college_zip=college_data['zip'],
-            college_phone=college_data['phone'],
-            college_email=college_data['email'],
-            college_website=college_data['website'],
-            college_description=college_data['description'],
-            college_address=college_data['address']
+            classes = college_data['classes'],
+            instructors= college_data['instructors']
         )
-
         return college
+
     else:
         return None
 
 # ____________ save object as json in database _______________________
-def save_college_to_mongodb(college):
+def save_college_to_mongodb(college, index):
     # MongoDB connection details
     host = 'localhost'
     database_name = 'test'
@@ -155,11 +152,22 @@ def save_college_to_mongodb(college):
     # Convert the College object to a dictionary
     college_dict = college.__dict__
 
-    # Save the College object in the collection
-    collection.insert_one(college_dict)
+    # Set the provided string as the index
+    college_dict['_id'] = index
+
+    try:
+        # Save or update the College object in the collection
+        collection.update_one({'_id': index}, {'$set': college_dict}, upsert=True)
+    except Exception as e:
+        print(f"Error saving/updating college: {e}")
+        client.close()
+        return False
 
     # Close the MongoDB connection
     client.close()
+
+    # Return True to indicate successful saving/updating
+    return True
     
 
 
@@ -229,8 +237,11 @@ def get_class_from_mongodb(class_name, db_name='test', collection_name='classes'
 
 # __________________ save and get teacher object _____________
 
-def save_teacher_to_mongodb(teacher):
+def save_teacher_to_mongodb(teacher,email):
     # MongoDB connection details
+    from .admin import Teacher
+    teacher:Teacher
+
     host = 'localhost'
     db_name = 'test'
     collection_name = 'teachers'
@@ -244,9 +255,9 @@ def save_teacher_to_mongodb(teacher):
 
     # Convert the Teacher object to a dictionary
     teacher_dict = teacher.__dict__
-
+    print(teacher_dict)
     # Save the Teacher object in the collection using the username as the key
-    collection.update_one({'username': teacher.email}, {"$set": teacher_dict}, upsert=True)
+    collection.update_one({'username': email}, {"$set": teacher_dict}, upsert=True)
 
     # Close the MongoDB connection
     client.close()

@@ -1,14 +1,21 @@
 from .Queries import *
 
 class College:
-    def __init__(self, college_name):
+    def __init__(self, college_name, classes = {}, instructors = {},instructor_class = {}):
         self.name = college_name
-        self.classes = {}
+        self.classes = classes
         # self.instructors_mail = []
-        self.instructors = {}
+        self.instructors = instructors
+        self.instructor_class = instructor_class
+
+    def __str__(self) -> str:
+        print("name:",self.name)
+        print("instructors:",self.instructors)
+        print("classes:",self.classes)
+        return self.name
 
     # ___________ teachers _____________________
-    def add_new_class(self,email:str, course_name:str, sem:int, section:str, sub:str, teacher_assigned:int, students:dict):
+    def add_new_class(self,email:str, course_name:str, sem:int, section:str, sub:str, students:dict):
 
         new_class = Class(course_name,sem,section, sub, teacher_assigned=email, students=students)
         course_id = (course_name.replace(' ', '_')+"-"+sub+"-"+str(sem)+"-"+section)
@@ -18,13 +25,13 @@ class College:
         new_class.save()
 
         # add class to teacher's classes
-        self.instructors[email].add_cource(course_id,new_class)
-        self.instructors[email].save()
-
+        if email in self.instructor_class.keys():
+            self.instructor_class[email].append(course_id)
+        else:
+            self.instructor_class[email] = [course_id]
         # add class to college's classes
         self.classes[course_id] = new_class
         self.save()
-
         return ["succsss", course_id]
 
     def get_all_class(self):
@@ -65,13 +72,15 @@ class College:
         password = generate_random_password()
         # generate a password and send it on mail
         message = f"Password for your MSI Attendence Management System Account is \n {password} \n \nPlease save this password and delete this email\nUse {email} email along with given passowrd to login"
-        send_contact_email(name="MSI janakpuri", email="care@msijanakpuri.com", message=message, to = email)
-
+        # send_contact_email(name="MSI janakpuri", email="care@msijanakpuri.com", message=message, to = email)
+        print(password)
         new_teacher = Teacher(email, password, name, title)
-        # save to main
-        self.instructors[email] = new_teacher
         # save to db
         new_teacher.save()
+
+        # save to main
+        self.instructors[email] = new_teacher
+        self.save()
 
         return {"status":True, "email":email}
 
@@ -84,8 +93,8 @@ class College:
 
     # ___________ WHOLE SERVER ____________
     def save(self):
-        result = save_college_to_mongodb(self)
-        return write_key_to_json(key=self.name, value=result)
+        result = save_college_to_mongodb(self, self.name)
+        return True
 
 class Teacher:
     def __init__(self,email, password, name, title):
@@ -93,22 +102,17 @@ class Teacher:
         self.password = password
         self.name = name
         self.title = title
-        self.Courses = {}
 
     def login(self, password):
         if password == self.password:
             return ["succsss", self.email]
         return ["fail", "wrong username or password"]
     
-    def add_cource(self,classId, cource):
-        self.Courses[classId] = cource
-    
     def save(self):
-        save_teacher_to_mongodb(self)
+        save_teacher_to_mongodb(self,self.email)
 
     def __str__(self) -> str:
-        return [ self.name, self.email, self.title, self.Courses]
-
+        return str(self.name+" "+self.email+" "+ self.title)
 class Class:
     def __init__(self, cource_name, sem, section, sub, teacher_assigned, students):
         self.classId=""
@@ -130,7 +134,7 @@ class Class:
         save_class_to_mongodb(class_name=self.classId, class_obj=self)
 
     def __str__(self) -> str:
-        return (self.cource_name.replace(' ', '_')+"-"+self.sub+"-"+str(self.sem)+"-"+self.section)
+        return str(self.cource_name.replace(' ', '_')+"-"+self.sub+"-"+str(self.sem)+"-"+self.section)
 
 
 class admin:

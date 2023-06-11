@@ -47,9 +47,18 @@ def create_class(request):
     subject = data.get('subject')
     students = data.get('students')
 
-    MSI.add_new_class(cource_name,sem,section,subject, email, students)
+    MSI.add_new_class( email,cource_name,sem,section,subject,students)
 
     return JsonResponse({"Status":True,'message': 'Success'}, status=200)
+
+    {
+        "email":"harshagnihotri90@gmail.com",
+        "cource_name":"BCA",
+        "semester":"4",
+        "section":"A",
+        "subject":"Django",
+        "student":["harsh","anas","amanjot","aman","yash","saurabh"]
+    }
 
 
 # ======================== TEACHER LOGIN ROUTES =======================
@@ -133,17 +142,6 @@ def teacher_register(request):
     }
     '''
 
-def test1():
-    res ={
-        "email":"harshagnihotri90@gmail.com",
-        "name":"test teacher",
-        "title":"Assitant professor"
-    }
-    return MSI.add_new_teacher(email=res["email"], name= res["name"], title= res["title"])
-  
-
-print(test1())
-
 @api_view(['POST'])
 def adminlogin(request):
     # if request.method == 'POST':
@@ -166,51 +164,3 @@ def adminlogin(request):
     else:
         # Return error response
         return JsonResponse({'message': 'Invalid login credentials'}, status=400)
-
-
-
-
-
-
-#API endpoints for admindashboard 
-
-#Add faculty
-
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
-
-@api_view(['POST'])
-def add_faculty(request):
-    email = request.data.get('email')
-
-    # Perform necessary validation
-    # Add the faculty email to the database
-
-    return Response({'message': 'Faculty added successfully'})
-
-
-#Remove faculty 
-
-@api_view(['POST'])
-def remove_faculty(request):
-    email = request.data.get('email')
-
-    # Perform necessary validation 
-    # Remove the faculty email from the database
-
-    return Response({'message': 'Faculty removed successfully'})
-
-
-
-#Edit faculty
-
-@api_view(['POST'])
-def edit_faculty(request):
-    email = request.data.get('email')
-
-    # Perform necessary validation
-    # Update the faculty email in the database
-
-    return Response({'message': 'Faculty email updated successfully'})
-
-

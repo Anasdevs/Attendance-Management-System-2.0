@@ -1,5 +1,4 @@
 import 'package:attendance_management_system/Screens/demoHomeScreen.dart';
-import 'package:attendance_management_system/Screens/homeScreen.dart';
 import 'package:flutter/material.dart';
 
 class signupScreen extends StatefulWidget {

@@ -1,4 +1,3 @@
-import 'package:attendance_management_system/Screens/demoHomeScreen.dart';
 import 'package:attendance_management_system/Screens/homeScreen.dart';
 import 'package:attendance_management_system/Screens/loginScreen.dart';
 import 'package:attendance_management_system/Walkthrough%20Screens/WalkthroughScreen.dart';
@@ -31,7 +30,7 @@ class _MyAppState extends State<MyApp> {
         home: const loginScreen(),
         initialRoute: Routes.wts,
         routes: {
-          "/": (context) => const loginScreen(),
+          // "/": (context) => const loginScreen(),
           "/home": (context) => const homeScreen(),
           "/wts": (context) => const walkthrough(),
         },

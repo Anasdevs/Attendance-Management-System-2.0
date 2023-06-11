@@ -1,4 +1,7 @@
+import 'package:attendance_management_system/Screens/attendanceScreen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
 
 class demo extends StatefulWidget {
   const demo({super.key});
@@ -11,7 +14,118 @@ class _demoState extends State<demo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: Color(0xff5e66e0),
+      resizeToAvoidBottomInset: false,
+      extendBody: true,
+      floatingActionButtonLocation: ExpandableFab.location,
+      floatingActionButton: ExpandableFab(
+        collapsedFabSize: ExpandableFabSize.regular,
+        expandedFabSize: ExpandableFabSize.regular,
+        closeButtonStyle: const ExpandableFabCloseButtonStyle(
+          backgroundColor: Color(0xff5e66e0),
+        ),
+        backgroundColor: const Color(0xff5e66e0),
+        distance: 100,
+        // fanAngle: 80,
+        collapsedFabShape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+        expandedFabShape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        type: ExpandableFabType.fan,
+        overlayStyle: ExpandableFabOverlayStyle(blur: 5),
+        children: [
+          FloatingActionButton(
+            backgroundColor: const Color(0xff5e66e0),
+            onPressed: () {},
+            heroTag: null,
+            enableFeedback: true,
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            child: const Icon(Icons.add),
+          ),
+          FloatingActionButton(
+            backgroundColor: const Color(0xff5e66e0),
+            onPressed: () {},
+            heroTag: null,
+            enableFeedback: true,
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            child: const Icon(Icons.settings),
+          ),
+          FloatingActionButton(
+            backgroundColor: const Color(0xff5e66e0),
+            onPressed: () {},
+            heroTag: null,
+            enableFeedback: true,
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            child: const Icon(Icons.person),
+          )
+        ],
+      ),
+      bottomNavigationBar:
+          // SafeArea(
+          //   child: Container(
+          //     padding: EdgeInsets.all(12),
+          //     margin: EdgeInsets.symmetric(horizontal: 20),
+          //     decoration: BoxDecoration(
+          //       color: Color(0xff5e66e0),
+          //       borderRadius: BorderRadius.all(
+          //         Radius.circular(24),
+          //       ),
+          //     ),
+          //     child: Row(
+          //       children: [
+          //         ImageIcon(
+          //           AssetImage(
+          //             'assets/images/login.png',
+          //           ),
+          //           size: 50,
+          //         ),
+          //       ],
+          //     ),
+          //   ),
+          // ),
+          const Padding(
+        padding: EdgeInsets.only(top: 0, left: 0, right: 0, bottom: 0),
+        child: Material(
+          elevation: 30,
+          child: GNav(
+            style: GnavStyle.google,
+            backgroundColor: Color(0xff5e66e0),
+            gap: 10,
+            rippleColor: const Color.fromARGB(150, 255, 255, 255),
+            haptic: true,
+            tabBorderRadius: 200,
+            activeColor: Colors.white,
+            tabBackgroundColor: Color.fromARGB(99, 255, 255, 255),
+            padding: EdgeInsets.symmetric(horizontal: 18, vertical: 17),
+            tabMargin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+            tabs: [
+              GButton(
+                icon: Icons.explore_outlined,
+                iconColor: Colors.white,
+                text: 'Home',
+              ),
+              GButton(
+                icon: Icons.calendar_month_rounded,
+                iconColor: Colors.white,
+                text: 'Calendar',
+              ),
+              GButton(
+                icon: Icons.file_present_outlined,
+                iconColor: Colors.white,
+                text: 'Report',
+              ),
+              GButton(
+                icon: Icons.person_outline_rounded,
+                iconColor: Colors.white,
+                text: 'Profile',
+              ),
+            ],
+          ),
+        ),
+      ),
       body: ListView(
         children: [
           //Profile picture
@@ -43,7 +157,7 @@ class _demoState extends State<demo> {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(left: 140, top: 20),
+                        padding: const EdgeInsets.only(left: 100, top: 20),
                         child: CircleAvatar(
                           foregroundImage:
                               AssetImage('assets/images/profile.jpg'),
@@ -108,65 +222,77 @@ class _demoState extends State<demo> {
             height: 20,
           ),
           //Classes container
-          Padding(
-            padding: const EdgeInsets.only(left: 30, right: 30),
-            child: Material(
-              elevation: 5,
-              borderRadius: BorderRadius.circular(13),
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: Color.fromARGB(134, 158, 158, 158)),
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const attScreen(),
                 ),
-                child: const Row(
-                  children: [
-                    Column(
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(left: 20, top: 20),
-                          child: Text(
-                            "Web Dev with Django",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontFamily: 'PoppinsSemi',
+              );
+            },
+            child: Padding(
+              padding: const EdgeInsets.only(left: 30, right: 30),
+              child: Material(
+                elevation: 5,
+                borderRadius: BorderRadius.circular(13),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(
+                        color: const Color.fromARGB(134, 158, 158, 158)),
+                  ),
+                  child: const Row(
+                    children: [
+                      Column(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(left: 20, top: 20),
+                            child: Text(
+                              "Web Dev with Django",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontFamily: 'PoppinsSemi',
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(right: 115, top: 5),
+                            child: Text(
+                              "BCA",
+                              style: TextStyle(
+                                color: Colors.grey,
                                 fontSize: 20,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(right: 115, top: 5),
-                          child: Text(
-                            "BCA",
-                            style: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 20,
+                              ),
                             ),
                           ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(right: 60, top: 5, left: 10),
-                          child: Text(
-                            "4th Semester",
-                            style: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 20,
+                          Padding(
+                            padding:
+                                EdgeInsets.only(right: 60, top: 5, left: 10),
+                            child: Text(
+                              "4th Semester",
+                              style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 20,
+                              ),
                             ),
                           ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(
-                              right: 77, top: 5, left: 10, bottom: 20),
-                          child: Text(
-                            "Section - A",
-                            style: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 20,
+                          Padding(
+                            padding: EdgeInsets.only(
+                                right: 77, top: 5, left: 10, bottom: 20),
+                            child: Text(
+                              "Section - A",
+                              style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 20,
+                              ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -183,7 +309,8 @@ class _demoState extends State<demo> {
               child: Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: Color.fromARGB(134, 158, 158, 158)),
+                  border: Border.all(
+                      color: const Color.fromARGB(134, 158, 158, 158)),
                 ),
                 child: const Row(
                   children: [
@@ -201,7 +328,7 @@ class _demoState extends State<demo> {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(right: 115, top: 5),
+                          padding: const EdgeInsets.only(right: 100, top: 5),
                           child: Text(
                             "BCA",
                             style: TextStyle(
@@ -211,7 +338,7 @@ class _demoState extends State<demo> {
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsets.only(right: 60, top: 5, left: 10),
+                          padding: EdgeInsets.only(right: 35, top: 5),
                           child: Text(
                             "4th Semester",
                             style: TextStyle(
@@ -221,10 +348,10 @@ class _demoState extends State<demo> {
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsets.only(
-                              right: 77, top: 5, left: 10, bottom: 20),
+                          padding:
+                              EdgeInsets.only(right: 54, top: 5, bottom: 20),
                           child: Text(
-                            "Section - A",
+                            "Section - B",
                             style: TextStyle(
                               color: Colors.grey,
                               fontSize: 20,
@@ -251,7 +378,8 @@ class _demoState extends State<demo> {
               child: Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: Color.fromARGB(134, 158, 158, 158)),
+                  border: Border.all(
+                      color: const Color.fromARGB(134, 158, 158, 158)),
                 ),
                 child: const Row(
                   children: [
@@ -260,7 +388,7 @@ class _demoState extends State<demo> {
                         Padding(
                           padding: EdgeInsets.only(left: 20, top: 20),
                           child: Text(
-                            "Web Dev with Django",
+                            "Software Engineering",
                             style: TextStyle(
                                 color: Colors.black,
                                 fontFamily: 'PoppinsSemi',
@@ -319,7 +447,8 @@ class _demoState extends State<demo> {
               child: Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: Color.fromARGB(134, 158, 158, 158)),
+                  border: Border.all(
+                      color: const Color.fromARGB(134, 158, 158, 158)),
                 ),
                 child: const Row(
                   children: [
@@ -328,7 +457,7 @@ class _demoState extends State<demo> {
                         Padding(
                           padding: EdgeInsets.only(left: 20, top: 20),
                           child: Text(
-                            "Web Dev with Django",
+                            "Digital Marketing",
                             style: TextStyle(
                                 color: Colors.black,
                                 fontFamily: 'PoppinsSemi',
@@ -337,7 +466,7 @@ class _demoState extends State<demo> {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(right: 115, top: 5),
+                          padding: const EdgeInsets.only(right: 80, top: 5),
                           child: Text(
                             "BCA",
                             style: TextStyle(
@@ -347,7 +476,7 @@ class _demoState extends State<demo> {
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsets.only(right: 60, top: 5, left: 10),
+                          padding: EdgeInsets.only(right: 15, top: 5),
                           child: Text(
                             "4th Semester",
                             style: TextStyle(
@@ -357,10 +486,10 @@ class _demoState extends State<demo> {
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsets.only(
-                              right: 77, top: 5, left: 10, bottom: 20),
+                          padding:
+                              EdgeInsets.only(right: 35, top: 5, bottom: 20),
                           child: Text(
-                            "Section - A",
+                            "Section - B",
                             style: TextStyle(
                               color: Colors.grey,
                               fontSize: 20,
@@ -386,7 +515,8 @@ class _demoState extends State<demo> {
               child: Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: Color.fromARGB(134, 158, 158, 158)),
+                  border: Border.all(
+                      color: const Color.fromARGB(134, 158, 158, 158)),
                 ),
                 child: const Row(
                   children: [
@@ -395,7 +525,7 @@ class _demoState extends State<demo> {
                         Padding(
                           padding: EdgeInsets.only(left: 20, top: 20),
                           child: Text(
-                            "Web Dev with Django",
+                            "Personality Dev. Skills",
                             style: TextStyle(
                                 color: Colors.black,
                                 fontFamily: 'PoppinsSemi',
@@ -404,7 +534,7 @@ class _demoState extends State<demo> {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(right: 115, top: 5),
+                          padding: const EdgeInsets.only(right: 114, top: 5),
                           child: Text(
                             "BCA",
                             style: TextStyle(
@@ -453,7 +583,8 @@ class _demoState extends State<demo> {
               child: Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: Color.fromARGB(134, 158, 158, 158)),
+                  border: Border.all(
+                      color: const Color.fromARGB(134, 158, 158, 158)),
                 ),
                 child: const Row(
                   children: [
@@ -462,7 +593,7 @@ class _demoState extends State<demo> {
                         Padding(
                           padding: EdgeInsets.only(left: 20, top: 20),
                           child: Text(
-                            "Web Dev with Django",
+                            "Accountancy",
                             style: TextStyle(
                                 color: Colors.black,
                                 fontFamily: 'PoppinsSemi',
@@ -471,9 +602,9 @@ class _demoState extends State<demo> {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(right: 115, top: 5),
+                          padding: const EdgeInsets.only(right: 30, top: 5),
                           child: Text(
-                            "BCA",
+                            "B.Com",
                             style: TextStyle(
                               color: Colors.grey,
                               fontSize: 20,
@@ -481,9 +612,9 @@ class _demoState extends State<demo> {
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsets.only(right: 60, top: 5, left: 10),
+                          padding: EdgeInsets.only(left: 17, top: 5),
                           child: Text(
-                            "4th Semester",
+                            "6th Semester",
                             style: TextStyle(
                               color: Colors.grey,
                               fontSize: 20,
@@ -491,8 +622,8 @@ class _demoState extends State<demo> {
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsets.only(
-                              right: 77, top: 5, left: 10, bottom: 20),
+                          padding:
+                              EdgeInsets.only(right: 1, top: 5, bottom: 20),
                           child: Text(
                             "Section - A",
                             style: TextStyle(
@@ -509,139 +640,9 @@ class _demoState extends State<demo> {
             ),
           ),
           const SizedBox(
-            height: 20,
+            height: 40,
           ),
-          //Seventh class
-          Padding(
-            padding: const EdgeInsets.only(left: 30, right: 30),
-            child: Material(
-              elevation: 5,
-              borderRadius: BorderRadius.circular(13),
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: Color.fromARGB(134, 158, 158, 158)),
-                ),
-                child: const Row(
-                  children: [
-                    Column(
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(left: 20, top: 20),
-                          child: Text(
-                            "Web Dev with Django",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontFamily: 'PoppinsSemi',
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(right: 115, top: 5),
-                          child: Text(
-                            "BCA",
-                            style: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 20,
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(right: 60, top: 5, left: 10),
-                          child: Text(
-                            "4th Semester",
-                            style: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 20,
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(
-                              right: 77, top: 5, left: 10, bottom: 20),
-                          child: Text(
-                            "Section - A",
-                            style: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 20,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          //Eigth class
-          Padding(
-            padding: const EdgeInsets.only(left: 30, right: 30),
-            child: Material(
-              elevation: 5,
-              borderRadius: BorderRadius.circular(13),
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: Color.fromARGB(134, 158, 158, 158)),
-                ),
-                child: const Row(
-                  children: [
-                    Column(
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(left: 20, top: 20),
-                          child: Text(
-                            "Web Dev with Django",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontFamily: 'PoppinsSemi',
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(right: 115, top: 5),
-                          child: Text(
-                            "BCA",
-                            style: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 20,
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(right: 60, top: 5, left: 10),
-                          child: Text(
-                            "4th Semester",
-                            style: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 20,
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(
-                              right: 77, top: 5, left: 10, bottom: 20),
-                          child: Text(
-                            "Section - A",
-                            style: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 20,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
+
           // Container(
           //   child: Row(
           //     children: [

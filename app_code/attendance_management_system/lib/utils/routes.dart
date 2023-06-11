@@ -5,4 +5,5 @@ class Routes {
   static String home = '/home';
   static String demo = '/demo';
   static String list = '/list';
+  static String screenSize = '/size';
 }

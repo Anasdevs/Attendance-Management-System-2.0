@@ -20,142 +20,151 @@ class _walkthroughState extends State<walkthrough> {
   bool onLastPage = false;
   @override
   Widget build(BuildContext context) {
-    return ScreenUtilInit(
-      designSize: const Size(414, 896),
-      splitScreenMode: true,
-      builder: (context, child) => Scaffold(
-        body: Stack(
-          children: [
-            PageView(
-              controller: _pagecontroller,
-              onPageChanged: (index) {
-                setState(() {
-                  onLastPage = (index == 3);
-                });
-              },
-              children: const [
-                firstScreen(),
-                secondScreen(),
-                thirdScreen(),
-                fourthScreen(),
-              ],
-            ),
-            Container(
-              // height: 10,
-              // width: 3,
-              alignment: const Alignment(0, 0.5),
-              child: SmoothPageIndicator(
-                controller: _pagecontroller,
-                count: 4,
-                effect: const ExpandingDotsEffect(
-                  dotHeight: 10,
-                  dotWidth: 10,
-                  activeDotColor: Color(0xFF5e66e0),
-                  // verticalOffset: 20,
+    return LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints constraints) {
+        return Scaffold(
+          body: Stack(
+            children: [
+              Container(
+                height: constraints.maxHeight * 1.0,
+                width: constraints.maxWidth * 1.0,
+                child: PageView(
+                  controller: _pagecontroller,
+                  onPageChanged: (index) {
+                    setState(() {
+                      onLastPage = (index == 3);
+                    });
+                  },
+                  children: const [
+                    firstScreen(),
+                    secondScreen(),
+                    thirdScreen(),
+                    fourthScreen(),
+                  ],
                 ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 770),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  SizedBox(
-                    height: 50,
-                    width: 80,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF5e66e0),
-                        elevation: 7,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                      ),
-                      onPressed: () {
-                        _pagecontroller.jumpToPage(3);
-                      },
-                      child: const Text(
-                        "Skip",
-                        style: TextStyle(
-                          // color: Color(0xFF5e66e0),
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                          fontFamily: 'PoppinsSemi',
-                        ),
-                      ),
-                    ),
+              Container(
+                height: constraints.maxHeight * 1.0,
+                width: constraints.maxWidth * 1.0,
+                alignment: const Alignment(0, 0.45),
+                child: SmoothPageIndicator(
+                  controller: _pagecontroller,
+                  count: 4,
+                  effect: const ExpandingDotsEffect(
+                    dotHeight: 10,
+                    dotWidth: 10,
+                    activeDotColor: Color(0xFF5e66e0),
+                    // verticalOffset: 20,
                   ),
-                  const SizedBox(
-                    width: 50,
-                  ),
-                  onLastPage
-                      ? SizedBox(
-                          height: 50,
-                          width: 80,
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xFF5e66e0),
-                              elevation: 7,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                            ),
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) {
-                                    return const loginScreen();
-                                  },
-                                ),
-                              );
-                            },
-                            child: const Text(
-                              "Login",
-                              style: TextStyle(
-                                // color: Color(0xFF5e66e0),
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20,
-                                fontFamily: 'PoppinsSemi',
-                              ),
-                            ),
-                          ),
-                        )
-                      : SizedBox(
-                          height: 50,
-                          width: 80,
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xFF5e66e0),
-                              elevation: 7,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                            ),
-                            onPressed: () {
-                              _pagecontroller.nextPage(
-                                  duration: const Duration(milliseconds: 200),
-                                  curve: Curves.easeIn);
-                            },
-                            child: const Text(
-                              "Next",
-                              style: TextStyle(
-                                // color: Color(0xFF5e66e0),
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20,
-                              ),
-                            ),
-                          ),
-                        )
-                ],
+                ),
               ),
-            )
-          ],
-        ),
-      ),
+              Container(
+                height: constraints.maxHeight * 1.0,
+                width: constraints.maxWidth * 1.0,
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 600),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      SizedBox(
+                        height: 50,
+                        width: 90,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color(0xFF5e66e0),
+                            elevation: 7,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                          ),
+                          onPressed: () {
+                            _pagecontroller.jumpToPage(3);
+                          },
+                          child: const Text(
+                            "Skip",
+                            style: TextStyle(
+                              // color: Color(0xFF5e66e0),
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                              fontFamily: 'PoppinsSemi',
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 50,
+                      ),
+                      onLastPage
+                          ? SizedBox(
+                              height: 50,
+                              width: 90,
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: const Color(0xFF5e66e0),
+                                  elevation: 7,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                ),
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) {
+                                        return const loginScreen();
+                                      },
+                                    ),
+                                  );
+                                },
+                                child: const Text(
+                                  "Login",
+                                  style: TextStyle(
+                                    // color: Color(0xFF5e66e0),
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20,
+                                    fontFamily: 'PoppinsSemi',
+                                  ),
+                                ),
+                              ),
+                            )
+                          : SizedBox(
+                              height: 50,
+                              width: 90,
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: const Color(0xFF5e66e0),
+                                  elevation: 7,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                ),
+                                onPressed: () {
+                                  _pagecontroller.nextPage(
+                                      duration:
+                                          const Duration(milliseconds: 200),
+                                      curve: Curves.easeIn);
+                                },
+                                child: const Text(
+                                  "Next",
+                                  style: TextStyle(
+                                    // color: Color(0xFF5e66e0),
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20,
+                                  ),
+                                ),
+                              ),
+                            )
+                    ],
+                  ),
+                ),
+              )
+            ],
+          ),
+        );
+      },
     );
   }
 }

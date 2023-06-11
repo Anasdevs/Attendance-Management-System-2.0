@@ -20,10 +20,8 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData.light().copyWith(
-        textTheme: GoogleFonts.adventProTextTheme(
-          Theme.of(context).textTheme,
-        ),
+      theme: ThemeData(
+        useMaterial3: true,
       ),
       debugShowCheckedModeBanner: false,
       home: MaterialApp(

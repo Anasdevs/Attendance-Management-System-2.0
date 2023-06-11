@@ -91,10 +91,10 @@ class _demoState extends State<demo> {
         child: Material(
           elevation: 30,
           child: GNav(
-            style: GnavStyle.google,
+            // style: GnavStyle.google,
             backgroundColor: Color(0xff5e66e0),
             gap: 10,
-            rippleColor: const Color.fromARGB(150, 255, 255, 255),
+            rippleColor: Color.fromARGB(103, 255, 255, 255),
             haptic: true,
             tabBorderRadius: 200,
             activeColor: Colors.white,

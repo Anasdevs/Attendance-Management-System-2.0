@@ -44,9 +44,18 @@ def create_class(request):
     subject = data.get('subject')
     students = data.get('students')
 
-    MSI.add_new_class(cource_name,sem,section,subject, email, students)
+    MSI.add_new_class( email,cource_name,sem,section,subject,students)
 
     return JsonResponse({"Status":True,'message': 'Success'}, status=200)
+
+    {
+        "email":"harshagnihotri90@gmail.com",
+        "cource_name":"BCA",
+        "semester":"4",
+        "section":"A",
+        "subject":"Django",
+        "student":["harsh","anas","amanjot","aman","yash","saurabh"]
+    }
 
 
 # ======================== TEACHER LOGIN ROUTES =======================
@@ -151,10 +160,3 @@ def adminlogin(request):
     else:
         # Return error response
         return JsonResponse({'message': 'Invalid login credentials'}, status=400)
-
-    '''
-    {
-        "loginId":"anass",
-        "password":"anass"
-    }
-    '''

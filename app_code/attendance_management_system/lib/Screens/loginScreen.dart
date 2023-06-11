@@ -18,7 +18,10 @@ class _loginScreenState extends State<loginScreen> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Image.asset('assets/images/login1.png'),
+              Padding(
+                padding: const EdgeInsets.only(left: 40, right: 40),
+                child: Image.asset('assets/images/login1.png'),
+              ),
               const Padding(
                 padding: EdgeInsets.only(right: 245),
                 child: Text(
@@ -128,13 +131,13 @@ class _loginScreenState extends State<loginScreen> {
               Row(
                 children: [
                   const Padding(
-                    padding: EdgeInsets.only(left: 80),
+                    padding: EdgeInsets.only(left: 90),
                     child: Text(
                       "Don't have an account? ",
                       style: TextStyle(
                           color: Colors.black,
                           fontFamily: 'PoppinsReg',
-                          fontSize: 20),
+                          fontSize: 17),
                     ),
                   ),
                   GestureDetector(
@@ -151,7 +154,7 @@ class _loginScreenState extends State<loginScreen> {
                       style: TextStyle(
                           color: Color(0xFF5e66e0),
                           fontFamily: 'PoppinsSemi',
-                          fontSize: 20),
+                          fontSize: 17),
                     ),
                   )
                 ],
@@ -160,7 +163,7 @@ class _loginScreenState extends State<loginScreen> {
                 height: 35,
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 60, right: 60),
+                padding: const EdgeInsets.only(left: 45, right: 45),
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
@@ -177,7 +180,7 @@ class _loginScreenState extends State<loginScreen> {
                         ],
                       ),
                       const SizedBox(
-                        width: 20,
+                        width: 25,
                       ),
                       Image.asset(
                         'assets/images/logo.png',
@@ -197,6 +200,9 @@ class _loginScreenState extends State<loginScreen> {
                   ),
                 ),
               ),
+              const SizedBox(
+                height: 30,
+              )
             ],
           ),
         ),

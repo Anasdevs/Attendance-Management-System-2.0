@@ -1,3 +1,6 @@
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
+import random
 from django.http import JsonResponse, HttpResponse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -30,12 +33,6 @@ def teacher_dashboard(request):
     # get class list (by teacher's classes assigned)
 
     return JsonResponse({"Status":False,'message': 'server error'}, status=501)
-
-    '''
-    {
-        "user_id":"123"
-    }
-    '''
 
 @api_view(['POST'])
 def create_class(request):
@@ -119,9 +116,9 @@ def teacher_login(request):
     '''
 
 # ------------ register teacher who's verified
-# from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.csrf import csrf_exempt
 
-# @csrf_exempt
+@csrf_exempt
 @api_view(['POST'])
 def teacher_register(request):
     data = json.loads(request.body)
@@ -130,13 +127,12 @@ def teacher_register(request):
     title = data.get('title')
 
     # try:
-    res = MSI.add_new_teacher(email,name, title)
-    print(res)
-    return JsonResponse({"status":True, "response":"Success"}, status= 200)
+    res = MSI.add_new_teacher(email=email, name= name, title= title)
+    return JsonResponse(res)
 
     '''
     {
-        "email":"harshagnihotri90@gmail.com",
+        "email":"test.teacher@gmail.com",
         "name":"test teacher",
         "title":"Assitant professor"
     }

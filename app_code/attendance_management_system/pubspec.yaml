@@ -20,6 +20,10 @@ dependencies:
   google_fonts: ^4.0.4
   flutter_expandable_fab: ^1.8.1
   google_nav_bar: ^5.0.6
+  flutter_slidable: ^3.0.0
+  swipeable_tile: ^2.0.0+3
+  fluttertoast: ^8.2.2
+  sizer: ^2.0.15
 
 dev_dependencies:
   flutter_test:

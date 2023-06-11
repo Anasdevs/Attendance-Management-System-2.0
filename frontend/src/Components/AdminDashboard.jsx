@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
-import styles from './AdminDashboard.css';
+import './AdminDashboard.css';
+import axios from 'axios';
 
 export default function AdminDashboard() {
   const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
+  const [title, setTitle] = useState('');
   const [faculties, setFaculties] = useState([]);
   const [sno, setSno] = useState(1);
 
@@ -10,15 +13,47 @@ export default function AdminDashboard() {
     setEmail(e.target.value);
   };
 
+  const handleNameChange = (e) => {
+    setName(e.target.value);
+  };
+
+  const handleTitleChange = (e) => {
+    setTitle(e.target.value);
+  };
+
   const handleAddFaculty = () => {
-    if (email.trim() !== '') {
+    if (email.trim() !== '' && name.trim() !== '' && title.trim() !== '') {
       const isDuplicate = faculties.some((faculty) => faculty.email === email);
       if (isDuplicate) {
         alert('Faculty email already exists!');
       } else {
-        setFaculties([...faculties, { sno, email, date: new Date().toLocaleDateString() }]);
+        const facultyData = {
+          email,
+          name,
+          title,
+        };
+        axios
+          .post('/api/faculties/', facultyData)
+          .then((response) => {
+            console.log('Faculty sent successfully:', response.data);
+          })
+          .catch((error) => {
+            console.error('Error sending faculty:', error);
+          });
+
+        const newFaculty = {
+          sno,
+          email,
+          name,
+          title,
+          date: new Date().toLocaleDateString(),
+        };
+
+        setFaculties([...faculties, newFaculty]);
+        setSno((prevSno) => prevSno + 1);
         setEmail('');
-        setSno(sno + 1);
+        setName('');
+        setTitle('');
       }
     }
   };
@@ -31,7 +66,6 @@ export default function AdminDashboard() {
       setSno(1); // Reset S.no. to 1 after removing faculty email
     }
   };
-  
 
   const handleEditFaculty = (email) => {
     const editedEmail = prompt('Enter the new faculty email:', email);
@@ -58,7 +92,22 @@ export default function AdminDashboard() {
           value={email}
           onChange={handleEmailChange}
         />
-        <button onClick={handleAddFaculty} disabled={email.trim() === ''}>
+        <input
+          type="text"
+          placeholder="Enter faculty name"
+          value={name}
+          onChange={handleNameChange}
+        />
+        <input
+          type="text"
+          placeholder="Enter faculty title"
+          value={title}
+          onChange={handleTitleChange}
+        />
+        <button
+          onClick={handleAddFaculty}
+          disabled={email.trim() === '' || name.trim() === '' || title.trim() === ''}
+        >
           Add Faculty
         </button>
       </div>
@@ -70,6 +119,8 @@ export default function AdminDashboard() {
               <tr>
                 <th>S.no.</th>
                 <th>Email</th>
+                <th>Name</th>
+                <th>Title</th>
                 <th>Date</th>
                 <th>Actions</th>
               </tr>
@@ -79,12 +130,11 @@ export default function AdminDashboard() {
                 <tr key={index}>
                   <td>{index + 1}</td>
                   <td>{faculty.email}</td>
+                  <td>{faculty.name}</td>
+                  <td>{faculty.title}</td>
                   <td>{faculty.date}</td>
                   <td>
-                    <button
-                      className="edit-button"
-                      onClick={() => handleEditFaculty(faculty.email)}
-                    >
+                    <button className="edit-button" onClick={() => handleEditFaculty(faculty.email)}>
                       Edit
                     </button>
                     <button

@@ -59,7 +59,7 @@ class College:
         return True
 
     # __________ teachers ____________
-    def add_new_teacher(self,email, name:str = "__blank__", title:str="__blank__"):
+    def add_new_teacher(self,email, name, title):
         if email in self.instructors.keys():
             return [False, "already exist"]
         password = generate_random_password()

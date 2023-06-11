@@ -1,3 +1,6 @@
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
+import random
 from django.http import JsonResponse, HttpResponse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -30,12 +33,6 @@ def teacher_dashboard(request):
     # get class list (by teacher's classes assigned)
 
     return JsonResponse({"Status":False,'message': 'server error'}, status=501)
-
-    '''
-    {
-        "user_id":"123"
-    }
-    '''
 
 @api_view(['POST'])
 def create_class(request):
@@ -110,9 +107,9 @@ def teacher_login(request):
     '''
 
 # ------------ register teacher who's verified
-# from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.csrf import csrf_exempt
 
-# @csrf_exempt
+@csrf_exempt
 @api_view(['POST'])
 def teacher_register(request):
     data = json.loads(request.body)
@@ -121,28 +118,16 @@ def teacher_register(request):
     title = data.get('title')
 
     # try:
-    res = MSI.add_new_teacher(email,name, title)
-    print(res)
-    return JsonResponse({"status":True, "response":"Success"}, status= 200)
+    res = MSI.add_new_teacher(email=email, name= name, title= title)
+    return JsonResponse(res)
 
     '''
     {
-        "email":"harshagnihotri90@gmail.com",
+        "email":"test.teacher@gmail.com",
         "name":"test teacher",
         "title":"Assitant professor"
     }
     '''
-
-def test1():
-    res ={
-        "email":"harshagnihotri90@gmail.com",
-        "name":"test teacher",
-        "title":"Assitant professor"
-    }
-    return MSI.add_new_teacher(email=res["email"], name= res["name"], title= res["title"])
-  
-
-print(test1())
 
 @api_view(['POST'])
 def adminlogin(request):
@@ -167,50 +152,9 @@ def adminlogin(request):
         # Return error response
         return JsonResponse({'message': 'Invalid login credentials'}, status=400)
 
-
-
-
-
-
-#API endpoints for admindashboard 
-
-#Add faculty
-
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
-
-@api_view(['POST'])
-def add_faculty(request):
-    email = request.data.get('email')
-
-    # Perform necessary validation
-    # Add the faculty email to the database
-
-    return Response({'message': 'Faculty added successfully'})
-
-
-#Remove faculty 
-
-@api_view(['POST'])
-def remove_faculty(request):
-    email = request.data.get('email')
-
-    # Perform necessary validation 
-    # Remove the faculty email from the database
-
-    return Response({'message': 'Faculty removed successfully'})
-
-
-
-#Edit faculty
-
-@api_view(['POST'])
-def edit_faculty(request):
-    email = request.data.get('email')
-
-    # Perform necessary validation
-    # Update the faculty email in the database
-
-    return Response({'message': 'Faculty email updated successfully'})
-
-
+    '''
+    {
+        "loginId":"anass",
+        "password":"anass"
+    }
+    '''

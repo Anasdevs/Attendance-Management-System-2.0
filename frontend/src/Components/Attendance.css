@@ -3,36 +3,6 @@
   height: 100vh;
 }
 
-.sidebar {
-  width: 10%;
-  background-color: #03011e;
-  padding: 20px;
-}
-
-.rightbar {
-  flex-grow: 1;
-  padding: 20px;
-  overflow-y: auto;
- 
-  /* background: linear-gradient(rgb(255, 255, 255), rgb(255, 255, 255)); */
-}
-
-.ams {
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 20px;
-}
-
-ul {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-}
-
-li {
-  margin-bottom: 10px;
-  cursor: pointer;
-}
 
 .image {
   display: flex;
@@ -72,15 +42,14 @@ li {
 .rightbar .image .date {
   position: relative;
   top: 0;
-  left:45rem;
+  left:60%;
   color: rgb(6, 6, 6);
   font-size: 25px;
   font-weight: bolder;
   /* background: #a0c49f; */
   padding: 10px;
   border-radius: 10px;
-  z-index: 999; /* Set a higher z-index value */
-  /* border: 2px solid rgb(89, 154, 89); */
+ 
 }
 
 .today-date {
@@ -107,25 +76,6 @@ li {
 
 
 
-/* .classInfo{
-  border: 2px solid green;
-  margin-bottom: 20px;
-  padding: 20px;
-}
-
-.classInfo h1 {
-  margin-top: 0;
-  font-size: 34px;
-  font-weight: bold;
-}
-
-.classInfo input {
-  width: 20%;
-  padding: 8px;
-  margin-bottom: 20px;
-  border-radius: 4px;
-  border: 1px solid #ccc;
-} */
 
 .classInfo {
   margin-bottom: 20px;
@@ -327,3 +277,5 @@ li {
   background-color: #ccc;
   cursor: not-allowed;
 }
+
+

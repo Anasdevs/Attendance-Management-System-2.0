@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate} from 'react-router-dom';
 import LoginForm from './Components/LoginForm';
 import Sidebar from './Components/Sidebar';
 import Dashboard from './Components/Dashboard';
@@ -14,6 +14,8 @@ const App = () => {
     <Router>
       <Routes>
         <Route path="/login" element={<LoginForm />} />
+        <Route path="*" element={<Navigate to="/login" />} />
+
         <Route path="/admin" element={<Admin />} />
         <Route path="/admin/admin-dashboard" element={<AdminDashboard />} />
         <Route element={<WithSidebar />}>

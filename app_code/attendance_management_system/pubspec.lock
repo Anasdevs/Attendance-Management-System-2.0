@@ -168,6 +168,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.0.6"
+  gradient_slide_to_act:
+    dependency: "direct main"
+    description:
+      name: gradient_slide_to_act
+      sha256: aa08019f20f1a8fe80f61ed774c34aca9939c034cdb49cf4d5fa3329337d0ad3
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.2"
   http:
     dependency: transitive
     description:

@@ -8,30 +8,37 @@
 
 ## makefile setup
 
-for __`both backend and frontend`__
+for __`both Backend and Frontend`__
 
 ``` shell
 make setup
 make run
 ```
 
-for `frontend only` | port - 7000
+for `Frontend only` | port - 7000
 
 ``` shell
 make FSetup
 make FRun
 ``` 
 
-for `backend only` | port - 8000
+for `Backend only` | port - 8000
 
 ``` shell
 make BSetup
 make BRun
 ```
-for `database migerations`
+for `Database migerations`
 
 ``` shell
 make db-mig
+```
+
+for `App` 
+
+``` shell
+flutter pub get
+flutter run
 ```
 
 ## Docker setup [not working]

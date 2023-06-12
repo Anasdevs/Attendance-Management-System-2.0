@@ -37,20 +37,6 @@ class College:
     def get_all_class(self):
         return self.classes.keys()
 
-    # def add_teacher_email(self,email):
-    #     self.instructors_mail.append(email)
-    #     return True
-
-    # def verify_registered_email(self, email):
-    #     if email in self.instructors_mail:
-    #         return True
-    #     return False
-
-    # def check_teacher_user(self, email):
-        if email in (self.instructors).keys():
-            return self.instructors[email].password
-        return False
-
     def teacherLogin(self, email,password):
         if email in (self.instructors).keys():
             if password == self.instructors[email].password:

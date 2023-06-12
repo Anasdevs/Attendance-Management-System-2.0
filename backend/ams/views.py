@@ -60,41 +60,6 @@ def create_class(request):
 
 # ======================== TEACHER LOGIN ROUTES =======================
 
-# if we wanted to do email only type
-'''
-# ---- Admin verifing teacher's email (1st step of teacher add)
-@api_view(['POST'])
-def admin_teacher_Add(request):
-    data = json.loads(request.body)
-    email = data.get('email')
-    
-    if not MSI.verify_registered_email(email):
-        response = admin_teacher_Add(email)
-        if not response:
-            return JsonResponse({"Status":False,'message': 'server error'}, status=501)
-        else:
-            MSI.save()
-            return JsonResponse({"Status":True,'message': 'Successfully added'}, status=200)
-    else:
-
-        return JsonResponse({"status":True, 'message': 'already exist'}, status=200)
-
-# --------- check for verify
-@api_view(['POST'])
-def verify_teacher(request):
-    data = json.loads(request.body)
-    email = data.get('email')
-    if not MSI.verify_registered_email(email):
-        return JsonResponse({"Status":False,'message': 'email not found'}, status=200)
-    else:
-        exist = MSI.check_teacher_user(email)
-        if exist["status"] == True:
-            return JsonResponse({"Status":True,"userCreated":True,"password":exist["password"],'message': 'User Found'}, status=200)
-        else:
-            return JsonResponse({"Status":True,"userCreated":False,"password":None,'message': 'email verified But user not created'}, status=200)
-'''
-
-
 # ---------------- login ---------------------
 @api_view(['POST'])
 def teacher_login(request):

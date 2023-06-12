@@ -24,6 +24,7 @@ dependencies:
   swipeable_tile: ^2.0.0+3
   fluttertoast: ^8.2.2
   sizer: ^2.0.15
+  gradient_slide_to_act: ^0.0.2
 
 dev_dependencies:
   flutter_test:

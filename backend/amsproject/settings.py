@@ -1,4 +1,6 @@
 from pathlib import Path
+from decouple import config
+
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -57,10 +59,6 @@ SESSION_SAVE_EVERY_REQUEST = True
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
 
-
-
-
-
 ROOT_URLCONF = 'amsproject.urls'
 
 TEMPLATES = [
@@ -86,8 +84,8 @@ WSGI_APPLICATION = 'amsproject.wsgi.application'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'attendance.msi@gmail.com'
-EMAIL_HOST_PASSWORD = 'wkyorjeuhgjygcce'
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 EMAIL_USE_TLS = True
 
 DATABASES = {

@@ -1,6 +1,8 @@
 from django.contrib.auth.hashers import make_password, check_password
+import os
 from django.core.mail import send_mail
 from django.conf import settings
+import dotenv
 from django.http import JsonResponse
 import string
 import random
@@ -17,6 +19,8 @@ from datetime import datetime
 from django.db.models import Q, Case, When, Value, Subquery, OuterRef
 from django.db.models.functions import Coalesce
 import csv
+
+dotenv.load_dotenv()
 
 
 @csrf_exempt
@@ -61,9 +65,10 @@ def send_password_email(email, password):
     # Compose email message
     subject = 'Your Account Password'
     message = f'Your account password is: {password}'
-    from_email = 'attendance.msi@gmail.com'
+    # from_email = settings.EMAIL_HOST_USER  # Access EMAIL_HOST_USER from settings
+    from_email = os.environ.get('EMAIL_HOST_USER')
     recipient_list = [email]
-
+    print(from_email)
     # Send email
     send_mail(subject, message, from_email, recipient_list)
 

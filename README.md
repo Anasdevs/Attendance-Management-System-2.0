@@ -36,7 +36,7 @@ for `Backend only` | port - 8000
 make BSetup
 make BRun
 ```
-for `Database migerations`
+for `Database migrations
 
 ``` shell
 make db-mig
@@ -49,8 +49,8 @@ flutter pub get
 flutter run
 ```
 
-##Without using makefile 
-Make sure you have nodejs and python installed on your system. 
+## Without using makefile 
+Make sure you have node.js and python installed on your system. 
 
 1. For `Frontend`
 ``` shell

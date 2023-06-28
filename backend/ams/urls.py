@@ -2,14 +2,13 @@ from django.urls import path
 from . import views
 from django.views.decorators.csrf import csrf_exempt
 
-urlpatterns = [
-    path('', views.test, name="test"),
-    path('adminlogin', views.adminlogin, name='adminlogin'),
-    path('teacher/signup', views.teacher_register, name='register'),
-    path('teacher/login/', views.teacher_login, name='login'),
-    path('teacher/dashboard', views.teacher_dashboard, name='login'),
-    path('class/create_class',views.create_class, name="create_class"),
-    # path('send_attendence/', views.sendMail, name='send_mail'),
-    # path('get_month_attendence/', views.sendMail, name='send_mail'),
-    # path('get_attendence_report/', views.sendMail, name='send_mail'),
+urlpatterns = [ 
+     path('api/send-password/', views.send_password, name='send_password'),
+     path('api/validate-password/', views.validate_password, name="validate_password"),
+     path('api/signin/', views.signin, name='signin'),
+     path('api/dashboard-data/', views.dashboard_data, name='dashboard_data'),
+     path('api/take-attendance/', views.take_attendance, name='take_attendance'),
+     path('api/submit-attendance/', views.submit_attendance, name='submit_attendance'),
+     path('api/attendance/reports/', views.generate_attendance_report, name='generate_attendance_report')
+
 ]

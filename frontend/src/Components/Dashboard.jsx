@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import React, { createContext, useState, useEffect } from 'react';
+import { NavLink, useHistory, useNavigate } from 'react-router-dom';
 import './Dashboard.css';
 import facultyImage from './Images/faculty.png';
 import { format } from 'date-fns';
+import Attendance from './Attendance';
 
 const Dashboard = () => {
-  const facultyName = 'Mr. Manpreet ';
-  const facultyQualification = 'M.Tech';
-  const facultyEmail = 'manpreet@msijanakpuri.com';
+  const [facultyName, setFacultyName] = useState('');
+  const [facultyEmail, setFacultyEmail] = useState('');
+  const [classes, setClasses] = useState([]);
+  const [isDataFetched, setIsDataFetched] = useState(false);
 
   const today = format(new Date(), 'EEE, dd-MMM-yyyy'); // Get the current date with the day
 
@@ -17,25 +19,46 @@ const Dashboard = () => {
     setSearchTerm(event.target.value.toLowerCase());
   };
 
-  const rows = [
-    { course: 'BCA', semester: '4', section: 'A', subject: 'Django', id: 34568 },
-    { course: 'BBA', semester: '2', section: 'B', subject: 'Marketing', id: 34569 },
-    { course: 'BCOM', semester: '3', section: 'A', subject: 'Accounting', id: 34570 },
-    { course: 'BEd', semester: '1', section: 'B', subject: 'English', id: 34571 },
-    { course: 'BEd', semester: '2', section: 'B', subject: 'English', id: 34572 },
-    { course: 'MBA', semester: '1', section: 'A', subject: 'Marketing', id: 34573 },
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('http://localhost:8000/api/dashboard-data/', {
+          method: 'GET',
+          credentials: 'include', // Include cookies in the request
+        });
 
-    // Add more rows as needed
-  ];
+        if (response.status === 200) {
+          const data = await response.json();
+          setFacultyName(data.faculty.name);
+          setFacultyEmail(data.faculty.email);
+          setClasses(data.classes);
+        } else if (response.status === 302) {
+          navigate('/signin');
+        } else {
+          alert('Error occurred while fetching dashboard data.');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        alert('Error occurred while fetching dashboard data.');
+      }
+    };
 
-  const filteredRows = rows.filter((row) =>
-    Object.values(row).some((value) =>
-      typeof value === 'string' && value.toLowerCase().includes(searchTerm)
+    fetchData()
+      .then(() => setIsDataFetched(true))
+      .catch(() => setIsDataFetched(true));
+  }, []);
+
+  const navigate = useNavigate();
+
+  const handleTakeAttendance = (courseId) => {
+    navigate(`/dashboard/take-attendance/${courseId}`);
+  };
+
+  const filteredRows = classes.filter((row) =>
+    Object.values(row).some(
+      (value) => typeof value === 'string' && value.toLowerCase().includes(searchTerm)
     )
   );
-
-  // Get the current location
-  const location = useLocation();
 
   return (
     <div className="page-container">
@@ -44,9 +67,9 @@ const Dashboard = () => {
           <img src={facultyImage} alt="Faculty" />
           <div className="faculty-info">
             <p className="faculty-name">{facultyName}</p>
-            <p className="faculty-qualification">{facultyQualification}</p>
             <p className="faculty-email">{facultyEmail}</p>
           </div>
+         
           <div className="date">
             <div className="today-date">Today</div>
             <div className="today-date">{today}</div>
@@ -65,7 +88,7 @@ const Dashboard = () => {
           <table className="table">
             <thead>
               <tr>
-                <th>ID</th>
+                <th>Course ID</th>
                 <th>Course</th>
                 <th>Semester</th>
                 <th>Section</th>
@@ -76,14 +99,17 @@ const Dashboard = () => {
             <tbody>
               {filteredRows.map((row, index) => (
                 <tr key={index}>
-                  <td>{row.id}</td>
+                  <td>{row.course_id}</td>
                   <td>{row.course}</td>
                   <td>{row.semester}</td>
                   <td>{row.section}</td>
                   <td>{row.subject}</td>
                   <td>
-                    <button className="action-button">
-                      <NavLink to="/dashboard/take-attendance" activeClassName="active">TAKE ATTENDANCE</NavLink>
+                    <button
+                      onClick={() => handleTakeAttendance(row.course_id)}
+                      className="action-button"
+                    >
+                      TAKE ATTENDANCE
                     </button>
                   </td>
                 </tr>
@@ -96,4 +122,5 @@ const Dashboard = () => {
   );
 };
 
+{/* <Attendance facultyEmail={facultyEmail} facultyName={facultyName}/> */}
 export default Dashboard;

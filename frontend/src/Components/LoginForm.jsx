@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate} from 'react-router-dom';
 
 import attendanceTracking from './Images/noteslist.svg';
 import attendanceTaking from './Images/onlinecalendar.svg';
@@ -8,12 +8,11 @@ import attendanceCompiling from './Images/segmentanalysis.svg';
 import './Auth.css';
 
 function LoginForm() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     username: '',
     email: '',
-    password: '',
-    createPassword: '',
-    confirmPassword: '',
+    password: ''
   });
 
   const [errors, setErrors] = useState([]);
@@ -22,40 +21,105 @@ function LoginForm() {
   const [otpTimer, setOtpTimer] = useState(120);
   const [isSignUp, setIsSignUp] = useState(false); // Added state for signup
   const [isPasswordCreated, setIsPasswordCreated] = useState(false); // Added state for password creation
+  const [isPasswordValidated, setIsPasswordValidated] = useState(false); // Added state for password validation
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleOtpSubmit = () => {
-    // Simulate sending OTP to email
-    alert('Password has been sent to your email!');
-    setIsOtpSent(true);
+  const handleOtpSubmit = async () => {
+    if (!formData.email) {
+      alert('Please enter your email');
+      return;
+    }
+  
+    try {
+      const response = await fetch('http://localhost:8000/api/send-password/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username: formData.username, email: formData.email }),
+      });
+  
+      const data = await response.json();
+      alert(data.message); // Show response message from the backend
+      setIsOtpSent(true);
+  
+      // Start the timer
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Error occurred while sending the password.');
+    }
+  };
+  
 
-    // Start the timer
-    let countDown = otpTimer;
-    const timer = setInterval(() => {
-      countDown--;
-      setOtpTimer(countDown);
-
-      if (countDown === 0) {
-        setIsOtpSent(false);
-        setOtpTimer(120);
-        clearInterval(timer);
+  const handleValidatePassword = async () => {
+    try {
+      const response = await fetch('http://localhost:8000/api/validate-password/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email: formData.email, password: formData.passwordSent }),
+      });
+  
+      const data = await response.json();
+  
+      if (data.success) {
+        setIsPasswordValidated(true);
+        alert('Password validated!');
+      } else {
+        alert(data.message); // Show error message from the backend
       }
-    }, 1000);
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Error occurred while validating the password.');
+    }
   };
+  
+  const handleSignInSubmit = async (e) => {
+    e.preventDefault();
 
-  const handleCreatePassword = () => {
-    setIsPasswordCreated(true);
+    try {
+      const response = await fetch('http://localhost:8000/api/signin/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+        credentials: 'include',
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        console.log('User authenticated!');
+        window.location.href = 'http://localhost:3000/dashboard'; // Redirect to Dashboard component
+      } else {
+        alert(data.message); // Show error message from the backend
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Error occurred while signing in.');
+    }
   };
-
+  
   const handleSubmit = (e) => {
     e.preventDefault();
 
     // Perform authentication or further processing
     // Here, we are just displaying the form data
     console.log(formData);
+  };
+  const handleSignUpSubmit = () => {
+    if (isPasswordValidated) {
+      // Perform signup submission
+      console.log('SignUp submitted!');
+      navigate('/signin'); // Redirect to SignIn component
+    } else {
+      alert('Password is not validated');
+    }
   };
 
   // Carousel images and descriptions
@@ -96,8 +160,6 @@ function LoginForm() {
       username: '',
       email: '',
       password: '',
-      createPassword: '',
-      confirmPassword: '',
     });
     setErrors([]);
   };
@@ -108,8 +170,6 @@ function LoginForm() {
     setFormData({
       email: '',
       password: '',
-      createPassword: '',
-      confirmPassword: '',
     });
     setErrors([]);
   };
@@ -138,88 +198,72 @@ function LoginForm() {
           <div className="contact">
             {isSignUp ? (
               <>
-                {isPasswordCreated ? (
-                  <form onSubmit={handleSubmit}>
-                    <h3>Create Password</h3>
-                    <input
-                      type="password"
-                      id="createPassword"
-                      name="createPassword"
-                      placeholder="Create password"
-                      value={formData.createPassword}
-                      onChange={handleChange}
-                      required
-                    />
-                    <input
-                      type="password"
-                      id="confirmPassword"
-                      name="confirmPassword"
-                      placeholder="Confirm password"
-                      value={formData.confirmPassword}
-                      onChange={handleChange}
-                      required
-                    />
-                    <button type="submit" className="submit">
-                      Submit
-                    </button>
-                  </form>
-                ) : (
-                  <form onSubmit={handleSubmit}>
-                    <h3>SIGN UP</h3>
-                    <input
-                      type="text"
-                      id="username"
-                      name="username"
-                      placeholder="Enter your name"
-                      value={formData.username}
-                      onChange={handleChange}
-                      required
-                    />
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      placeholder="Enter your email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      required
-                    />
-                    <input
-                      type="password"
-                      id="passwordSent"
-                      name="passwordSent"
-                      placeholder="Enter password sent to your email"
-                      value={formData.passwordSent}
-                      onChange={handleChange}
-                      required
-                    />
-                    <div className="otp-container">
+                <form onSubmit={handleSubmit}>
+                  <h3>SIGN UP</h3>
+                  <input
+                    type="text"
+                    id="username"
+                    name="username"
+                    placeholder="Enter your name"
+                    value={formData.username}
+                    onChange={handleChange}
+                    required
+                  />
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="Enter your email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                  />
+                  {isOtpSent ? (
+                    <>
+                      <input
+                        type="password"
+                        id="passwordSent"
+                        name="passwordSent"
+                        placeholder="Enter password sent to your email"
+                        value={formData.passwordSent}
+                        onChange={handleChange}
+                        required
+                      />
                       <button
                         className="get-code"
-                        onClick={handleOtpSubmit}
-                        disabled={isOtpSent}
+                        onClick={handleValidatePassword}
+                        disabled={!formData.passwordSent}
                       >
-                        {buttonText}
+                        Validate Password
                       </button>
-                    </div>
+                    </>
+                  ) : (
                     <button
-                      className="submit"
-                      onClick={handleCreatePassword}
-                      disabled={!isOtpSent}
+                      className="get-code"
+                      onClick={handleOtpSubmit}
+                      disabled={isOtpSent}
                     >
-                      Create Password
+                      {buttonText}
                     </button>
-                    <p>
-                      Already have an account?{' '}
-                      <button className="link-button" onClick={handleSignIn}>
-                        SignIn
-                      </button>
-                    </p>
-                  </form>
-                )}
+                  )}
+                  <button
+                    type="submit"
+                    className="submit"
+                    disabled={!isPasswordValidated}
+                    onClick={handleSignUpSubmit}
+                  >
+                    Submit
+                  </button>
+                  <p>
+                    Already have an account?{' '}
+                    <button className="link-button" onClick={handleSignInSubmit}>
+                      SignIn
+                    </button>
+                  </p>
+                </form>
               </>
             ) : (
-              <form onSubmit={handleSubmit}>
+              <form onSubmit={handleSignInSubmit}>
                 <h3>SIGN IN</h3>
                 <input
                   type="email"

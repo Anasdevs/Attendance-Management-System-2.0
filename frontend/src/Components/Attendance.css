@@ -209,7 +209,12 @@
 }
 
 .attendance-table input[type='checkbox']:not(:checked) {
-  background-color: #a80000;
+  background-color: red;
+  border: 1px solid #000;
+}
+
+.attendance-table input[type='checkbox'][data-status='none'] {
+  background-color: rgb(170, 170, 165);
   border: 1px solid #000;
 }
 

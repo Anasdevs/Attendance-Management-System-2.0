@@ -20,7 +20,7 @@ const App = () => {
         <Route path="/admin/admin-dashboard" element={<AdminDashboard />} />
         <Route element={<WithSidebar />}>
           <Route path="/dashboard/*" element={<Dashboard />} />
-          <Route path="/dashboard/take-attendance" element={<Attendance />} />
+          <Route path="/dashboard/take-attendance/:courseId" element={<Attendance />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/admin/admin-dashboard" element={<AdminDashboard />} />
           <Route path="/holidays" element={<Holidays />} />
@@ -37,7 +37,7 @@ const WithSidebar = () => {
       <Sidebar />
       <Routes>
         <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/dashboard/take-attendance" element={<Attendance />} />
+        <Route path="/dashboard/take-attendance/:courseId" element={<Attendance />} />
        
         <Route path="/holidays" element={<Holidays />} />
         <Route path="/calendar" element={<Calendar />} />

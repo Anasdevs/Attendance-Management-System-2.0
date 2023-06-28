@@ -208,7 +208,7 @@ console.log(formattedDate);
 
   const handleDownloadReports = () => {
     // Construct the URL with the filter values
-    const url = `http://localhost:8000/api/attendance/reports?startDate=${startDate}&endDate=${endDate}`;
+    const url = `http://localhost:8000/api/attendance/reports?startDate=${startDate}&endDate=${endDate}&courseId=${courseId}`;
   
     // Make an AJAX request to the backend API
     fetch(url)

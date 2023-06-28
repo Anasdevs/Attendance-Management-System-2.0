@@ -251,17 +251,19 @@ def submit_attendance(request):
         return JsonResponse({'error': str(e)})
     
 
-
-
-
+from django.db.models import Count, F
 @csrf_exempt
 def generate_attendance_report(request):
     if request.method == 'GET':
         start_date = request.GET.get('startDate')
         end_date = request.GET.get('endDate')
+        course_id = request.GET.get('courseId')  # Add courseId parameter to get the class ID
 
-        # Fetch attendance data based on the provided start date and end date
-        attendance_data = Attendance.objects.filter(date__range=[start_date, end_date])
+        # Fetch attendance data based on the provided start date, end date, and class ID
+        attendance_data = Attendance.objects.filter(
+            date__range=[start_date, end_date],
+            class_attendance__course_id=course_id
+        )
 
         # Prepare the CSV response
         response = HttpResponse(content_type='text/csv')
@@ -269,17 +271,28 @@ def generate_attendance_report(request):
 
         # Create the CSV writer
         writer = csv.writer(response)
-        writer.writerow(['Enrolment Number', 'Name', 'Class', 'Attendance Status', 'Date'])
+        writer.writerow(['Enrollment Number', 'Name', 'Subject', 'Present Days', 'Total Days', 'Percentage'])
+
+        # Calculate attendance statistics for each student
+        attendance_stats = attendance_data.values(
+            'student__enrolment_no',
+            'student__name',
+            'class_attendance__subject',
+        ).annotate(
+            total_present=Count('id', filter=Q(status='Present')),
+            total_days=Count('id')
+        ).order_by('student__enrolment_no')
 
         # Write attendance data to the CSV file
-        for attendance in attendance_data:
-            writer.writerow([
-                attendance.student.enrolment_no,
-                attendance.student.name,
-                attendance.class_attendance.course,
-                attendance.status,
-                attendance.date.strftime('%Y-%m-%d')
-            ])
+        for stats in attendance_stats:
+            enrollment_no = stats['student__enrolment_no']
+            name = stats['student__name']
+            subject = stats['class_attendance__subject']
+            present_days = stats['total_present']
+            total_days = stats['total_days']
+            percentage = (present_days / total_days) * 100 if total_days > 0 else 0
+
+            writer.writerow([enrollment_no, name, subject, present_days, total_days, percentage])
 
         return response
 

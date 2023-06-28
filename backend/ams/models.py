@@ -24,7 +24,7 @@ class Faculty(AbstractBaseUser):
     faculty_id = models.CharField(max_length=20, unique=True)
     faculty_name = models.CharField(max_length=100)
     faculty_email = models.EmailField(unique=True)
-    password = models.CharField(max_length=128, default=' ')
+    password = models.CharField(max_length=128, default= None)
 
     objects = FacultyManager()
 

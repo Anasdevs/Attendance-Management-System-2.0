@@ -49,18 +49,19 @@ flutter pub get
 flutter run
 ```
 
-## Docker setup [not working]
+##Without using makefile 
+Make sure you have nodejs and python installed on your system. 
 
-for `frontend` | port - 7000
-
+1. For `Frontend`
 ``` shell
-docker build -t frontend-image -f Dockerfile .
-docker run -d -p 7000:7000 frontend-image
+cd frontend
+npm i
+npm start
+```
+2. For `Backend`
+``` shell
+cd backend
+pip install -r requirements.txt
+python manage.py runserver
 ```
 
-for `backend` | port - 8000
-
-``` shell
-docker build -t backend-image -f Dockerfile .
-docker run -d -p 8000:8000 backend-image
-```

@@ -61,7 +61,7 @@ def send_password_email(email, password):
     # Compose email message
     subject = 'Your Account Password'
     message = f'Your account password is: {password}'
-    from_email = 'anassaifi1108@gmail.com'
+    from_email = 'attendance.msi@gmail.com'
     recipient_list = [email]
 
     # Send email
@@ -136,7 +136,7 @@ def signin(request):
 def dashboard_data(request):
     try:
         faculty_email = request.session.get('faculty_email')
-        print(faculty_email)
+        # print(faculty_email)
 
         if faculty_email:
             faculty = Faculty.objects.get(faculty_email=faculty_email)
@@ -176,7 +176,6 @@ def dashboard_data(request):
 @csrf_exempt
 def take_attendance(request):
     if request.method == 'GET':
-        print(request.GET)
         course_id = request.GET.get('course_id')
         date = request.GET.get('date')
 
@@ -205,7 +204,7 @@ def take_attendance(request):
                 'attendance__date': data['filtered_date'],
             }
             students.append(student)
-        print(students)
+        # print(students)
         response_data = {'students': students}
         # print(response_data)
         return JsonResponse(response_data)
@@ -227,11 +226,11 @@ def submit_attendance(request):
             enrolment_no = fields.get('enrolment_no')
             attendance_status = fields.get('attendance__status')
             attendance_date_str = fields.get('attendance_date')
-            print(attendance_date_str)
+            # print(attendance_date_str)
             # Convert the date string to a datetime object
             # attendance_date = datetime.strptime(attendance_date_str, '%Y-%m-%d').date()
             attendance_date = datetime.fromisoformat(attendance_date_str)
-            print(attendance_date)
+            # print(attendance_date)
 
             # Retrieve the student by enrolment_no
             student_obj = Student.objects.get(enrolment_no=enrolment_no, class_attendance=class_obj)

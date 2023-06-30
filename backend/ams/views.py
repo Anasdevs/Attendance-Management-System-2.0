@@ -63,7 +63,7 @@ def generate_random_password(length=8):
 
 def send_password_email(email, password):
     # Compose email message
-    subject = 'Your Account Password'
+    subject = 'Your Account Password for AMS'
     message = f'Your account password is: {password}'
     # from_email = settings.EMAIL_HOST_USER  # Access EMAIL_HOST_USER from settings
     from_email = os.environ.get('EMAIL_HOST_USER')

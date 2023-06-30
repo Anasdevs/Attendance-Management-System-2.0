@@ -76,28 +76,24 @@ body {
 }
 
 .get-code {
+  position: relative;
   box-shadow: 0 3px 5px #777777, inset 0 0 0px #777777;
-    transition: transform 200ms, border-color 300ms;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 5px;
-    display: block;
-    /* margin: auto; */
-    background: #3d53d3;
-    color: #fff;
-    font-weight: bold;
-    border-color: #583672;
-    cursor: pointer;
+  transition: transform 200ms, border-color 300ms;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  display: block;
+  background: #3d53d3;
+  color: #fff;
+  font-weight: bold;
+  border-color: #583672;
+  cursor: pointer;
 }
-
-
 
 .get-code:disabled {
   cursor: not-allowed;
   background-color: #7b7283;
 }
-
-
 
 .get-code:active {
   transform: scale(0.98);

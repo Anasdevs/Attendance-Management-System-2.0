@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate} from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import attendanceTracking from './Images/noteslist.svg';
 import attendanceTaking from './Images/onlinecalendar.svg';
@@ -22,6 +22,7 @@ function LoginForm() {
   const [isSignUp, setIsSignUp] = useState(false); // Added state for signup
   const [isPasswordCreated, setIsPasswordCreated] = useState(false); // Added state for password creation
   const [isPasswordValidated, setIsPasswordValidated] = useState(false); // Added state for password validation
+  const [isLoading, setIsLoading] = useState(false); // Added state for loading animation
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -32,63 +33,78 @@ function LoginForm() {
       alert('Please enter your email');
       return;
     }
-  
+
     try {
+      setIsLoading(true); // Start loading animation
       const response = await fetch('http://localhost:8000/api/send-password/', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ username: formData.username, email: formData.email }),
+        body: JSON.stringify({ username: formData.username, email: formData.email })
       });
-  
+
       const data = await response.json();
       alert(data.message); // Show response message from the backend
-      setIsOtpSent(true);
-  
+
+      if (response.status === 200) {
+        setIsOtpSent(true);
+        setIsPasswordCreated(true); // Password is created for this email
+      } else {
+        setIsOtpSent(false);
+        setIsPasswordCreated(false); // Password is not created for this email
+      }
+
+      setIsLoading(false); // Stop loading animation
+
       // Start the timer
     } catch (error) {
       console.error('Error:', error);
       alert('Error occurred while sending the password.');
+      setIsLoading(false); // Stop loading animation
     }
   };
-  
 
   const handleValidatePassword = async () => {
     try {
+      setIsLoading(true); // Start loading animation
       const response = await fetch('http://localhost:8000/api/validate-password/', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ email: formData.email, password: formData.passwordSent }),
+        body: JSON.stringify({ email: formData.email, password: formData.passwordSent })
       });
-  
+
       const data = await response.json();
-  
+
       if (data.success) {
         setIsPasswordValidated(true);
         alert('Password validated!');
       } else {
         alert(data.message); // Show error message from the backend
       }
+
+      setIsLoading(false); // Stop loading animation
     } catch (error) {
       console.error('Error:', error);
       alert('Error occurred while validating the password.');
+      setIsLoading(false); // Stop loading animation
     }
   };
-  
+
   const handleSignInSubmit = async (e) => {
     e.preventDefault();
 
     try {
+      setIsLoading(true); // Start loading animation
       const response = await fetch('http://localhost:8000/api/signin/', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify(formData),
-        credentials: 'include',
+        credentials: 'include'
       });
 
       const data = await response.json();
@@ -99,12 +115,15 @@ function LoginForm() {
       } else {
         alert(data.message); // Show error message from the backend
       }
+
+      setIsLoading(false); // Stop loading animation
     } catch (error) {
       console.error('Error:', error);
       alert('Error occurred while signing in.');
+      setIsLoading(false); // Stop loading animation
     }
   };
-  
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -112,6 +131,7 @@ function LoginForm() {
     // Here, we are just displaying the form data
     console.log(formData);
   };
+
   const handleSignUpSubmit = () => {
     if (isPasswordValidated) {
       // Perform signup submission
@@ -126,23 +146,23 @@ function LoginForm() {
   const carouselItems = [
     {
       image: `url(${attendanceTracking})`,
-      description: 'Attendance Tracking',
+      description: 'Attendance Tracking'
     },
     {
       image: `url(${attendanceTaking})`,
-      description: 'Attendance Taking',
+      description: 'Attendance Taking'
     },
     {
       image: `url(${attendanceCompiling})`,
-      description: 'Attendance Compiling',
-    },
+      description: 'Attendance Compiling'
+    }
   ];
 
   const [currentSlide, setCurrentSlide] = useState(0);
   const buttonText = isOtpSent
     ? `Resend Password in ${Math.floor(otpTimer / 60)}:${otpTimer % 60
-        .toString()
-        .padStart(2, '0')}`
+    .toString()
+    .padStart(2, '0')}`
     : 'Get Password';
 
   useEffect(() => {
@@ -159,7 +179,7 @@ function LoginForm() {
     setFormData({
       username: '',
       email: '',
-      password: '',
+      password: ''
     });
     setErrors([]);
   };
@@ -169,7 +189,7 @@ function LoginForm() {
     setIsPasswordCreated(false);
     setFormData({
       email: '',
-      password: '',
+      password: ''
     });
     setErrors([]);
   };
@@ -184,7 +204,7 @@ function LoginForm() {
                 key={index}
                 className={`carousel-item ${
                   index === currentSlide ? 'active' : ''
-                }`}
+                  }`}
                 style={{ backgroundImage: item.image }}
               >
                 <div className="carousel-description">
@@ -218,7 +238,7 @@ function LoginForm() {
                     onChange={handleChange}
                     required
                   />
-                  {isOtpSent ? (
+                   {isOtpSent && isPasswordCreated ? (
                     <>
                       <input
                         type="password"
@@ -232,20 +252,20 @@ function LoginForm() {
                       <button
                         className="get-code"
                         onClick={handleValidatePassword}
-                        disabled={!formData.passwordSent}
+                        disabled={!formData.passwordSent || isLoading}
                       >
-                        Validate Password
+                        {isLoading ? 'Validating...' : 'Validate Password'}
                       </button>
                     </>
                   ) : (
                     <button
                       className="get-code"
                       onClick={handleOtpSubmit}
-                      disabled={isOtpSent}
+                      disabled={isOtpSent || isLoading}
                     >
-                      {buttonText}
+                      {isLoading ? 'Sending Email...' : buttonText}
                     </button>
-                  )}
+                    )}
                   <button
                     type="submit"
                     className="submit"
@@ -256,44 +276,48 @@ function LoginForm() {
                   </button>
                   <p>
                     Already have an account?{' '}
-                    <button className="link-button" onClick={handleSignInSubmit}>
+                    <button className="link-button" onClick={handleSignIn}>
                       SignIn
                     </button>
                   </p>
                 </form>
               </>
             ) : (
-              <form onSubmit={handleSignInSubmit}>
-                <h3>SIGN IN</h3>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  placeholder="Enter your email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                />
-                <input
-                  type="password"
-                  id="password"
-                  name="password"
-                  placeholder="Enter your password"
-                  value={formData.password}
-                  onChange={handleChange}
-                  required
-                />
-                <button type="submit" className="submit">
-                  Sign In
-                </button>
-                <p>
-                  Don't have an account?{' '}
-                  <button className="link-button" onClick={handleSignUp}>
-                    SignUp
+                <form onSubmit={handleSignInSubmit}>
+                  <h3>SIGN IN</h3>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="Enter your email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                  />
+                  <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Enter your password"
+                    value={formData.password}
+                    onChange={handleChange}
+                    required
+                  />
+                  <button
+                    type="submit"
+                    className="submit"
+                    disabled={isLoading}
+                  >
+                    {isLoading ? 'Signing In...' : 'Sign In'}
                   </button>
-                </p>
-              </form>
-            )}
+                  <p>
+                    Don't have an account?{' '}
+                    <button className="link-button" onClick={handleSignUp}>
+                      SignUp
+                    </button>
+                  </p>
+                </form>
+              )}
           </div>
         </div>
       </div>

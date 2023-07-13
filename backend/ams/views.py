@@ -231,23 +231,28 @@ def submit_attendance(request):
             enrolment_no = fields.get('enrolment_no')
             attendance_status = fields.get('attendance__status')
             attendance_date_str = fields.get('attendance_date')
-            # print(attendance_date_str)
+            print(attendance_date_str)
+
+            if(attendance_date_str == None):
+                continue
+
             # Convert the date string to a datetime object
-            # attendance_date = datetime.strptime(attendance_date_str, '%Y-%m-%d').date()
             attendance_date = datetime.fromisoformat(attendance_date_str)
-            # print(attendance_date)
+            print(attendance_date)
 
             # Retrieve the student by enrolment_no
             student_obj = Student.objects.get(enrolment_no=enrolment_no, class_attendance=class_obj)
 
-            # Create or update the attendance record for the student
-            attendance, created = Attendance.objects.get_or_create(
-                student=student_obj,
-                class_attendance=class_obj,
-                date=attendance_date
-            )
-            attendance.status = attendance_status
-            attendance.save()
+            # Retrieve the existing attendance record for the student and date
+            attendance = Attendance.objects.filter(student=student_obj, class_attendance=class_obj, date=attendance_date).first()
+
+            # If the attendance record exists, update the attendance status
+            if attendance:
+                attendance.status = attendance_status
+                attendance.save()
+            else:
+                # Create a new attendance record
+                attendance = Attendance.objects.create(student=student_obj, class_attendance=class_obj, date=attendance_date, status=attendance_status)
 
         return JsonResponse({'message': 'Attendance submitted successfully'})
     except Exception as e:

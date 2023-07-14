@@ -17,6 +17,10 @@ from django.contrib import admin
 from django.urls import path, include
 import ams.urls
 
+admin.site.site_header = "Attendance Management System for MSI"
+admin.site.site_title = "AMS Admin Panel"
+admin.site.index_title = "AMS MSI"
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("", include(ams.urls)),

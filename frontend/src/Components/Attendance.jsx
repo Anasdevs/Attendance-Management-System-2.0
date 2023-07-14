@@ -21,6 +21,8 @@ export default function Attendance() {
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [studentId, setStudentId] = useState('');
+  const [isLoading, setIsLoading] = useState(false); // Added state for loading animation
+
 
  
 
@@ -207,7 +209,11 @@ console.log(formattedDate);
   };
 
   const handleDownloadReports = () => {
-    // Construct the URL with the filter values
+    if (!startDate || !endDate) {
+      alert('Please select both the start date and end date to download the report.');
+      return;
+    }
+    setIsLoading(true);
     const url = `http://localhost:8000/api/attendance/reports?startDate=${startDate}&endDate=${endDate}&courseId=${courseId}`;
   
     // Make an AJAX request to the backend API
@@ -231,6 +237,9 @@ console.log(formattedDate);
       .catch((error) => {
         console.error('Error:', error);
         // Handle the error case
+      })
+      .finally(() => {
+        setIsLoading(false); // Set isLoading to false after the request is complete
       });
   };
   
@@ -274,8 +283,8 @@ console.log(formattedDate);
           <label htmlFor="end-date">End Date:</label>
           <input type="date" id="end-date" value={endDate} onChange={handleEndDateChange} />
 
-          <button className="download-button" onClick={handleDownloadReports}>
-            Download Reports
+          <button className="download-button" onClick={handleDownloadReports} disabled={isLoading}>
+          {isLoading ? 'Downloading...' : 'Download Reports'}
           </button>
           </div>
         <div className="statistics-container">

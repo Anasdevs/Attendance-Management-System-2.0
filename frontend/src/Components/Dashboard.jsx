@@ -115,6 +115,15 @@ const Dashboard = () => {
                 </tr>
               ))}
             </tbody>
+            {isDataFetched && filteredRows.length === 0 && (
+              <tfoot>
+                <tr>
+                  <td colSpan="6" className="no-records">
+                    No records found.
+                  </td>
+                </tr>
+              </tfoot>
+            )}
           </table>
         </div>
       </div>

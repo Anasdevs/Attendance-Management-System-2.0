@@ -120,6 +120,7 @@ def signin(request):
         try:
             faculty = Faculty.objects.get(faculty_email=email)
             
+            
             if check_password(password_entered, faculty.password):
                 # Create a session for the authenticated user
                 request.session['faculty_email'] = faculty.faculty_email
@@ -138,6 +139,18 @@ def signin(request):
     
     else:
         return JsonResponse({'success': False, 'message': 'Invalid request'})
+    
+
+@csrf_exempt
+def check_session(request):
+    faculty_email = request.session.get('faculty_email')
+    print("Faculty email:", faculty_email)
+    is_authenticated = bool(faculty_email)
+    print(is_authenticated)
+    return JsonResponse({'is_authenticated': is_authenticated})
+
+
+
 
 @csrf_exempt
 def reset_password(request):
@@ -166,7 +179,6 @@ def reset_password(request):
 
 
 @csrf_exempt
-# @login_required
 def dashboard_data(request):
     try:
         faculty_email = request.session.get('faculty_email')

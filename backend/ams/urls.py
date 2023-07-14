@@ -1,8 +1,12 @@
 from django.urls import path
+from django.shortcuts import redirect
 from . import views
 from django.views.decorators.csrf import csrf_exempt
 
+
+
 urlpatterns = [ 
+     path('api/check-session/', views.check_session, name='check_session'),
      path('api/send-password/', views.send_password, name='send_password'),
      path('api/validate-password/', views.validate_password, name="validate_password"),
      path('api/signin/', views.signin, name='signin'),

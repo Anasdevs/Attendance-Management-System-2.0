@@ -6,7 +6,6 @@ import attendanceTaking from './Images/onlinecalendar.svg';
 import attendanceCompiling from './Images/segmentanalysis.svg';
 
 import './Auth.css';
-
 function LoginForm() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -24,6 +23,7 @@ function LoginForm() {
   const [isPasswordValidated, setIsPasswordValidated] = useState(false); // Added state for password validation
   const [isLoading, setIsLoading] = useState(false); // Added state for loading animation
   const [isForgotPassword, setIsForgotPassword] = useState(false); // Added state for forgot password
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -112,6 +112,7 @@ function LoginForm() {
 
       if (data.success) {
         console.log('User authenticated!');
+        setIsAuthenticated(true);
         window.location.href = 'http://localhost:3000/dashboard'; // Redirect to Dashboard component
       } else {
         alert(data.message); // Show error message from the backend

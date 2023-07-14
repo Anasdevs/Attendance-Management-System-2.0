@@ -32,8 +32,8 @@ CORS_ORIGIN_WHITELIST = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -42,11 +42,10 @@ MIDDLEWARE = [
 ]
 
 
+
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 ]
-
-LOGIN_URL = 'http://localhost:3000/signin'
 
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'  # Use database-backed sessions

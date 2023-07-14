@@ -34,6 +34,8 @@ def send_password(request):
         try:
             # Check if faculty email exists in the Faculty model
             faculty = Faculty.objects.get(faculty_email=email)
+            if faculty.password:
+                return JsonResponse({'message': 'Faculty already exists. Please sign in.'})
         except ObjectDoesNotExist:
             # Return a response indicating that the faculty email is not found
             return JsonResponse({'message': 'Your email is not added. Please contact the administrator.'})
@@ -54,6 +56,11 @@ def send_password(request):
     return JsonResponse({'error': 'Invalid request'})
 
 # Rest of the code remains the same...
+
+
+
+
+
 
 def generate_random_password(length=8):
     # Generate a random password of the specified length
@@ -132,8 +139,30 @@ def signin(request):
     else:
         return JsonResponse({'success': False, 'message': 'Invalid request'})
 
-
-
+@csrf_exempt
+def reset_password(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        email = data.get('email')
+        
+        try:
+            faculty = Faculty.objects.get(faculty_email=email)
+            
+            # Send password email
+            password = generate_random_password()
+            send_password_email(email, password)
+            
+            # Update faculty model with hashed password
+            faculty.password = make_password(password)
+            faculty.save()
+            
+            response_msg = f"Password sent to {email}"
+            return JsonResponse({'success': True, 'message': "Password reset success"})
+        
+        except Faculty.DoesNotExist:
+            return JsonResponse({'message': 'Faculty does not exist. Please contact the administrator.'})
+    
+    return JsonResponse({'success': 'False', 'message': 'Invalid request'})
 
 
 @csrf_exempt

@@ -23,6 +23,7 @@ function LoginForm() {
   const [isPasswordCreated, setIsPasswordCreated] = useState(false); // Added state for password creation
   const [isPasswordValidated, setIsPasswordValidated] = useState(false); // Added state for password validation
   const [isLoading, setIsLoading] = useState(false); // Added state for loading animation
+  const [isForgotPassword, setIsForgotPassword] = useState(false); // Added state for forgot password
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -124,6 +125,36 @@ function LoginForm() {
     }
   };
 
+  const handleReset = async (e) => {
+    e.preventDefault();
+    if (!formData.email) {
+      alert('Please enter your email');
+      return;
+    }
+    try {
+      setIsLoading(true);
+      const response = await fetch('http://localhost:8000/api/reset-password/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData),
+      });
+  	const data = await response.json();
+      if (data.success) {
+        alert('Password reset successfully!');
+        navigate('/signin');
+        // Perform any necessary state updates here
+      } else {
+        alert(data.message);
+      }
+      setIsLoading(false);
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Error occurred while resetting the password: ' + error);
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -140,6 +171,34 @@ function LoginForm() {
     } else {
       alert('Password is not validated');
     }
+  };
+
+  const handleForgotPassword = () => {
+    setIsForgotPassword(true);
+    setIsSignUp(false);
+    setIsPasswordCreated(false);
+    setFormData({
+      email: '',
+      password: ''
+    });
+    setErrors([]);
+  };
+
+ 
+  
+
+  
+  const handleResetPasswordSubmit = () => {
+    // Perform password reset submission
+    console.log('Reset Password submitted!');
+    setIsForgotPassword(false);
+    setIsSignUp(false);
+    setIsPasswordCreated(false);
+    setFormData({
+      email: '',
+      password: ''
+    });
+    setErrors([]);
   };
 
   // Carousel images and descriptions
@@ -176,6 +235,7 @@ function LoginForm() {
   const handleSignUp = () => {
     setIsSignUp(true);
     setIsPasswordCreated(false);
+    setIsForgotPassword(false);
     setFormData({
       username: '',
       email: '',
@@ -187,6 +247,7 @@ function LoginForm() {
   const handleSignIn = () => {
     setIsSignUp(false);
     setIsPasswordCreated(false);
+    setIsForgotPassword(false);
     setFormData({
       email: '',
       password: ''
@@ -204,7 +265,7 @@ function LoginForm() {
                 key={index}
                 className={`carousel-item ${
                   index === currentSlide ? 'active' : ''
-                  }`}
+                }`}
                 style={{ backgroundImage: item.image }}
               >
                 <div className="carousel-description">
@@ -216,7 +277,31 @@ function LoginForm() {
         </div>
         <div className="box-right">
           <div className="contact">
-            {isSignUp ? (
+            {isForgotPassword ? (
+              <>
+                <form onSubmit={handleResetPasswordSubmit}>
+                  <h3>Reset Password</h3>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="Enter your email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                  />
+                  <button type="submit" className="submit" onClick={handleReset}>
+                  {isLoading ? 'Sending email...' : 'Reset Password'}
+                  </button>
+                  <p>
+                    Remember your password?{' '}
+                    <button className="link-button" onClick={handleSignIn}>
+                      Sign In
+                    </button>
+                  </p>
+                </form>
+              </>
+            ) : isSignUp ? (
               <>
                 <form onSubmit={handleSubmit}>
                   <h3>SIGN UP</h3>
@@ -238,7 +323,7 @@ function LoginForm() {
                     onChange={handleChange}
                     required
                   />
-                   {isOtpSent && isPasswordCreated ? (
+                  {isOtpSent && isPasswordCreated ? (
                     <>
                       <input
                         type="password"
@@ -265,7 +350,7 @@ function LoginForm() {
                     >
                       {isLoading ? 'Sending Email...' : buttonText}
                     </button>
-                    )}
+                  )}
                   <button
                     type="submit"
                     className="submit"
@@ -277,47 +362,55 @@ function LoginForm() {
                   <p>
                     Already have an account?{' '}
                     <button className="link-button" onClick={handleSignIn}>
-                      SignIn
+                      Sign In
                     </button>
                   </p>
                 </form>
               </>
             ) : (
-                <form onSubmit={handleSignInSubmit}>
-                  <h3>SIGN IN</h3>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    placeholder="Enter your email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                  />
-                  <input
-                    type="password"
-                    id="password"
-                    name="password"
-                    placeholder="Enter your password"
-                    value={formData.password}
-                    onChange={handleChange}
-                    required
-                  />
-                  <button
-                    type="submit"
-                    className="submit"
-                    disabled={isLoading}
-                  >
-                    {isLoading ? 'Signing In...' : 'Sign In'}
+              <form onSubmit={handleSignInSubmit}>
+                
+                <h3>SIGN IN</h3>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  placeholder="Enter your email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
+                />
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  placeholder="Enter your password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  required
+                />
+                <p>
+                  Forgot your password?{' '}
+                  <button className="link-button" onClick={handleForgotPassword}>
+                    Reset Password
                   </button>
-                  <p>
-                    Don't have an account?{' '}
-                    <button className="link-button" onClick={handleSignUp}>
-                      SignUp
-                    </button>
-                  </p>
-                </form>
-              )}
+                </p>
+                <button
+                  type="submit"
+                  className="submit"
+                  disabled={isLoading}
+                >
+                  {isLoading ? 'Signing In...' : 'Sign In'}
+                </button>
+                <p>
+                  Don't have an account?{' '}
+                  <button className="link-button" onClick={handleSignUp}>
+                    Sign Up
+                  </button>
+                </p>
+                
+              </form>
+            )}
           </div>
         </div>
       </div>

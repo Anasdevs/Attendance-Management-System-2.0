@@ -6,6 +6,7 @@ import Dashboard from './Components/Dashboard';
 import Attendance from './Components/Attendance';
 import Holidays from './Components/Holidays';
 import Calendar from './Components/Calendar';
+import NotFound from './Components/NotFound';
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -49,6 +50,7 @@ const App = () => {
         ) : (
           <Route path="/login" element={<Navigate to="/dashboard" replace />} />
         )}
+        {isAuthenticated && <Route path="" element={<Navigate to="/dashboard" replace />} />}
         <Route path="*" element={isAuthenticated ? <WithSidebar /> : <Navigate to="/login" />} />
       </Routes>
     </Router>

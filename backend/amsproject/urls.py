@@ -22,6 +22,6 @@ admin.site.site_title = "AMS Admin Panel"
 admin.site.index_title = "AMS MSI"
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
     path("", include(ams.urls)),
+    path('admin/', admin.site.urls),
 ]

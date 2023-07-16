@@ -33,7 +33,7 @@ const Dashboard = () => {
           setFacultyEmail(data.faculty.email);
           setClasses(data.classes);
         } else if (response.status === 302) {
-          navigate('/signin');
+          navigate('/login');
         } else {
           alert('Error occurred while fetching dashboard data.');
         }

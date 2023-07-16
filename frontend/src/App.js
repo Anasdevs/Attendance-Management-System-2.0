@@ -6,7 +6,7 @@ import Dashboard from './Components/Dashboard';
 import Attendance from './Components/Attendance';
 import Holidays from './Components/Holidays';
 import Calendar from './Components/Calendar';
-import NotFound from './Components/NotFound';
+import Profile from './Components/Profile';
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -22,10 +22,7 @@ const App = () => {
         const data = await response.json();
         const { is_authenticated } = data;
 
-        if (is_authenticated) {
-          setIsAuthenticated(true);
-        }
-
+        setIsAuthenticated(is_authenticated);
         setIsLoading(false);
       } catch (error) {
         console.error('Error:', error);
@@ -36,6 +33,25 @@ const App = () => {
 
     checkSession();
   }, []);
+
+  const handleLogout = async () => {
+    try {
+      const response = await fetch('http://localhost:8000/api/logout/', {
+        method: 'POST',
+        credentials: 'include', // Include cookies in the request
+      });
+
+      if (response.ok) {
+        setIsAuthenticated(false);
+      } else {
+        // Handle logout error
+        console.error('Logout failed');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      // Handle error
+    }
+  };
 
   if (isLoading) {
     // Show loading spinner or placeholder while checking session
@@ -51,21 +67,22 @@ const App = () => {
           <Route path="/login" element={<Navigate to="/dashboard" replace />} />
         )}
         {isAuthenticated && <Route path="" element={<Navigate to="/dashboard" replace />} />}
-        <Route path="*" element={isAuthenticated ? <WithSidebar /> : <Navigate to="/login" />} />
+        <Route path="*" element={isAuthenticated ? <WithSidebar handleLogout={handleLogout} /> : <Navigate to="/login" />} />
       </Routes>
     </Router>
   );
 };
 
-const WithSidebar = () => {
+const WithSidebar = ({ handleLogout }) => {
   return (
     <>
-      <Sidebar />
+      <Sidebar handleLogout={handleLogout} />
       <Routes>
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/dashboard/take-attendance/:courseId" element={<Attendance />} />
         <Route path="/holidays" element={<Holidays />} />
         <Route path="/calendar" element={<Calendar />} />
+        <Route path="/profile" element={<Profile handleLogout={handleLogout} />} />
       </Routes>
     </>
   );

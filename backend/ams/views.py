@@ -347,3 +347,14 @@ def generate_attendance_report(request):
         return response
 
     return JsonResponse({'error': 'Invalid request'})
+
+
+
+@csrf_exempt
+def handle_logout(request):
+    if request.method == 'POST':
+        # Delete the session data
+        request.session.flush()
+        return JsonResponse({'message': 'Logout successful'})
+    
+    return JsonResponse({'error': 'Invalid request'})

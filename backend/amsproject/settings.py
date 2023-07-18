@@ -97,11 +97,11 @@ EMAIL_USE_TLS = True
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'DB_NAME': 'AMS',
-        'DB_USER': 'Amit',
-        'DB_PASSWORD': 'Amit71.',
-        'HOST': 'localhost',  
-        'PORT': '3306',  
+        'NAME': 'ams',
+        'USER': 'root',
+        'PASSWORD': 'ams@2.0',
+        'HOST': 'localhost',
+        'PORT': '3306',
     }
 }
 

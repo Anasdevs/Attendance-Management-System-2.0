@@ -7,6 +7,7 @@ import Attendance from './Components/Attendance';
 import Holidays from './Components/Holidays';
 import Calendar from './Components/Calendar';
 import Profile from './Components/Profile';
+import NotFound from './Components/NotFound'
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -83,6 +84,7 @@ const WithSidebar = ({ handleLogout }) => {
         <Route path="/holidays" element={<Holidays />} />
         <Route path="/calendar" element={<Calendar />} />
         <Route path="/profile" element={<Profile handleLogout={handleLogout} />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </>
   );

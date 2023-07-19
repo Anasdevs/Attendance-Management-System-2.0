@@ -19,9 +19,13 @@ from datetime import datetime
 from django.db.models import Q, Case, When, Value, Subquery, OuterRef
 from django.db.models.functions import Coalesce
 import csv
-
+from django.shortcuts import redirect
+from django.urls import reverse
 dotenv.load_dotenv()
 
+@csrf_exempt
+def admin_login_redirect(request):
+    return redirect(reverse('admin:index'))
 
 @csrf_exempt
 def send_password(request):

@@ -349,7 +349,14 @@ console.log(formattedDate);
                   </td>
                 </tr>
               ))}
-            </tbody>):(<Skeleton count={5} height={10}/>)}
+            </tbody>):(<tbody>
+                <tr>
+                  <td colSpan={3}>
+                    <Skeleton count={5} height={40} />
+                  </td>
+                </tr>
+              </tbody>
+)}
           </table>
         </div>
         <button

@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { format, addDays, subDays, isToday } from 'date-fns';
-import { utcToZonedTime } from 'date-fns-tz'; // Import the utcToZonedTime function
+import { utcToZonedTime } from 'date-fns-tz'; 
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 import './Attendance.css';
 import { useParams } from 'react-router-dom';
-import facultyImage from './Images/faculty.png';
+import defaultFacultyImage from './Images/faculty.png';
 
 export default function Attendance() {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -249,14 +251,22 @@ console.log(formattedDate);
     <div className="page-container">
       <div className="rightbar">
         <div className="image">
-         {facultyImage ? (
+        {facultyImage ? (
             <img src={facultyImage} alt="Faculty" />
           ) : (
-            <img src={facultyImage} alt="Default Faculty" /> // Display a default image if no faculty image is available
+            <Skeleton circle height={70} width={70}/> // Display a default image if no faculty image is available
           )}
           <div className="faculty-info">
-            <p className="faculty-name">{facultyName}</p>
-            <p className="faculty-email">{facultyEmail}</p>
+            {facultyName ? (
+              <p className="faculty-name">{facultyName}</p>
+            ) : (
+              <Skeleton width={150} />
+            )}
+            {facultyEmail ? (
+              <p className="faculty-email">{facultyEmail}</p>
+            ) : (
+              <Skeleton count={1} />
+            )}
           </div>
           <div className="date">
   {isCurrentDate && <div className="today-date">Today</div>}
@@ -307,6 +317,7 @@ console.log(formattedDate);
           </div>
         </div>
         <div className="attendance-container">
+          
           <table className="attendance-table">
             <thead>
               <tr>
@@ -315,6 +326,7 @@ console.log(formattedDate);
                 <th>Attendance</th>
               </tr>
             </thead>
+            {isDataFetched? (
             <tbody>
               {attendanceData.map((student) => (
                 <tr key={student.enrolment_no}>
@@ -337,7 +349,7 @@ console.log(formattedDate);
                   </td>
                 </tr>
               ))}
-            </tbody>
+            </tbody>):(<Skeleton count={5} height={10}/>)}
           </table>
         </div>
         <button

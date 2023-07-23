@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 import { useNavigate } from 'react-router-dom';
 import './Dashboard.css';
 import { format } from 'date-fns';
-import Attendance from './Attendance';
+import defaultFacultyImage from './Images/faculty.png'
+
 
 const Dashboard = () => {
   const [facultyName, setFacultyName] = useState('');
@@ -66,14 +69,22 @@ const Dashboard = () => {
     <div className="page-container">
       <div className="rightbar">
         <div className="image">
-          {facultyImage ? (
+        {facultyImage ? (
             <img src={facultyImage} alt="Faculty" />
           ) : (
-            <img src={facultyImage} alt="Default Faculty" /> // Display a default image if no faculty image is available
+            <Skeleton circle height={70} width={70}/> // Display a default image if no faculty image is available
           )}
           <div className="faculty-info">
-            <p className="faculty-name">{facultyName}</p>
-            <p className="faculty-email">{facultyEmail}</p>
+            {facultyName ? (
+              <p className="faculty-name">{facultyName}</p>
+            ) : (
+              <Skeleton width={150} />
+            )}
+            {facultyEmail ? (
+              <p className="faculty-email">{facultyEmail}</p>
+            ) : (
+              <Skeleton count={1} />
+            )}
           </div>
 
           <div className="date">
@@ -91,51 +102,54 @@ const Dashboard = () => {
           />
         </div>
         <div className="table-container">
-          <table className="table">
-            <thead>
-              <tr>
-                <th>Course ID</th>
-                <th>Course</th>
-                <th>Semester</th>
-                <th>Section</th>
-                <th>Subject</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredRows.map((row, index) => (
-                <tr key={index}>
-                  <td>{row.course_id}</td>
-                  <td>{row.course}</td>
-                  <td>{row.semester}</td>
-                  <td>{row.section}</td>
-                  <td>{row.subject}</td>
-                  <td>
-                    <button
-                      onClick={() => handleTakeAttendance(row.course_id)}
-                      className="action-button"
-                    >
-                      TAKE ATTENDANCE
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-            {isDataFetched && filteredRows.length === 0 && (
-              <tfoot>
+          {isDataFetched ? (
+            <table className="table">
+              <thead>
                 <tr>
-                  <td colSpan="6" className="no-records">
-                    No records found.
-                  </td>
+                  <th>Course ID</th>
+                  <th>Course</th>
+                  <th>Semester</th>
+                  <th>Section</th>
+                  <th>Subject</th>
+                  <th>Actions</th>
                 </tr>
-              </tfoot>
-            )}
-          </table>
+              </thead>
+              <tbody>
+                {filteredRows.map((row, index) => (
+                  <tr key={index}>
+                    <td>{row.course_id}</td>
+                    <td>{row.course}</td>
+                    <td>{row.semester}</td>
+                    <td>{row.section}</td>
+                    <td>{row.subject}</td>
+                    <td>
+                      <button
+                        onClick={() => handleTakeAttendance(row.course_id)}
+                        className="action-button"
+                      >
+                        TAKE ATTENDANCE
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+              {filteredRows.length === 0 && (
+                <tfoot>
+                  <tr>
+                    <td colSpan="6" className="no-records">
+                      No records found.
+                    </td>
+                  </tr>
+                </tfoot>
+              )}
+            </table>
+          ) : (
+            <Skeleton count={5}/>
+          )}
         </div>
       </div>
     </div>
   );
 };
 
-{/* <Attendance facultyEmail={facultyEmail} facultyName={facultyName}/> */}
 export default Dashboard;

@@ -8,7 +8,6 @@ import Holidays from './Components/Holidays';
 import Calendar from './Components/Calendar';
 import Profile from './Components/Profile';
 import NotFound from './Components/NotFound'
-
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -55,7 +54,6 @@ const App = () => {
   };
 
   if (isLoading) {
-    // Show loading spinner or placeholder while checking session
     return <div>Loading...</div>;
   }
 

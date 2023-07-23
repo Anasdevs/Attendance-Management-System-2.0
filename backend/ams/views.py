@@ -67,7 +67,6 @@ def send_password_email(email, password):
     # Compose email message
     subject = 'Your Account Password for AMS'
     message = f'Your account password is: {password}'
-    # from_email = settings.EMAIL_HOST_USER  # Access EMAIL_HOST_USER from settings
     from_email = os.environ.get('EMAIL_HOST_USER')
     recipient_list = [email]
     print(from_email)
@@ -113,11 +112,7 @@ def signin(request):
             if check_password(password_entered, faculty.password):
                 # Create a session for the authenticated user
                 request.session['faculty_email'] = faculty.faculty_email
-                # print(faculty.faculty_email)
-                request.session.save()  # Save the session data
-                # print(request.session.session_key) 
-                # faculty_email = request.session.get('faculty_email')
-                # print(faculty_email)
+                request.session.save()
 
                 return JsonResponse({'success': True, 'message': 'Password validated successfully!'})
             else:
@@ -139,8 +134,6 @@ def check_session(request):
     is_authenticated = bool(faculty_email)
     print(is_authenticated)
     return JsonResponse({'is_authenticated': is_authenticated})
-
-
 
 
 @csrf_exempt
@@ -228,9 +221,6 @@ def take_attendance(request):
             student_id=OuterRef('pk'),
             date=date
         ).values('status', 'date')
-
-        # print(attendance_subquery)
-        
         student_data = Student.objects.filter(class_attendance__course_id=course_id).values(
             'enrolment_no',
             'name',
@@ -238,8 +228,6 @@ def take_attendance(request):
             filtered_status=Coalesce(Subquery(attendance_subquery.values('status')), Value(None)),
             filtered_date=Coalesce(Subquery(attendance_subquery.values('date')), Value(None)),
         ).distinct()
-
-        # print(student_data)
         students = []
         for data in student_data:
             student = {
@@ -306,9 +294,8 @@ def generate_attendance_report(request):
     if request.method == 'GET':
         start_date = request.GET.get('startDate')
         end_date = request.GET.get('endDate')
-        course_id = request.GET.get('courseId')  # Add courseId parameter to get the class ID
+        course_id = request.GET.get('courseId') 
 
-        # Fetch attendance data based on the provided start date, end date, and class ID
         attendance_data = Attendance.objects.filter(
             date__range=[start_date, end_date],
             class_attendance__course_id=course_id

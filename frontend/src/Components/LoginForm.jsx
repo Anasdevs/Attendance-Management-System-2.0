@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-
+import {useNavigate } from 'react-router-dom';
 import attendanceTracking from './Images/noteslist.svg';
 import attendanceTaking from './Images/onlinecalendar.svg';
 import attendanceCompiling from './Images/segmentanalysis.svg';
@@ -16,14 +15,13 @@ function LoginForm() {
 
   const [errors, setErrors] = useState([]);
   const [isOtpSent, setIsOtpSent] = useState(false);
-  const [isOtpVerified, setIsOtpVerified] = useState(false);
   const [otpTimer, setOtpTimer] = useState(120);
+  const [currentSlide, setCurrentSlide] = useState(0);
   const [isSignUp, setIsSignUp] = useState(false); // Added state for signup
   const [isPasswordCreated, setIsPasswordCreated] = useState(false); // Added state for password creation
   const [isPasswordValidated, setIsPasswordValidated] = useState(false); // Added state for password validation
   const [isLoading, setIsLoading] = useState(false); // Added state for loading animation
   const [isForgotPassword, setIsForgotPassword] = useState(false); // Added state for forgot password
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -46,7 +44,7 @@ function LoginForm() {
       });
 
       const data = await response.json();
-      alert(data.message); // Show response message from the backend
+      alert(data.message); 
 
       if (response.status === 200) {
         setIsOtpSent(true);
@@ -145,7 +143,6 @@ function LoginForm() {
       if (data.success) {
         alert('Password reset successfully!');
         navigate('/signin');
-        // Perform any necessary state updates here
       } else {
         alert(data.message);
       }
@@ -158,15 +155,11 @@ function LoginForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    // Perform authentication or further processing
-    // Here, we are just displaying the form data
     console.log(formData);
   };
 
   const handleSignUpSubmit = () => {
     if (isPasswordValidated) {
-      // Perform signup submission
       console.log('SignUp submitted!');
       navigate('/signin'); // Redirect to SignIn component
     } else {
@@ -184,13 +177,8 @@ function LoginForm() {
     });
     setErrors([]);
   };
-
- 
-  
-
   
   const handleResetPasswordSubmit = () => {
-    // Perform password reset submission
     console.log('Reset Password submitted!');
     setIsForgotPassword(false);
     setIsSignUp(false);
@@ -218,7 +206,6 @@ function LoginForm() {
     }
   ];
 
-  const [currentSlide, setCurrentSlide] = useState(0);
   const buttonText = isOtpSent
     ? `Resend Password in ${Math.floor(otpTimer / 60)}:${otpTimer % 60
     .toString()
@@ -409,7 +396,6 @@ function LoginForm() {
                     Sign Up
                   </button>
                 </p>
-                
               </form>
             )}
           </div>

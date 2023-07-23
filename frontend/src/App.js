@@ -56,9 +56,9 @@ const App = () => {
     }
   };
 
-  // if (isLoading) {
-  //   return <div><Skeleton/></div>;
-  // }
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <Router>

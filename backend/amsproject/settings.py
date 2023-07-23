@@ -1,5 +1,6 @@
 from pathlib import Path
 from decouple import config
+import os
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -29,6 +30,12 @@ CORS_ORIGIN_WHITELIST = [
     'http://localhost:3000'
 ]
 
+
+# Define the path to store the uploaded images
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# # Define the base URL to serve the uploaded images
+# MEDIA_URL = '/media/'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

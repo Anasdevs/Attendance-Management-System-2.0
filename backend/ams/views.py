@@ -59,12 +59,6 @@ def send_password(request):
 
     return JsonResponse({'error': 'Invalid request'})
 
-# Rest of the code remains the same...
-
-
-
-
-
 
 def generate_random_password(length=8):
     # Generate a random password of the specified length
@@ -83,10 +77,6 @@ def send_password_email(email, password):
     # Send email
     send_mail(subject, message, from_email, recipient_list)
 
-
-from django.contrib.auth import authenticate
-
-# ...
 
 @csrf_exempt
 def validate_password(request):
@@ -112,8 +102,6 @@ def validate_password(request):
 
     return JsonResponse({'success': False, 'message': 'Invalid request'})
 
-
-    
 @csrf_exempt
 def signin(request):
     if request.method == 'POST':
@@ -145,6 +133,8 @@ def signin(request):
         return JsonResponse({'success': False, 'message': 'Invalid request'})
     
 
+
+#To check if user is authenticated (for react)
 @csrf_exempt
 def check_session(request):
     faculty_email = request.session.get('faculty_email')
@@ -186,14 +176,21 @@ def reset_password(request):
 def dashboard_data(request):
     try:
         faculty_email = request.session.get('faculty_email')
-        # print(faculty_email)
 
         if faculty_email:
             faculty = Faculty.objects.get(faculty_email=faculty_email)
 
+            # Get the faculty image URL
+            faculty_image_url = faculty.faculty_image.url if faculty.faculty_image else None
+
+            # Build the absolute URL for the faculty image
+            if faculty_image_url:
+                faculty_image_url = request.build_absolute_uri(faculty_image_url)
+
             faculty_data = {
-                'name': faculty.faculty_name,  # Use faculty_name instead of name
-                'email': faculty.faculty_email
+                'name': faculty.faculty_name,
+                'email': faculty.faculty_email,
+                'image_url': faculty_image_url,
             }
 
             assigned_classes = faculty.get_assigned_classes()
@@ -222,6 +219,7 @@ def dashboard_data(request):
 
     except Faculty.DoesNotExist:
         return JsonResponse({'error': 'Faculty not found'})
+
     
 @csrf_exempt
 def take_attendance(request):

@@ -1,17 +1,17 @@
-import React, { createContext, useState, useEffect } from 'react';
-import { NavLink, useHistory, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Dashboard.css';
-import facultyImage from './Images/faculty.png';
 import { format } from 'date-fns';
 import Attendance from './Attendance';
 
 const Dashboard = () => {
   const [facultyName, setFacultyName] = useState('');
   const [facultyEmail, setFacultyEmail] = useState('');
+  const [facultyImage, setFacultyImage] = useState(null); // New state for faculty image
   const [classes, setClasses] = useState([]);
   const [isDataFetched, setIsDataFetched] = useState(false);
 
-  const today = format(new Date(), 'EEE, dd-MMM-yyyy'); // Get the current date with the day
+  const today = format(new Date(), 'EEE, dd-MMM-yyyy');
 
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -24,13 +24,15 @@ const Dashboard = () => {
       try {
         const response = await fetch('http://localhost:8000/api/dashboard-data/', {
           method: 'GET',
-          credentials: 'include', // Include cookies in the request
+          credentials: 'include',
         });
 
         if (response.status === 200) {
           const data = await response.json();
+          console.log(data);
           setFacultyName(data.faculty.name);
           setFacultyEmail(data.faculty.email);
+          setFacultyImage(data.faculty.image_url); // Set the faculty image URL
           setClasses(data.classes);
         } else if (response.status === 302) {
           navigate('/login');
@@ -64,12 +66,16 @@ const Dashboard = () => {
     <div className="page-container">
       <div className="rightbar">
         <div className="image">
-          <img src={facultyImage} alt="Faculty" />
+          {facultyImage ? (
+            <img src={facultyImage} alt="Faculty" />
+          ) : (
+            <img src={facultyImage} alt="Default Faculty" /> // Display a default image if no faculty image is available
+          )}
           <div className="faculty-info">
             <p className="faculty-name">{facultyName}</p>
             <p className="faculty-email">{facultyEmail}</p>
           </div>
-         
+
           <div className="date">
             <div className="today-date">Today</div>
             <div className="today-date">{today}</div>

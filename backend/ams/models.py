@@ -25,6 +25,7 @@ class Faculty(AbstractBaseUser):
     faculty_name = models.CharField(max_length=100)
     faculty_email = models.EmailField(unique=True)
     password = models.CharField(max_length=128, blank=True, default= None)
+    faculty_image = models.ImageField(upload_to='faculty_images/', blank=True, null=True)
 
     objects = FacultyManager()
 

@@ -1,26 +1,23 @@
-from django.contrib.auth.hashers import make_password, check_password
-import os
-from django.core.mail import send_mail
-from django.conf import settings
-import dotenv
-from django.http import JsonResponse
+from django.shortcuts import redirect
 import string
 import random
 import json
-from django.views.decorators.csrf import csrf_exempt
-from django.http import HttpResponse
+from django.core.mail import send_mail
+from django.contrib.auth.hashers import make_password, check_password
+from django.http import JsonResponse
 from ams.models import Faculty, Class, Student, Attendance
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth import authenticate, login
+from django.views.decorators.csrf import csrf_exempt
 from django.core.exceptions import ObjectDoesNotExist
-from django.shortcuts import get_object_or_404
 from django.views.decorators.http import require_POST
 from datetime import datetime
-from django.db.models import Q, Case, When, Value, Subquery, OuterRef
+from django.db.models import Q, Value, Subquery, OuterRef
 from django.db.models.functions import Coalesce
 import csv
-from django.shortcuts import redirect
+from django.http import HttpResponse
 from django.urls import reverse
+import os
+import dotenv
+
 dotenv.load_dotenv()
 
 @csrf_exempt

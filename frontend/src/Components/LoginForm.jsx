@@ -14,6 +14,7 @@ function LoginForm() {
   });
 
   const [errors, setErrors] = useState([]);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isOtpSent, setIsOtpSent] = useState(false);
   const [otpTimer, setOtpTimer] = useState(120);
   const [currentSlide, setCurrentSlide] = useState(0);

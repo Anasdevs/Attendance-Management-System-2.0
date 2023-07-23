@@ -22,9 +22,8 @@ export default function Attendance() {
   const [endDate, setEndDate] = useState('');
   const [studentId, setStudentId] = useState('');
   const [isLoading, setIsLoading] = useState(false); // Added state for loading animation
+  const [facultyImage, setFacultyImage] = useState(null);
 
-
- 
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
@@ -71,6 +70,8 @@ console.log(formattedDate);
           const data = await response.json();
           setFacultyName(data.faculty.name);
           setFacultyEmail(data.faculty.email);
+          setFacultyImage(data.faculty.image_url); // Set the faculty image URL
+
         } else {
           alert('Error occurred while fetching dashboard data.');
         }
@@ -248,7 +249,11 @@ console.log(formattedDate);
     <div className="page-container">
       <div className="rightbar">
         <div className="image">
-          <img src={facultyImage} alt="Faculty" />
+         {facultyImage ? (
+            <img src={facultyImage} alt="Faculty" />
+          ) : (
+            <img src={facultyImage} alt="Default Faculty" /> // Display a default image if no faculty image is available
+          )}
           <div className="faculty-info">
             <p className="faculty-name">{facultyName}</p>
             <p className="faculty-email">{facultyEmail}</p>

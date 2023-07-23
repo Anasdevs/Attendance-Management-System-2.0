@@ -8,13 +8,9 @@ class FacultyManager(BaseUserManager):
             faculty_name=faculty_name,
             faculty_email=faculty_email,
         )
-
         # Set the password
         faculty.set_password(password)
-        
-        # Save the Faculty instance
-        faculty.save()
-
+        faculty.save();
         return faculty
 
 class Faculty(AbstractBaseUser):
@@ -58,7 +54,6 @@ class Student(models.Model):
         return self.name
 
 
-
 class Attendance(models.Model):
     student = models.ForeignKey('Student', on_delete=models.CASCADE)
     class_attendance = models.ForeignKey('Class', on_delete=models.CASCADE, default=1)
@@ -66,7 +61,7 @@ class Attendance(models.Model):
     status = models.CharField(
     max_length=10,
     choices=(
-        (None, 'Not marked'),  # Add a default option with None value
+        (None, 'Not marked'), 
         ('Present', 'Present'),
         ('Absent', 'Absent'),
     ),
@@ -74,9 +69,10 @@ class Attendance(models.Model):
     default=None
 )
 
-    def __str__(self):
+
+def __str__(self):
         return f"{self.student.name} - {self.class_attendance} - {self.date.strftime('%d %m %Y')}"
 
-    class Meta:
+class Meta:
         unique_together = ('student', 'date',)
 

@@ -8,6 +8,10 @@ import Holidays from './Components/Holidays';
 import Calendar from './Components/Calendar';
 import Profile from './Components/Profile';
 import NotFound from './Components/NotFound'
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css'
+
+
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -49,13 +53,12 @@ const App = () => {
       }
     } catch (error) {
       console.error('Error:', error);
-      // Handle error
     }
   };
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+  // if (isLoading) {
+  //   return <div><Skeleton/></div>;
+  // }
 
   return (
     <Router>

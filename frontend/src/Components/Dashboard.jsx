@@ -102,20 +102,20 @@ const Dashboard = () => {
           />
         </div>
         <div className="table-container">
-          {isDataFetched ? (
-            <table className="table">
-              <thead>
-                <tr>
-                  <th>Course ID</th>
-                  <th>Course</th>
-                  <th>Semester</th>
-                  <th>Section</th>
-                  <th>Subject</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredRows.map((row, index) => (
+          <table className="table">
+            <thead>
+              <tr>
+                <th>Course ID</th>
+                <th>Course</th>
+                <th>Semester</th>
+                <th>Section</th>
+                <th>Subject</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {isDataFetched ? (
+                filteredRows.map((row, index) => (
                   <tr key={index}>
                     <td>{row.course_id}</td>
                     <td>{row.course}</td>
@@ -131,21 +131,16 @@ const Dashboard = () => {
                       </button>
                     </td>
                   </tr>
-                ))}
-              </tbody>
-              {filteredRows.length === 0 && (
-                <tfoot>
-                  <tr>
-                    <td colSpan="6" className="no-records">
-                      No records found.
-                    </td>
-                  </tr>
-                </tfoot>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan={6}>
+                    <Skeleton count={5} height={35} width="100%" />
+                  </td>
+                </tr>
               )}
-            </table>
-          ) : (
-            <Skeleton count={5}/>
-          )}
+            </tbody>
+          </table>
         </div>
       </div>
     </div>

@@ -1,6 +1,5 @@
 from pathlib import Path
 from decouple import config
-import os
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -30,13 +29,6 @@ CORS_ORIGIN_WHITELIST = [
     'http://localhost:3000'
 ]
 
-
-# Define the path to store the uploaded images
-# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-# # Define the base URL to serve the uploaded images
-# MEDIA_URL = '/media/'
-
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'corsheaders.middleware.CorsMiddleware',
@@ -47,8 +39,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
-
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
@@ -93,13 +83,6 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 EMAIL_USE_TLS = True
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
 
 DATABASES = {
     'default': {

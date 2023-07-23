@@ -4,20 +4,17 @@ import 'react-loading-skeleton/dist/skeleton.css'
 import { useNavigate } from 'react-router-dom';
 import './Dashboard.css';
 import { format } from 'date-fns';
-import defaultFacultyImage from './Images/faculty.png'
+// import defaultFacultyImage from './Images/faculty.png'
 
 
 const Dashboard = () => {
   const [facultyName, setFacultyName] = useState('');
   const [facultyEmail, setFacultyEmail] = useState('');
-  const [facultyImage, setFacultyImage] = useState(null); // New state for faculty image
+  const [facultyImage, setFacultyImage] = useState(null);
   const [classes, setClasses] = useState([]);
   const [isDataFetched, setIsDataFetched] = useState(false);
-
   const today = format(new Date(), 'EEE, dd-MMM-yyyy');
-
   const [searchTerm, setSearchTerm] = useState('');
-
   const handleSearch = (event) => {
     setSearchTerm(event.target.value.toLowerCase());
   };
@@ -72,7 +69,7 @@ const Dashboard = () => {
         {facultyImage ? (
             <img src={facultyImage} alt="Faculty" />
           ) : (
-            <Skeleton circle height={70} width={70}/> // Display a default image if no faculty image is available
+            <Skeleton circle height={70} width={70}/>
           )}
           <div className="faculty-info">
             {facultyName ? (
@@ -86,7 +83,6 @@ const Dashboard = () => {
               <Skeleton count={1} />
             )}
           </div>
-
           <div className="date">
             <div className="today-date">Today</div>
             <div className="today-date">{today}</div>

@@ -70,9 +70,9 @@ class Attendance(models.Model):
 )
 
 
-def __str__(self):
-        return f"{self.student.name} - {self.class_attendance} - {self.date.strftime('%d %m %Y')}"
+    def __str__(self):
+            return f"{self.student.name} - {self.class_attendance} - {self.date.strftime('%d %m %Y')}"
 
-class Meta:
-        unique_together = ('student', 'date',)
+    class Meta:
+            unique_together = ('student', 'date',)
 

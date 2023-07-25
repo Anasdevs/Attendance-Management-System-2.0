@@ -4,6 +4,7 @@ import 'react-loading-skeleton/dist/skeleton.css'
 import { useNavigate } from 'react-router-dom';
 import './Dashboard.css';
 import { format } from 'date-fns';
+import LoadingBar from 'react-top-loading-bar';
 // import defaultFacultyImage from './Images/faculty.png'
 
 
@@ -15,12 +16,15 @@ const Dashboard = () => {
   const [isDataFetched, setIsDataFetched] = useState(false);
   const today = format(new Date(), 'EEE, dd-MMM-yyyy');
   const [searchTerm, setSearchTerm] = useState('');
+  const [loadingProgress, setLoadingProgress] = useState(0);
+
   const handleSearch = (event) => {
     setSearchTerm(event.target.value.toLowerCase());
   };
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoadingProgress(30);
       try {
         const response = await fetch('http://localhost:8000/api/dashboard-data/', {
           method: 'GET',
@@ -39,9 +43,9 @@ const Dashboard = () => {
         } else {
           alert('Error occurred while fetching dashboard data.');
         }
-      } catch (error) {
-        console.error('Error:', error);
-        alert('Error occurred while fetching dashboard data.');
+      } finally {
+        setIsDataFetched(true);
+        setLoadingProgress(100); // Set the loading bar progress when data fetching is completed
       }
     };
 
@@ -49,6 +53,7 @@ const Dashboard = () => {
       .then(() => setIsDataFetched(true))
       .catch(() => setIsDataFetched(true));
   }, []);
+
 
   const navigate = useNavigate();
 
@@ -64,6 +69,7 @@ const Dashboard = () => {
 
   return (
     <div className="page-container">
+       <LoadingBar progress={loadingProgress} color="#111137" height={4} />
       <div className="rightbar">
         <div className="image">
         {facultyImage ? (

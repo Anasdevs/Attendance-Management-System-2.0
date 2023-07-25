@@ -5,9 +5,11 @@ import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import './Attendance.css';
 import { useParams } from 'react-router-dom';
+import LoadingBar from 'react-top-loading-bar';
 // import defaultFacultyImage from './Images/faculty.png';
 
 export default function Attendance() {
+  const [loadingProgress, setLoadingProgress] = useState(0);
   const [currentDate, setCurrentDate] = useState(new Date());
   const timeZone = 'Asia/Kolkata';
   const zonedDate = utcToZonedTime(currentDate, timeZone);
@@ -54,6 +56,7 @@ export default function Attendance() {
       console.error('Error:', error);
       alert('Error occurred while fetching student records.');
     }
+    setLoadingProgress(100);
   };
 
   useEffect(() => {
@@ -80,7 +83,7 @@ export default function Attendance() {
       } catch (error) {
         console.error('Error:', error);
         alert('Error occurred while fetching dashboard data.');
-      }
+      }setLoadingProgress(100);
     };
 
     fetchData()
@@ -235,6 +238,7 @@ export default function Attendance() {
 
   return (
     <div className="page-container">
+      <LoadingBar progress={loadingProgress} color="#111137" height={4} />
       <div className="rightbar">
         <div className="image">
           {facultyImage ? (
@@ -312,45 +316,53 @@ export default function Attendance() {
               </tr>
             </thead>
             {isDataFetched ? (
-              <tbody>
-                {attendanceData.map((student) => (
-                  <tr key={student.enrolment_no}>
-                    <td>{student.enrolment_no}</td>
-                    <td>{student.name}</td>
-                    <td>
-                      <input
-                        id={`attendance-input-${student.enrolment_no}`}
-                        type="checkbox"
-                        checked={student.attendance__status === 'Present'}
-                        onChange={() =>
-                          markAttendance(
-                            student.enrolment_no,
-                            student.attendance__status === 'Present' ? 'Absent' : 'Present'
-                          )
-                        }
-                        onKeyPress={(event) => handleKeyPress(event, student.enrolment_no)}
-                        data-status={student.attendance__status ? student.attendance__status : 'none'}
-                      />
-                    </td>
-                  </tr>
-                ))}
-              </tbody>) : (<tbody>
-                <tr>
-                  <td colSpan={3}>
-                    <Skeleton count={5} height={40} />
+            <tbody>
+              {attendanceData.map((student) => (
+                <tr key={student.enrolment_no}>
+                  <td>{student.enrolment_no}</td>
+                  <td>{student.name}</td>
+                  <td>
+                    <input
+                      id={`attendance-input-${student.enrolment_no}`}
+                      type="checkbox"
+                      checked={student.attendance__status === 'Present'}
+                      onChange={() =>
+                        markAttendance(
+                          student.enrolment_no,
+                          student.attendance__status === 'Present' ? 'Absent' : 'Present'
+                        )
+                      }
+                      onKeyPress={(event) => handleKeyPress(event, student.enrolment_no)}
+                      data-status={student.attendance__status ? student.attendance__status : 'none'}
+                    />
                   </td>
                 </tr>
-              </tbody>
-            )}
-          </table>
-        </div>
-        <button
-          className={`submit-button${isSubmitting ? ' submitting' : ''}`}
-          onClick={handleSubmitAttendance}
-        >
-          {isSubmitting ? 'Submitting...' : 'Submit Attendance'}
-        </button>
+              ))}
+              {attendanceData.length === 0 && (
+                <tr>
+                  <td colSpan={3} style={{ textAlign: 'center' }}>
+                    No Records Found
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          ) : (
+            <tbody>
+              <tr>
+                <td colSpan={3}>
+                  <Skeleton count={5} height={40} />
+                </td>
+              </tr>
+            </tbody>
+          )}
+        </table>
       </div>
+      <button
+        className={`submit-button${isSubmitting ? ' submitting' : ''}`}
+        onClick={handleSubmitAttendance}
+      >
+        {isSubmitting ? 'Submitting...' : 'Submit Attendance'}
+      </button>
     </div>
-  );
-}
+  </div>
+)};

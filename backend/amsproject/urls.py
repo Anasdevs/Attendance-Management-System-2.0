@@ -5,7 +5,7 @@ from django.conf.urls.static import static  # Import static from django.conf.url
 
 admin.site.site_header = "Attendance Management System for MSI"
 admin.site.site_title = "AMS Admin Panel"
-admin.site.index_title = "AMS MSI"
+admin.site.index_title = "Attendance Management System - MSI"
 
 urlpatterns = [
     path('admin/', admin.site.urls),

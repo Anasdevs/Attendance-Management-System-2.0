@@ -10,6 +10,7 @@ import LoadingBar from 'react-top-loading-bar';
 
 export default function Attendance() {
   const [loadingProgress, setLoadingProgress] = useState(0);
+  const { courseId } = useParams();
   const [currentDate, setCurrentDate] = useState(new Date());
   const timeZone = 'Asia/Kolkata';
   const zonedDate = utcToZonedTime(currentDate, timeZone);
@@ -19,8 +20,9 @@ export default function Attendance() {
   const [facultyName, setFacultyName] = useState('');
   const [facultyEmail, setFacultyEmail] = useState('');
   const [attendanceData, setAttendanceData] = useState([]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const [className, setClassName] = useState('');
-  const { courseId } = useParams();
   const [isDataFetched, setIsDataFetched] = useState(false);
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
@@ -176,9 +178,6 @@ export default function Attendance() {
   const getTotalAbsent = () => {
     return attendanceData.filter((student) => student.attendance__status === 'Absent').length;
   };
-
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleSubmitAttendance = () => {
     setIsSubmitting(true);

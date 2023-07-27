@@ -1,8 +1,129 @@
 .rightbar {
-    width: 85%;
-    padding: 20px;
-    margin-left: 12%;
-    overflow-y: auto;
-    background: #f5f4fa
+  width: 85%;
+  padding: 20px;
+  margin-left: 12%;
+  overflow-y: auto;
+  background: #f5f4fa;
+  height: 100vh;
+}
+.profile-container {
+  display: flex;
+  margin-top: 5%;
+}
+
+.profile-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin: 0 0 0 10%;
+}
+
+.date{
+  position: absolute;
+  right: 50px;
+  top: 20px;
+}
+
+
+.faculty-image {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border: 2px solid goldenrod;
+  margin-bottom: 20px;
+  transform: scale(1);
+  transition: transform 0.2s ease-in-out;
+}
+
+.faculty-image:hover {
+  transform: scale(1.05);
+}
+
+.faculty-name {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.faculty-name p {
+  font-size: 18px;
+  color: #777;
+  margin: 0;
+}
+
+
+.profile-right {
+  background-color: #021932fc;
+  margin: 0 0 0 5%;
+  padding: 50px;
+  border-radius: 10px;
+  border: 4px solid rgb(4, 4, 92);
+}
+
+.faculty-dept {
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+  margin-bottom: 10px;
+}
+
+.faculty-qualification,
+.faculty-email {
+  font-size: 16px;
+  color: white;
+  margin: 5px 0;
+}
+
+.dept-heading, .qualification-heading, .email-heading{
+  color: wheat;
+  font-weight: 400;
+}
+
+.profile-actions {
+  margin-top: 20px;
+}
+
+.contact-admin-button,
+.logout-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #fff;
+  transition: background-color 0.3s ease;
+}
+
+.contact-admin-button {
+  background-color: #007bff;
+}
+
+.logout-button {
+  margin-left: 10px;
+  background-color: #dc3545;
+}
+
+.contact-admin-button:hover{
+  background-color: rgb(37, 116, 181);
+}
+.logout-button:hover {
+  background-color: rgb(199, 52, 52);
+}
+
+@media screen and (max-width: 768px) {
+  .profile-left {
+    flex-direction: column;
+    align-items: flex-start;
   }
 
+  .faculty-image {
+    width: 150px;
+    height: 150px;
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+}

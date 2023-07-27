@@ -69,7 +69,6 @@ def send_password_email(email, password):
     message = f'Your account password is: {password}'
     from_email = os.environ.get('EMAIL_HOST_USER')
     recipient_list = [email]
-    print(from_email)
     # Send email
     send_mail(subject, message, from_email, recipient_list)
 
@@ -130,9 +129,7 @@ def signin(request):
 @csrf_exempt
 def check_session(request):
     faculty_email = request.session.get('faculty_email')
-    print("Faculty email:", faculty_email)
     is_authenticated = bool(faculty_email)
-    print(is_authenticated)
     return JsonResponse({'is_authenticated': is_authenticated})
 
 
@@ -237,9 +234,7 @@ def take_attendance(request):
                 'attendance__date': data['filtered_date'],
             }
             students.append(student)
-        # print(students)
         response_data = {'students': students}
-        # print(response_data)
         return JsonResponse(response_data)
         
 
@@ -259,14 +254,11 @@ def submit_attendance(request):
             enrolment_no = fields.get('enrolment_no')
             attendance_status = fields.get('attendance__status')
             attendance_date_str = fields.get('attendance_date')
-            print(attendance_date_str)
-
             if(attendance_date_str == None):
                 continue
 
             # Convert the date string to a datetime object
             attendance_date = datetime.fromisoformat(attendance_date_str)
-            print(attendance_date)
 
             # Retrieve the student by enrolment_no
             student_obj = Student.objects.get(enrolment_no=enrolment_no, class_attendance=class_obj)
@@ -284,7 +276,6 @@ def submit_attendance(request):
 
         return JsonResponse({'message': 'Attendance submitted successfully'})
     except Exception as e:
-        print("Exception:", e)
         return JsonResponse({'error': str(e)})
     
 

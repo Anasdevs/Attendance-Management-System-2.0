@@ -175,6 +175,12 @@ export default function Attendance() {
     return attendanceData.filter((student) => student.attendance__status === 'Absent').length;
   };
 
+
+  const presentPercentage = (getTotalPresent() / attendanceData.length) * 100;
+  const absentPercentage = (getTotalAbsent() / attendanceData.length) * 100;
+  const presentColor = `linear-gradient(to right, #52c234, #238500 ${presentPercentage}%, transparent 0%)`;
+  const absentColor = `linear-gradient(to right, #cb2d3e, #ef473a ${absentPercentage}%, transparent 0%)`;
+
   const handleSubmitAttendance = () => {
     setIsSubmitting(true);
     setTimeout(() => {
@@ -287,19 +293,19 @@ export default function Attendance() {
           </button>
         </div>
         <div className="statistics-container">
-          <div className="statistics-card">
-            <h3>Total Students</h3>
-            <p className="statistics-value">{attendanceData.length}</p>
-          </div>
-          <div className="statistics-card">
-            <h3>Total Present</h3>
-            <p className="statistics-value">{getTotalPresent()}</p>
-          </div>
-          <div className="statistics-card">
-            <h3>Total Absent</h3>
-            <p className="statistics-value">{getTotalAbsent()}</p>
-          </div>
+        <div className="statistics-card">
+          <h3>Total Students</h3>
+          <p className="statistics-value">{attendanceData.length}</p>
         </div>
+        <div className="statistics-card" style={{ background: presentColor }}>
+          <h3>Total Present</h3>
+          <p className="statistics-value">{getTotalPresent()}</p>
+        </div>
+        <div className="statistics-card" style={{ background: absentColor }}>
+          <h3>Total Absent</h3>
+          <p className="statistics-value">{getTotalAbsent()}</p>
+        </div>
+      </div>
         <div className="attendance-container">
 
           <table className="attendance-table">

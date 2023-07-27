@@ -3,7 +3,6 @@
   height: 100vh;
 }
 
-
 .image {
   display: flex;
   align-items: center;
@@ -46,7 +45,6 @@
   color: rgb(6, 6, 6);
   font-size: 25px;
   font-weight: bolder;
-  /* background: #a0c49f; */
   padding: 10px;
   border-radius: 10px;
  
@@ -99,12 +97,6 @@
   cursor: pointer;
 }
 
-
-
-/* .classInfo input {
-  display: none;
-} */
-
 .success-message {
   position: fixed;
   top: 20px;
@@ -113,7 +105,7 @@
   background-color: rgb(61, 152, 61);
   color: white;
   padding: 10px;
-  z-index: 9999;/* Ensure the success message appears above other elements */
+  z-index: 9999;
 }
 
 .statistics-container {
@@ -155,8 +147,8 @@
 .attendance-container {
   overflow-x: auto;
   max-height: calc(100vh - 250px);
-  scrollbar-width: thin; /* For Firefox */
-  scrollbar-color: #888888 #f0f0f0; /* For Firefox */
+  scrollbar-width: thin; 
+  scrollbar-color: #888888 #f0f0f0;
 }
 
 .attendance-container::-webkit-scrollbar {
@@ -241,9 +233,6 @@
   opacity: 0.7;
 }
 
-
-/* Add this CSS code in your CSS file or style block */
-
 .filters-container {
   display: flex;
   align-items: flex-start;
@@ -273,14 +262,3 @@
   cursor: pointer;
   margin-left: 20px;
 }
-
-/* .filters-container button.download-button:hover {
-  background-color: #151aad;
-} */
-
-/* .filters-container button.download-button:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
-} */
-
-

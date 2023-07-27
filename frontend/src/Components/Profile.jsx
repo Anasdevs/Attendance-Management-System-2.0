@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Profile.css';
 import { useNavigate } from 'react-router-dom';
 import { format } from 'date-fns';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faGraduationCap, faEnvelope, faBuilding, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import facultyImage from './Images/shikha.jpg';
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 
 const today = format(new Date(), 'EEE, dd-MMM-yyyy');
+// const [loadingProgress, setLoadingProgress] = useState(0);
 
 // Sample data (hardcoded)
 const facultyData = {

@@ -40,7 +40,6 @@ export default function Attendance() {
       const timeZone = 'Asia/Kolkata';
       const zonedDate = utcToZonedTime(date, timeZone);
       const formattedDate = format(zonedDate, 'yyyy-MM-dd');
-      console.log(formattedDate);
 
       const response = await fetch(`http://localhost:8000/api/take-attendance/?course_id=${courseId}&date=${formattedDate}`, {
         method: 'GET',
@@ -50,7 +49,6 @@ export default function Attendance() {
         const data = await response.json();
         setClassName(data.class_name);
         setAttendanceData(data.students);
-        console.log(date);
       } else {
         alert('Error occurred while fetching student records.');
       }
@@ -144,8 +142,6 @@ export default function Attendance() {
       if (response.status === 200) {
         // Attendance submitted successfully
         setIsSubmitted(true);
-        console.log(requestBody);
-        console.log('Attendance submitted');
         setTimeout(() => {
           setIsSubmitted(false);
         }, 3000);

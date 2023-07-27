@@ -33,7 +33,6 @@ const Dashboard = () => {
 
         if (response.status === 200) {
           const data = await response.json();
-          console.log(data);
           setFacultyName(data.faculty.name);
           setFacultyEmail(data.faculty.email);
           setFacultyImage(data.faculty.image_url); // Set the faculty image URL

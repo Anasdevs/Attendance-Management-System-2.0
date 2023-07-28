@@ -178,7 +178,7 @@ export default function Attendance() {
 
   const presentPercentage = (getTotalPresent() / attendanceData.length) * 100;
   const absentPercentage = (getTotalAbsent() / attendanceData.length) * 100;
-  const presentColor = `linear-gradient(to right, #52c234, #238500 ${presentPercentage}%, transparent 0%)`;
+  const presentColor = `linear-gradient(to right, #52c234, #4dbc25 ${presentPercentage}%, transparent 0%)`;
   const absentColor = `linear-gradient(to right, #cb2d3e, #ef473a ${absentPercentage}%, transparent 0%)`;
 
   const handleSubmitAttendance = () => {

@@ -1,0 +1,9 @@
+.rightbar {
+        width: 85%;
+        padding: 20px;
+        margin-left: 12%;
+        overflow-y: auto;
+        background: #f5f4fa;
+      }
+
+      

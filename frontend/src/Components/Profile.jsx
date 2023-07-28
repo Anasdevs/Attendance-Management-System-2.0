@@ -40,7 +40,7 @@ export default function Profile({ handleLogout }) {
 
   return (
     <div className="rightbar">
-      <h1>Welcome to your profile</h1>
+      <h1 className='profile-heading'>Faculty Profile</h1>
       <div className="date">
         <div className="today-date">Today</div>
         <div className="today-date">{today}</div>

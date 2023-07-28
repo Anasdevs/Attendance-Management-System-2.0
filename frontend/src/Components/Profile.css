@@ -8,7 +8,15 @@
 .profile-container {
   display: flex;
   margin-top: 5%;
-  
+  border: 3px solid rgb(1, 1, 30);
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(18.3px);
+  -webkit-backdrop-filter: blur(18.3px);
+  border: 1px solid rgba(255, 255, 255, 1);
+  padding: 2em;
+  margin-bottom: 4em;
 }
 
 .profile-left {
@@ -18,13 +26,35 @@
   justify-content: center;
   text-align: center;
   margin: 0 0 0 10%;
-  border: 3px soild black;
+  padding: 1em;
+  background-color: rgba(255, 255, 255, 0.75);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.125);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(25px) saturate(180%)
+  /* border: 3px solid black; */
+}
+.profile-heading {
+  font-size: 30px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 30px;
+  position: relative;
+  padding: 20px;
+  border-radius: 8px;
+  backdrop-filter: blur(10px) saturate(180%);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  transition: background-color 0.3s ease, transform 0.2s ease-in-out;
+}
+
+.profile-heading:hover {
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 .date{
   position: absolute;
   right: 50px;
-  top: 20px;
+  top: 50px;
 }
 
 
@@ -59,7 +89,7 @@
 
 .profile-right {
   background-color: #021932fc;
-  margin: 0 0 0 5%;
+  margin: 0 0 0 15%;
   padding: 50px;
   border-radius: 10px;
   border: 4px solid rgb(4, 4, 92);

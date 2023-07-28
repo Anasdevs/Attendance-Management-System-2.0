@@ -116,6 +116,7 @@ const Dashboard = () => {
             </thead>
             <tbody>
               {isDataFetched ? (
+                classes.length>0?(
                 filteredRows.map((row, index) => (
                   <tr key={index}>
                     <td>{row.course_id}</td>
@@ -123,7 +124,7 @@ const Dashboard = () => {
                     <td>{row.semester}</td>
                     <td>{row.section}</td>
                     <td>{row.subject}</td>
-                    <td>
+                    <td> 
                       <button
                         onClick={() => handleTakeAttendance(row.course_id)}
                         className="action-button"
@@ -134,6 +135,13 @@ const Dashboard = () => {
                   </tr>
                 ))
               ) : (
+                <tr>
+                  <td colSpan={6} style={{ textAlign: 'center' }}>
+                    No classes are assigned to you
+                  </td>
+                </tr>
+              )
+            ): (
                 <tr>
                   <td colSpan={6}>
                     <Skeleton count={5} height={35} width="100%" />

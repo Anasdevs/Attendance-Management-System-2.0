@@ -175,6 +175,16 @@ export default function Attendance() {
     return attendanceData.filter((student) => student.attendance__status === 'Absent').length;
   };
 
+  // const totalStudentsPercentage = (getTotalPresent() + getTotalAbsent())/attendanceData.length * 100;
+  // const totalStudentsColor = `linear-gradient(to left, #9f9d9d, #7e7979d6 ${totalStudentsPercentage}%, transparent 0%)`;
+  const [totalStudentsPercentage, setTotalStudentsPercentage] = useState(100);
+  useEffect(() => {
+    const initialPresentStudents = getTotalPresent(); // Initially marked as Present
+    const initialAbsentStudents = getTotalAbsent(); // Initially marked as Absent
+    const initialPercentage = ((initialPresentStudents + initialAbsentStudents) / attendanceData.length) * 100;
+    const initialTotalStudentsPercentage = 100 - initialPercentage; // Invert the percentage
+    setTotalStudentsPercentage(initialTotalStudentsPercentage);
+  }, [attendanceData]);
 
   const presentPercentage = (getTotalPresent() / attendanceData.length) * 100;
   const absentPercentage = (getTotalAbsent() / attendanceData.length) * 100;
@@ -313,7 +323,7 @@ export default function Attendance() {
           </button>
         </div>
         <div className="statistics-container">
-        <div className="statistics-card">
+        <div className="statistics-card" style={{ background: `linear-gradient(to right, #d3cce3, #e9e4f0 ${totalStudentsPercentage}%, transparent 0%)` }}>
           <h3>Total Students</h3>
           <p className="statistics-value">{attendanceData.length}</p>
         </div>

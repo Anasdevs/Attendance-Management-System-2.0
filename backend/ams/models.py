@@ -13,6 +13,11 @@ class FacultyManager(BaseUserManager):
         faculty.save();
         return faculty
 
+Post=(
+     ('Hod','Hod'),
+     ('Associate Professor','Associate professor'),
+     ('Assistant Professor','Assistent professor'),
+)
 class Faculty(AbstractBaseUser):
     def get_assigned_classes(self):
         return Class.objects.filter(assigned_to=self)
@@ -22,6 +27,11 @@ class Faculty(AbstractBaseUser):
     faculty_email = models.EmailField(unique=True)
     password = models.CharField(max_length=128, blank=True, default= None)
     faculty_image = models.ImageField(upload_to='faculty_images/', blank=True, null=True)
+    Designation=models.CharField(max_length=50,choices=Post,default=None,blank=True)
+    department=models.CharField(max_length=50,default=None)
+    qualifications=models.CharField(max_length=200,default=None,blank=True)
+    
+
 
     objects = FacultyManager()
 

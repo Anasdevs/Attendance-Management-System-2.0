@@ -33,7 +33,7 @@ export default function Profile({ handleLogout }) {
         console.error('Error:', error);
         alert('Error occurred while fetching faculty profile.');
       } finally {
-        setLoadingProgress(100); // Set loading progress to 100 after data is loaded or an error occurs
+        setLoadingProgress(100);
       }
     };
 
@@ -50,7 +50,13 @@ export default function Profile({ handleLogout }) {
   };
 
   const contactAdmin = () => {
-    alert('Contacting Admin...');
+    const adminEmail = 'attendance.msi@gmail.com'; // Replace this with the admin's email
+  
+    // Create the mailto link
+    const mailtoLink = `mailto:${adminEmail}`;
+  
+    // Open the default email client with the mailto link
+    window.location.href = mailtoLink;
   };
 
   return (

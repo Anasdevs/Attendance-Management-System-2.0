@@ -29,7 +29,7 @@ export default function Attendance() {
   const [studentId, setStudentId] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [facultyImage, setFacultyImage] = useState(null);
-
+  const [showMarkAllAttendanceMessage, setShowMarkAllAttendanceMessage] = useState(false);
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
@@ -182,6 +182,19 @@ export default function Attendance() {
   const absentColor = `linear-gradient(to right, #cb2d3e, #ef473a ${absentPercentage}%, transparent 0%)`;
 
   const handleSubmitAttendance = () => {
+    // Check if all students' attendance is marked
+    const allAttendanceMarked = attendanceData.every(
+      (student) => student.attendance__status === 'Present' || student.attendance__status === 'Absent'
+    );
+
+    if (!allAttendanceMarked) {
+      setShowMarkAllAttendanceMessage(true);
+      setTimeout(() => {
+        setShowMarkAllAttendanceMessage(false);
+      }, 3000);
+      return;
+    }
+
     setIsSubmitting(true);
     setTimeout(() => {
       setIsSubmitting(false);
@@ -240,6 +253,13 @@ export default function Attendance() {
   return (
     <div className="page-container">
       <LoadingBar progress={loadingProgress} color="#111137" height={4} />
+      {showMarkAllAttendanceMessage && (
+        <div className="message-container">
+          <div className="message-popup">
+            <p>Please mark the attendance of all students.</p>
+          </div>
+        </div>
+      )}
       <div className="rightbar">
         <div className="image">
           {facultyImage ? (

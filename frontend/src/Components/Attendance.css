@@ -82,7 +82,7 @@
 
 .classInfo h1 {
   margin-top: 0;
-  font-size: 35px;
+  font-size: 30px;
   font-weight: bold;
   text-align: center !important;
   color: #333; 
@@ -105,7 +105,19 @@
   background-color: rgb(61, 152, 61);
   color: white;
   padding: 10px;
-  z-index: 9999;
+}
+
+.message-container {
+  position: fixed;
+  top: 20px;
+  left: 55%;
+  transform: translateX(-50%);
+  background-color: rgba(207, 3, 3, 0.863);
+  color: white;
+  border-radius: 3px;
+  padding-left: 1em;
+  padding-right: 1em;
+  animation: shake 0.6s;
 }
 
 .statistics-container {
@@ -263,3 +275,19 @@
   margin-left: 20px;
 }
 
+
+
+/* @keyframes shake {
+  10%, 90% {
+    transform: translateX(-3px);
+  }
+  20%, 80% {
+    transform: translateX(3px);
+  }
+  30%, 50%, 70% {
+    transform: translateX(-2px);
+  }
+  40%, 60% {
+    transform: translateX(2px);
+  }
+} */

@@ -4,18 +4,20 @@ import { useNavigate } from 'react-router-dom';
 import { format } from 'date-fns';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faGraduationCap, faEnvelope, faBuilding, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
-import Skeleton from 'react-loading-skeleton'
-import 'react-loading-skeleton/dist/skeleton.css'
-
-const today = format(new Date(), 'EEE, dd-MMM-yyyy');
+import LoadingBar from 'react-top-loading-bar';
+import Skeleton from 'react-loading-skeleton';
 
 export default function Profile({ handleLogout }) {
   const navigate = useNavigate();
   const [facultyData, setFacultyData] = useState(null);
+  const today = format(new Date(), 'EEE, dd-MMM-yyyy');
+  const [loadingProgress, setLoadingProgress] = useState(0);
 
   useEffect(() => {
     const fetchFacultyData = async () => {
       try {
+        setLoadingProgress(30); // Set initial loading progress
+
         const response = await fetch('http://localhost:8000/api/faculty-profile/', {
           method: 'GET',
           credentials: 'include', // Include cookies in the request
@@ -30,6 +32,8 @@ export default function Profile({ handleLogout }) {
       } catch (error) {
         console.error('Error:', error);
         alert('Error occurred while fetching faculty profile.');
+      } finally {
+        setLoadingProgress(100); // Set loading progress to 100 after data is loaded or an error occurs
       }
     };
 
@@ -51,24 +55,37 @@ export default function Profile({ handleLogout }) {
 
   return (
     <div className="rightbar">
+      <LoadingBar progress={loadingProgress} color="#111137" height={4} />
       <h1 className='profile-heading'>Faculty Profile</h1>
       <div className="date">
         <div className="today-date">Today</div>
         <div className="today-date">{today}</div>
       </div>
-      {facultyData ? (
-        <div className="profile-container">
+      <div className="profile-container">
+        {facultyData ? (
           <div className="profile-left">
-            <img
-              className="faculty-image"
-              src={facultyData.image} 
-              alt="Faculty"
-            />
+            {facultyData.image ? (
+              <img
+                className="faculty-image"
+                src={facultyData.image}
+                alt="Faculty"
+              />
+            ) : (
+              <Skeleton circle height={200} width={200} />
+            )}
             <div className="faculty-name">
-              <h2>{facultyData.name}</h2>
+              {facultyData.name ? (
+                <h2>{facultyData.name}</h2>
+              ) : (
+                <Skeleton width={150} />
+              )}
               <p>{facultyData.designation}</p>
             </div>
           </div>
+        ) : (
+          <Skeleton height={1000} width={1500} />
+        )}
+        {facultyData && (
           <div className="profile-right">
             <div className="profile-item">
               <h3 className="dept-heading">
@@ -100,10 +117,8 @@ export default function Profile({ handleLogout }) {
               </button>
             </div>
           </div>
-        </div>
-      ) : (
-        <Skeleton height={10} count={5} />
-      )}
+        )}
+      </div>
     </div>
   );
-}
+        }  

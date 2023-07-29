@@ -1,4 +1,4 @@
-from django.shortcuts import redirect
+from django.shortcuts import redirect, get_object_or_404
 import string
 import random
 import json
@@ -234,9 +234,20 @@ def take_attendance(request):
                 'attendance__date': data['filtered_date'],
             }
             students.append(student)
-        response_data = {'students': students}
-        return JsonResponse(response_data)
+
+        # response_data = {'students': students}
+        # return JsonResponse(response_data)
+        try:
+            class_obj = Class.objects.get(course_id=course_id)
+            class_name = f"{class_obj.course}-{class_obj.semester}-{class_obj.section} {class_obj.subject}"
+        except Class.DoesNotExist:
+            class_name = "Class Name Not Found"  # Default value if class is not found
         
+        response_data = {
+            'class_name': class_name,
+            'students': students,
+        }
+        return JsonResponse(response_data)
 
 
 @require_POST

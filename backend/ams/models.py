@@ -14,9 +14,9 @@ class FacultyManager(BaseUserManager):
         return faculty
 
 Post=(
-     ('Hod','Hod'),
-     ('Associate Professor','Associate professor'),
-     ('Assistant Professor','Assistent professor'),
+     ('HOD','HOD'),
+     ('Associate Professor','Associate Professor'),
+     ('Assistant Professor','Assistant Professor'),
 )
 class Faculty(AbstractBaseUser):
     def get_assigned_classes(self):

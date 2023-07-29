@@ -234,14 +234,11 @@ def take_attendance(request):
                 'attendance__date': data['filtered_date'],
             }
             students.append(student)
-
-        # response_data = {'students': students}
-        # return JsonResponse(response_data)
         try:
             class_obj = Class.objects.get(course_id=course_id)
             class_name = f"{class_obj.course}-{class_obj.semester}-{class_obj.section} {class_obj.subject}"
         except Class.DoesNotExist:
-            class_name = "Class Name Not Found"  # Default value if class is not found
+            class_name = "Class Name Not Found" 
         
         response_data = {
             'class_name': class_name,
@@ -339,10 +336,35 @@ def generate_attendance_report(request):
 
 
 @csrf_exempt
+def faculty_profile(request):
+    try:
+        faculty_email = request.session.get('faculty_email')
+        if faculty_email:
+            faculty_data = Faculty.objects.get(faculty_email=faculty_email)
+            faculty_image_url = faculty_data.faculty_image.url if faculty_data.faculty_image else None
+            if faculty_image_url:
+                faculty_image_url = request.build_absolute_uri(faculty_image_url)
+            faculty_profile_data = {
+                'name': faculty_data.faculty_name,
+                'designation': faculty_data.Designation,
+                'image': faculty_image_url,  # Fixed the curly braces here
+                'department': faculty_data.department,
+                'qualification': faculty_data.qualifications,
+                'email': faculty_data.faculty_email,
+            }
+            return JsonResponse(faculty_profile_data)
+
+    except Faculty.DoesNotExist:
+        pass
+
+    return JsonResponse({'error': 'Faculty not found'}, status=404)
+
+@csrf_exempt
 def handle_logout(request):
     if request.method == 'POST':
         # Delete the session data
         request.session.flush()
         return JsonResponse({'message': 'Logout successful'})
-    
     return JsonResponse({'error': 'Invalid request'})
+
+

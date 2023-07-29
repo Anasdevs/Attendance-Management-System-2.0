@@ -16,6 +16,7 @@ urlpatterns = [
      path('api/take-attendance/', views.take_attendance, name='take_attendance'),
      path('api/submit-attendance/', views.submit_attendance, name='submit_attendance'),
      path('api/attendance/reports/', views.generate_attendance_report, name='generate_attendance_report'),
+     path('api/faculty-profile/', views.faculty_profile, name='faculty_profile'),
      path('api/logout/', views.handle_logout, name="logout")
 
 

@@ -238,7 +238,7 @@ export default function Attendance() {
       return;
     }
     setIsLoading(true);
-    const url = `http://localhost:8000/api/attendance/reports?startDate=${startDate}&endDate=${endDate}&courseId=${courseId}`;
+    const url = `http://localhost:8000/api/attendance/reports/?startDate=${startDate}&endDate=${endDate}&courseId=${courseId}`;
     fetch(url)
       .then((response) => response.blob())
       .then((blob) => {

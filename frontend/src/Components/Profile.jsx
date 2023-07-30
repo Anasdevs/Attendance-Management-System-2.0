@@ -62,11 +62,11 @@ export default function Profile({ handleLogout }) {
   return (
     <div className="rightbar">
       <LoadingBar progress={loadingProgress} color="#111137" height={4} />
-      <h1 className='profile-heading'>Faculty Profile</h1>
-      <div className="date">
+      {/* <h1 className='profile-heading'>Faculty Profile</h1> */}
+      {/* <div className="date">
         <div className="today-date">Today</div>
         <div className="today-date">{today}</div>
-      </div>
+      </div> */}
       <div className="profile-container">
         {facultyData ? (
           <div className="profile-left">

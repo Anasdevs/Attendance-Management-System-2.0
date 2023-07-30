@@ -91,16 +91,6 @@ export default function Attendance() {
       .catch(() => setIsDataFetched(true));
   }, []);
 
-  const handleKeyPress = (event, eno) => {
-    if (event.key === 'p' || event.key === 'P') {
-      markAttendance(eno, 'Present');
-      moveNext(eno);
-    } else if (event.key === 'a' || event.key === 'A') {
-      markAttendance(eno, 'Absent');
-      moveNext(eno);
-    }
-  };
-
   const markAttendance = (eno, status) => {
     setAttendanceData((prevAttendanceData) =>
       prevAttendanceData.map((student) => {
@@ -154,11 +144,44 @@ export default function Attendance() {
     }
   };
 
-  const moveNext = (eno) => {
+  const handleKeyPress = (event, eno) => {
+    switch (event.key) {
+      case 'p':
+      case 'P':
+        markAttendance(eno, 'Present');
+        moveNext(eno, 'down');
+        break;
+      case 'a':
+      case 'A':
+        markAttendance(eno, 'Absent');
+        moveNext(eno, 'down');
+        break;
+      case 'D':
+      case 'd':
+        moveNext(eno, 'down');
+        break;
+      case 'U':
+      case 'u':
+        movePrevious(eno);
+        break;
+      default:
+        return; // For any other key, return without moving to the next/previous record
+    }
+  };
+  
+  const moveNext = (eno, direction) => {
     const studentIndex = attendanceData.findIndex((student) => student.enrolment_no === eno);
-    const nextIndex = studentIndex + 1;
-
-    if (nextIndex < attendanceData.length) {
+    let nextIndex;
+  
+    if (direction === 'down') {
+      nextIndex = studentIndex + 1;
+    } else if (direction === 'up') {
+      nextIndex = studentIndex - 1;
+    } else {
+      return; // Invalid direction, return without moving
+    }
+  
+    if (nextIndex >= 0 && nextIndex < attendanceData.length) {
       const nextStudent = attendanceData[nextIndex];
       const inputElement = document.getElementById(`attendance-input-${nextStudent.enrolment_no}`);
       if (inputElement) {
@@ -166,7 +189,19 @@ export default function Attendance() {
       }
     }
   };
-
+  const movePrevious = (eno) => {
+    const studentIndex = attendanceData.findIndex((student) => student.enrolment_no === eno);
+    const previousIndex = studentIndex - 1;
+  
+    if (previousIndex >= 0) {
+      const previousStudent = attendanceData[previousIndex];
+      const inputElement = document.getElementById(`attendance-input-${previousStudent.enrolment_no}`);
+      if (inputElement) {
+        inputElement.focus();
+      }
+    }
+  };
+  
   const getTotalPresent = () => {
     return attendanceData.filter((student) => student.attendance__status === 'Present').length;
   };

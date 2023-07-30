@@ -334,7 +334,6 @@ def generate_attendance_report(request):
     return JsonResponse({'error': 'Invalid request'})
 
 
-
 @csrf_exempt
 def faculty_profile(request):
     try:

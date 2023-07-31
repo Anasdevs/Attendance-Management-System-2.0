@@ -18,7 +18,7 @@ function LoginForm() {
   const [errors, setErrors] = useState([]);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isOtpSent, setIsOtpSent] = useState(false);
-  const [otpTimer, setOtpTimer] = useState(120);
+  const [otpTimer, setOtpTimer] = useState(60);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isSignUp, setIsSignUp] = useState(false);
   const [isPasswordCreated, setIsPasswordCreated] = useState(false);
@@ -55,7 +55,7 @@ function LoginForm() {
         setIsOtpSent(true);
         setIsPasswordCreated(true);
         setIsGetPasswordDisabled(true);
-        setOtpTimer(120);
+        setOtpTimer(60);
 
         const timer = setInterval(() => {
           setOtpTimer((prevTimer) => prevTimer - 1);
@@ -64,7 +64,7 @@ function LoginForm() {
         setTimeout(() => {
           setIsGetPasswordDisabled(false);
           clearInterval(timer);
-        }, 120000); // 120 seconds (120,000 milliseconds) to re-enable the button
+        }, 60000); // 
       } else {
         setIsOtpSent(false);
         setIsPasswordCreated(false);

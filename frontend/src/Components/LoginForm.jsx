@@ -26,6 +26,7 @@ function LoginForm() {
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingPassword, setIsLoadingPassword] = useState(false);
   const [isForgotPassword, setIsForgotPassword] = useState(false);
+  const [isGetPasswordDisabled, setIsGetPasswordDisabled] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -53,6 +54,17 @@ function LoginForm() {
       if (response.status === 200) {
         setIsOtpSent(true);
         setIsPasswordCreated(true);
+        setIsGetPasswordDisabled(true);
+        setOtpTimer(120);
+
+        const timer = setInterval(() => {
+          setOtpTimer((prevTimer) => prevTimer - 1);
+        }, 1000);
+
+        setTimeout(() => {
+          setIsGetPasswordDisabled(false);
+          clearInterval(timer);
+        }, 120000); // 120 seconds (120,000 milliseconds) to re-enable the button
       } else {
         setIsOtpSent(false);
         setIsPasswordCreated(false);
@@ -172,13 +184,13 @@ function LoginForm() {
   };
 
   const handleSignUpSubmit = () => {
-  if (isPasswordValidated) {
-    console.log('SignUp submitted!');
-    navigate('/signin');
-  } else {
-    alert('Please validate the password');
-  }
-};
+    if (isPasswordValidated) {
+      console.log('SignUp submitted!');
+      navigate('/signin');
+    } else {
+      alert('Please validate the password');
+    }
+  };
 
   const handleForgotPassword = () => {
     setIsForgotPassword(true);
@@ -261,9 +273,7 @@ function LoginForm() {
             {carouselItems.map((item, index) => (
               <div
                 key={index}
-                className={`carousel-item ${
-                  index === currentSlide ? 'active' : ''
-                }`}
+                className={`carousel-item ${index === currentSlide ? 'active' : ''}`}
                 style={{ backgroundImage: item.image }}
               >
                 <div className="carousel-description">{item.description}</div>
@@ -329,20 +339,20 @@ function LoginForm() {
                     required
                   />
                   <div className="button-container">
-                  <button
-                    className="get-code"
-                    onClick={handleOtpSubmit}
-                    disabled={isLoading}
-                  >
-                    {isLoading ? 'Sending Email...' : 'Get Password'}
-                  </button>
-                  <button
-                    className="code-validate"
-                    onClick={handleValidatePassword}
-                    disabled={isLoadingPassword || !formData.passwordSent}
-                  >
-                    {isLoadingPassword ? 'Validating...' : 'Validate Password'}
-                  </button>
+                    <button
+                      className="get-code"
+                      onClick={handleOtpSubmit}
+                      disabled={isLoading || isGetPasswordDisabled}
+                    >
+                      {isLoading ? 'Sending Email...' : isGetPasswordDisabled ? `Resend Password in ${otpTimer}s` : 'Get Password'}
+                    </button>
+                    <button
+                      className="code-validate"
+                      onClick={handleValidatePassword}
+                      disabled={isLoadingPassword || !formData.passwordSent}
+                    >
+                      {isLoadingPassword ? 'Validating...' : 'Validate Password'}
+                    </button>
                   </div>
                   <button
                     type="submit"

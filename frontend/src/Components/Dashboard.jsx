@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import './Dashboard.css';
 import { format } from 'date-fns';
 import LoadingBar from 'react-top-loading-bar';
+import WithRightbarLayout from './WithRightbarLayout';
 // import defaultFacultyImage from './Images/faculty.png'
 
 
@@ -67,9 +68,11 @@ const Dashboard = () => {
   );
 
   return (
-    <div className="page-container">
+    <WithRightbarLayout>
+      <div className="dashboard-container">
        <LoadingBar progress={loadingProgress} color="#111137" height={4} />
-      <div className="rightbar">
+      <div className="rightside">
+      
         <div className="image">
         {facultyImage ? (
             <img src={facultyImage} alt="Faculty" />
@@ -152,7 +155,8 @@ const Dashboard = () => {
           </table>
         </div>
       </div>
-    </div>
+      </div>
+    </WithRightbarLayout>
   );
 };
 

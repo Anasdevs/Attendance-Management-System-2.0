@@ -1,29 +1,22 @@
-.page-container {
-  display: flex;
+
+
+.dashboard-container{
+  height: 100vh;
 }
 
-.rightbar {
-  width: 85%;
-  padding: 20px;
-  margin-left: 12%;
-  overflow-y: auto;
-  background: #f5f4fa
-}
-
-.rightbar .image {
+.rightside .image {
   display: flex;
   align-items: center;
-  /* background: #d7ffdd; */
   border-radius: 10px;
 }
 
-.rightbar .image img {
+.rightside .image img {
   height: 70px;
   width: 70px;
   border-radius: 50%;
 }
 
-.rightbar .image .faculty-info p {
+.rightside .image .faculty-info p {
   margin: 3px 0;
   font-weight: bold;
 }
@@ -36,7 +29,7 @@
   color: rgb(54, 54, 54);
 }
 
-.rightbar .image .date {
+.rightside .image .date {
     position: absolute;
     right: 50px;
     color: rgb(6, 6, 6);

@@ -1,7 +1,3 @@
-.page-container {
-  display: flex;
-  height: 100vh;
-}
 
 .image {
   display: flex;
@@ -30,7 +26,7 @@
   font-size: 14px;
 }
 
-.rightbar .image {
+.rightside .image {
   display: flex;
   align-items: center;
   border-radius: 10px;
@@ -38,7 +34,7 @@
 
 }
 
-.rightbar .image .date {
+.rightside .image .date {
   position: relative;
   top: 0;
   left:60%;

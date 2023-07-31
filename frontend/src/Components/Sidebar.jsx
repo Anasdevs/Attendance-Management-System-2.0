@@ -5,8 +5,6 @@ import { faChartBar, faCalendarAlt, faCalendarCheck, faUser } from '@fortawesome
 import './Sidebar.css';
 import msilogo from './Images/msilogo.png';
 
-
-
 export default function Sidebar() {
   return (
     <div>
@@ -49,7 +47,6 @@ export default function Sidebar() {
           </NavLink></li>
         </ul>
         <div className="profile-button">
-          
         </div>
       </div>
     </div>

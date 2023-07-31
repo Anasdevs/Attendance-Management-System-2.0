@@ -6,6 +6,8 @@ import 'react-loading-skeleton/dist/skeleton.css'
 import './Attendance.css';
 import { useParams } from 'react-router-dom';
 import LoadingBar from 'react-top-loading-bar';
+import WithRightbarLayout from './WithRightbarLayout';
+
 // import defaultFacultyImage from './Images/faculty.png';
 
 export default function Attendance() {
@@ -296,6 +298,7 @@ export default function Attendance() {
   };
 
   return (
+    <WithRightbarLayout>
     <div className="page-container">
       <LoadingBar progress={loadingProgress} color="#111137" height={4} />
       {showMarkAllAttendanceMessage && (
@@ -305,7 +308,7 @@ export default function Attendance() {
           </div>
         </div>
       )}
-      <div className="rightbar">
+      <div className="rightside">
         <div className="image">
           {facultyImage ? (
             <img src={facultyImage} alt="Faculty" />
@@ -431,4 +434,5 @@ export default function Attendance() {
       </button>
     </div>
   </div>
+  </WithRightbarLayout>
 )};

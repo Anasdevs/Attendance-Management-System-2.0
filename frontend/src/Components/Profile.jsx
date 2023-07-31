@@ -6,6 +6,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faGraduationCap, faEnvelope, faBuilding, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import LoadingBar from 'react-top-loading-bar';
 import Skeleton from 'react-loading-skeleton';
+import WithRightbarLayout from './WithRightbarLayout';
+
 
 export default function Profile({ handleLogout }) {
   const navigate = useNavigate();
@@ -60,13 +62,8 @@ export default function Profile({ handleLogout }) {
   };
 
   return (
-    <div className="rightbar">
+    <WithRightbarLayout>
       <LoadingBar progress={loadingProgress} color="#111137" height={4} />
-      {/* <h1 className='profile-heading'>Faculty Profile</h1> */}
-      {/* <div className="date">
-        <div className="today-date">Today</div>
-        <div className="today-date">{today}</div>
-      </div> */}
       <div className="profile-container">
         {facultyData ? (
           <div className="profile-left">
@@ -125,6 +122,5 @@ export default function Profile({ handleLogout }) {
           </div>
         )}
       </div>
-    </div>
-  );
-        }  
+    </WithRightbarLayout>
+  );}  

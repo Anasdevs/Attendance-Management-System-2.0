@@ -32,6 +32,8 @@ export default function Attendance() {
   const [isLoading, setIsLoading] = useState(false);
   const [facultyImage, setFacultyImage] = useState(null);
   const [showMarkAllAttendanceMessage, setShowMarkAllAttendanceMessage] = useState(false);
+  const [focusedEno, setFocusedEno] = useState(null);
+
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
@@ -387,7 +389,8 @@ export default function Attendance() {
             {isDataFetched ? (
             <tbody>
               {attendanceData.map((student) => (
-                <tr key={student.enrolment_no}>
+                <tr key={student.enrolment_no}id={`attendance-row-${student.enrolment_no}`}
+                className={focusedEno === student.enrolment_no ? 'highlighted' : ''}>
                   <td>{student.enrolment_no}</td>
                   <td>{student.name}</td>
                   <td>
@@ -403,6 +406,8 @@ export default function Attendance() {
                       }
                       onKeyPress={(event) => handleKeyPress(event, student.enrolment_no)}
                       data-status={student.attendance__status ? student.attendance__status : 'none'}
+                      onFocus={() => setFocusedEno(student.enrolment_no)}
+                      onBlur={() => setFocusedEno(null)}
                     />
                   </td>
                 </tr>

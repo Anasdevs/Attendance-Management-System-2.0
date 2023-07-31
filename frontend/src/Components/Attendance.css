@@ -1,3 +1,9 @@
+.attendance-table tbody tr.highlighted {
+  color: red;
+  font-weight: bold;
+  font-size: 20px;
+  text-decoration-line: underline;
+}
 
 .image {
   display: flex;

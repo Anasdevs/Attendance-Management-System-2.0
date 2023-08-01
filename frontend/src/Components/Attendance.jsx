@@ -113,6 +113,44 @@ export default function Attendance() {
     );
   };
 
+  const submitAttendanceData = async () => {
+    try {
+      const modifiedAttendanceData = attendanceData.map((student) => ({
+        enrolment_no: student.enrolment_no,
+        attendance__status: student.attendance__status,
+        attendance_date: student.attendance_date,
+      }));
+
+      const requestBody = {
+        course_id: courseId,
+        attendance_data: modifiedAttendanceData,
+        attendance_date: format(currentDate, 'yyyy-MM-dd'),
+      };
+
+      const response = await fetch('http://localhost:8000/api/submit-attendance/', {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestBody),
+      });
+
+      if (response.status === 200) {
+        setIsSubmitted(true);
+        setTimeout(() => {
+          setIsSubmitted(false);
+        }, 3000);
+      } else {
+        alert('Error occurred while submitting attendance.');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Error occurred while submitting attendance.');
+    }
+  };
+
+
   const handleKeyPress = (event, eno) => {
     switch (event.key) {
       case 'p':

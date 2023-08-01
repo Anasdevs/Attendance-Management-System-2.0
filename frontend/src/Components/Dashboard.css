@@ -33,16 +33,6 @@
   color: #383f6e;
 
 }
-.rightside .image .date {
-    position: absolute;
-    right: 50px;
-    color: rgb(6, 6, 6);
-    font-size: 25px;
-    font-weight: bolder;
-    /* background: #a0c49f; */
-    padding: 10px;
-    border-radius: 10px;
-}
 
 .classInfo {
   margin-top: 65px;

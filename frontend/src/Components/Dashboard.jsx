@@ -12,7 +12,7 @@ import WithRightbarLayout from './WithRightbarLayout';
 const Dashboard = () => {
   const [facultyName, setFacultyName] = useState('');
   const [role , setRole] = useState('');
-  const [facultyEmail, setFacultyEmail] = useState('');
+  const [facultyDepartment, setFacultyDepartment] = useState('');
   const [facultyImage, setFacultyImage] = useState(null);
   const [classes, setClasses] = useState([]);
   const [isDataFetched, setIsDataFetched] = useState(false);
@@ -37,7 +37,7 @@ const Dashboard = () => {
           const data = await response.json();
           setFacultyName(data.faculty.name);
           setRole(data.faculty.role);
-          setFacultyEmail(data.faculty.email);
+          setFacultyDepartment(data.faculty.department);
           setFacultyImage(data.faculty.image_url); // Set the faculty image URL
           setClasses(data.classes);
         } else if (response.status === 302) {
@@ -82,7 +82,6 @@ const Dashboard = () => {
             <Skeleton circle height={70} width={70}/>
           )}
           <div className="faculty-info">
-            <div className="faculty-info-name">
             {facultyName ? (
               <p className="faculty-name">{facultyName}</p>
             ) : (
@@ -93,13 +92,12 @@ const Dashboard = () => {
             ) : (
               <Skeleton width={100} />
             )}
-            </div>
-            {facultyEmail ? (
-              <p className="faculty-email">{facultyEmail}</p>
-            ) : (
-              <Skeleton count={1} />
-            )}
-          </div>
+            {facultyDepartment ? (
+              <p className="faculty-department">{facultyDepartment}</p>
+              ) : (
+                <Skeleton count={1} />
+                )}
+                </div>
           <div className="date">
             <div className="today-date">Today</div>
             <div className="today-date">{today}</div>

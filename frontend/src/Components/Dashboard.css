@@ -21,9 +21,12 @@
   font-weight: bold;
 }
 
-.heading{
+.faculty-info-name{
   display: flex;
+  gap: 10px;
+  align-items: center;
 }
+
 .faculty-info .faculty-email {
   color: rgb(54, 54, 54);
 }
@@ -146,9 +149,4 @@
   border-radius: 4px;
   font-size: 16px;
   width: 200px;
-}
-
-
-pip{
-  color: #111137;
 }

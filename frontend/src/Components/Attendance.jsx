@@ -8,6 +8,7 @@ import { useParams } from 'react-router-dom';
 import LoadingBar from 'react-top-loading-bar';
 import WithRightbarLayout from './WithRightbarLayout';
 
+
 export default function Attendance() {
   const [loadingProgress, setLoadingProgress] = useState(0);
   const { courseId } = useParams();
@@ -17,7 +18,7 @@ export default function Attendance() {
   const formattedDate = format(zonedDate, 'EEE, dd-MMM-yyyy');
   const isCurrentDate = isToday(zonedDate);
   const [facultyImage, setFacultyImage] = useState(null);
-  const [role , setRole] = useState('');
+  const [role, setRole] = useState('');
   const [facultyName, setFacultyName] = useState('');
   const [facultyDepartment, setFacultyDepartment] = useState('');
   const [attendanceData, setAttendanceData] = useState([]);
@@ -34,14 +35,6 @@ export default function Attendance() {
 
   useEffect(() => {
     fetchData(format(currentDate, 'yyyy-MM-dd'));
-    // Set the focus on the first student's attendance checkbox when the component renders
-    const firstStudent = attendanceData[0];
-    if (firstStudent) {
-      const inputElement = document.getElementById(`attendance-input-${firstStudent.enrolment_no}`);
-      if (inputElement) {
-        inputElement.focus();
-      }
-    }
   }, [currentDate, courseId]);
 
   const fetchData = async (date) => {
@@ -58,6 +51,14 @@ export default function Attendance() {
         const data = await response.json();
         setClassName(data.class_name);
         setAttendanceData(data.students);
+        setIsDataFetched(true);
+        const firstStudent = data.students[0];
+        if (firstStudent) {
+          const inputElement = document.getElementById(`attendance-input-${firstStudent.enrolment_no}`);
+          if (inputElement) {
+            inputElement.focus();
+          }
+        }
       } else {
         alert('Error occurred while fetching student records.');
       }
@@ -82,7 +83,6 @@ export default function Attendance() {
           setRole(data.faculty.role);
           setFacultyDepartment(data.faculty.department);
           setFacultyImage(data.faculty.image_url);
-
         } else {
           alert('Error occurred while fetching dashboard data.');
         }
@@ -111,6 +111,31 @@ export default function Attendance() {
         return student;
       })
     );
+  };
+
+  const handleKeyPress = (event, eno) => {
+    switch (event.key) {
+      case 'p':
+      case 'P':
+        markAttendance(eno, 'Present');
+        moveNext(eno, 'down');
+        break;
+      case 'a':
+      case 'A':
+        markAttendance(eno, 'Absent');
+        moveNext(eno, 'down');
+        break;
+      case 'D':
+      case 'd':
+        moveNext(eno, 'down');
+        break;
+      case 'U':
+      case 'u':
+        movePrevious(eno);
+        break;
+      default:
+        return;
+    }
   };
 
   const submitAttendanceData = async () => {
@@ -150,36 +175,10 @@ export default function Attendance() {
     }
   };
 
-
-  const handleKeyPress = (event, eno) => {
-    switch (event.key) {
-      case 'p':
-      case 'P':
-        markAttendance(eno, 'Present');
-        moveNext(eno, 'down');
-        break;
-      case 'a':
-      case 'A':
-        markAttendance(eno, 'Absent');
-        moveNext(eno, 'down');
-        break;
-      case 'D':
-      case 'd':
-        moveNext(eno, 'down');
-        break;
-      case 'U':
-      case 'u':
-        movePrevious(eno);
-        break;
-      default:
-        return; 
-    }
-  };
-  
   const moveNext = (eno, direction) => {
     const studentIndex = attendanceData.findIndex((student) => student.enrolment_no === eno);
     let nextIndex;
-  
+
     if (direction === 'down') {
       nextIndex = studentIndex + 1;
     } else if (direction === 'up') {
@@ -187,7 +186,7 @@ export default function Attendance() {
     } else {
       return;
     }
-  
+
     if (nextIndex >= 0 && nextIndex < attendanceData.length) {
       const nextStudent = attendanceData[nextIndex];
       const inputElement = document.getElementById(`attendance-input-${nextStudent.enrolment_no}`);
@@ -196,11 +195,11 @@ export default function Attendance() {
       }
     }
   };
-  
+
   const movePrevious = (eno) => {
     const studentIndex = attendanceData.findIndex((student) => student.enrolment_no === eno);
     const previousIndex = studentIndex - 1;
-  
+
     if (previousIndex >= 0) {
       const previousStudent = attendanceData[previousIndex];
       const inputElement = document.getElementById(`attendance-input-${previousStudent.enrolment_no}`);
@@ -209,7 +208,7 @@ export default function Attendance() {
       }
     }
   };
-  
+
   const getTotalPresent = () => {
     return attendanceData.filter((student) => student.attendance__status === 'Present').length;
   };
@@ -218,8 +217,6 @@ export default function Attendance() {
     return attendanceData.filter((student) => student.attendance__status === 'Absent').length;
   };
 
-  // const totalStudentsPercentage = (getTotalPresent() + getTotalAbsent())/attendanceData.length * 100;
-  // const totalStudentsColor = `linear-gradient(to left, #9f9d9d, #7e7979d6 ${totalStudentsPercentage}%, transparent 0%)`;
   const [totalStudentsPercentage, setTotalStudentsPercentage] = useState(100);
   useEffect(() => {
     const initialPresentStudents = getTotalPresent(); // Initially marked as Present
@@ -274,7 +271,6 @@ export default function Attendance() {
   const handleStudentIdChange = (event) => {
     setStudentId(event.target.value);
   };
-
   const handleDownloadReports = () => {
     if (!startDate || !endDate) {
       alert('Please select both the start date and end date to download the report.');

@@ -18,9 +18,10 @@ export default function Attendance() {
   const zonedDate = utcToZonedTime(currentDate, timeZone);
   const formattedDate = format(zonedDate, 'EEE, dd-MMM-yyyy');
   const isCurrentDate = isToday(zonedDate);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [facultyImage, setFacultyImage] = useState(null);
+  const [role , setRole] = useState('');
   const [facultyName, setFacultyName] = useState('');
-  const [facultyEmail, setFacultyEmail] = useState('');
+  const [facultyDepartment, setFacultyDepartment] = useState('');
   const [attendanceData, setAttendanceData] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -30,14 +31,9 @@ export default function Attendance() {
   const [endDate, setEndDate] = useState('');
   const [studentId, setStudentId] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [facultyImage, setFacultyImage] = useState(null);
   const [showMarkAllAttendanceMessage, setShowMarkAllAttendanceMessage] = useState(false);
   const [focusedEno, setFocusedEno] = useState(null);
 
-
-  const handleSearch = (event) => {
-    setSearchTerm(event.target.value);
-  };
 
   const fetchData = async (date) => {
     try {
@@ -78,8 +74,9 @@ export default function Attendance() {
         if (response.status === 200) {
           const data = await response.json();
           setFacultyName(data.faculty.name);
-          setFacultyEmail(data.faculty.email);
-          setFacultyImage(data.faculty.image_url); // Set the faculty image URL
+          setRole(data.faculty.role);
+          setFacultyDepartment(data.faculty.department);
+          setFacultyImage(data.faculty.image_url);
 
         } else {
           alert('Error occurred while fetching dashboard data.');
@@ -323,8 +320,13 @@ export default function Attendance() {
             ) : (
               <Skeleton width={150} />
             )}
-            {facultyEmail ? (
-              <p className="faculty-email">{facultyEmail}</p>
+            {role ? (
+              <p className="faculty-role">{role}</p>
+            ) : (
+              <Skeleton width={100} />
+            )}
+            {facultyDepartment ? (
+              <p className="faculty-department">{facultyDepartment}</p>
             ) : (
               <Skeleton count={1} />
             )}
@@ -363,7 +365,7 @@ export default function Attendance() {
           </button>
         </div>
         <div className="statistics-container">
-        <div className="statistics-card" style={{ background: `linear-gradient(to right, #d3cce3, #e9e4f0 ${totalStudentsPercentage}%, transparent 0%)` }}>
+        <div className="statistics-card" style={{ background: `linear-gradient(to right, #7e7c80, #97959a ${totalStudentsPercentage}%, transparent 0%)` }}>
           <h3>Total Students</h3>
           <p className="statistics-value">{attendanceData.length}</p>
         </div>

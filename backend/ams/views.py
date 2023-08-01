@@ -179,6 +179,7 @@ def dashboard_data(request):
                 'email': faculty.faculty_email,
                 'image_url': faculty_image_url,
                 'role': faculty.role,
+                'department': faculty.department
             }
 
             assigned_classes = faculty.get_assigned_classes()

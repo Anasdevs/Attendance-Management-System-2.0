@@ -43,7 +43,7 @@
 .rightside .image .date {
   position: relative;
   top: 0;
-  left:50%;
+  left:65%;
   color: rgb(6, 6, 6);
   font-size: 25px;
   font-weight: bolder;
@@ -277,18 +277,3 @@
   cursor: pointer;
   margin-left: 20px;
 }
-
-/* @keyframes shake {
-  10%, 90% {
-    transform: translateX(-3px);
-  }
-  20%, 80% {
-    transform: translateX(3px);
-  }
-  30%, 50%, 70% {
-    transform: translateX(-2px);
-  }
-  40%, 60% {
-    transform: translateX(2px);
-  }
-} */

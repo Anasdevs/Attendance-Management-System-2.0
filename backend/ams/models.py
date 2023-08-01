@@ -14,9 +14,15 @@ class FacultyManager(BaseUserManager):
         return faculty
 
 Post=(
-     ('HOD','HOD'),
-     ('Associate Professor','Associate Professor'),
-     ('Assistant Professor','Assistant Professor'),
+     ('Associate Professor,Head ','Associate Professor,Head'),
+     ('Assistant Professor,Head','Assistant Professor,Head'),
+        ('Assistant Professor','Assistant Professor'),
+        ('Associate Professor','Associate Professor'),
+)
+Role=(
+        ('Head Of Department(HOD)','Head Of Department(HOD)'),
+        ('(Class Coordinator)','(Class Coordinator)'),
+        ('(Subject Teacher)','(Subject Teacher)'),
 )
 class Faculty(AbstractBaseUser):
     def get_assigned_classes(self):
@@ -30,6 +36,7 @@ class Faculty(AbstractBaseUser):
     Designation=models.CharField(max_length=50,choices=Post,default=None,blank=True)
     department=models.CharField(max_length=50,default=None)
     qualifications=models.CharField(max_length=200,default=None,blank=True)
+    role=models.CharField(max_length=50,default=None,blank=True ,choices=Role)
     
 
 

@@ -8,8 +8,6 @@ import { useParams } from 'react-router-dom';
 import LoadingBar from 'react-top-loading-bar';
 import WithRightbarLayout from './WithRightbarLayout';
 
-// import defaultFacultyImage from './Images/faculty.png';
-
 export default function Attendance() {
   const [loadingProgress, setLoadingProgress] = useState(0);
   const { courseId } = useParams();
@@ -34,7 +32,6 @@ export default function Attendance() {
   const [showMarkAllAttendanceMessage, setShowMarkAllAttendanceMessage] = useState(false);
   const [focusedEno, setFocusedEno] = useState(null);
 
-
   const fetchData = async (date) => {
     try {
       const timeZone = 'Asia/Kolkata';
@@ -43,7 +40,7 @@ export default function Attendance() {
 
       const response = await fetch(`http://localhost:8000/api/take-attendance/?course_id=${courseId}&date=${formattedDate}`, {
         method: 'GET',
-        credentials: 'include', // Include cookies in the request
+        credentials: 'include',
       });
       if (response.status === 200) {
         const data = await response.json();
@@ -68,7 +65,7 @@ export default function Attendance() {
       try {
         const response = await fetch('http://localhost:8000/api/dashboard-data/', {
           method: 'GET',
-          credentials: 'include', // Include cookies in the request
+          credentials: 'include',
         });
 
         if (response.status === 200) {
@@ -131,7 +128,6 @@ export default function Attendance() {
       });
 
       if (response.status === 200) {
-        // Attendance submitted successfully
         setIsSubmitted(true);
         setTimeout(() => {
           setIsSubmitted(false);
@@ -166,7 +162,7 @@ export default function Attendance() {
         movePrevious(eno);
         break;
       default:
-        return; // For any other key, return without moving to the next/previous record
+        return; 
     }
   };
   
@@ -179,7 +175,7 @@ export default function Attendance() {
     } else if (direction === 'up') {
       nextIndex = studentIndex - 1;
     } else {
-      return; // Invalid direction, return without moving
+      return;
     }
   
     if (nextIndex >= 0 && nextIndex < attendanceData.length) {
@@ -346,7 +342,6 @@ export default function Attendance() {
             </div>
           </div>
         </div>
-
         <div className="classInfo">
           <h1>{className}</h1>
         </div>

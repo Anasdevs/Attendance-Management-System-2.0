@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { format, addDays, subDays, isToday } from 'date-fns';
 import { utcToZonedTime } from 'date-fns-tz';
-import Skeleton from 'react-loading-skeleton'
-import 'react-loading-skeleton/dist/skeleton.css'
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 import './Attendance.css';
 import { useParams } from 'react-router-dom';
 import LoadingBar from 'react-top-loading-bar';
@@ -32,6 +32,18 @@ export default function Attendance() {
   const [showMarkAllAttendanceMessage, setShowMarkAllAttendanceMessage] = useState(false);
   const [focusedEno, setFocusedEno] = useState(null);
 
+  useEffect(() => {
+    fetchData(format(currentDate, 'yyyy-MM-dd'));
+    // Set the focus on the first student's attendance checkbox when the component renders
+    const firstStudent = attendanceData[0];
+    if (firstStudent) {
+      const inputElement = document.getElementById(`attendance-input-${firstStudent.enrolment_no}`);
+      if (inputElement) {
+        inputElement.focus();
+      }
+    }
+  }, [currentDate, courseId]);
+
   const fetchData = async (date) => {
     try {
       const timeZone = 'Asia/Kolkata';
@@ -57,10 +69,6 @@ export default function Attendance() {
   };
 
   useEffect(() => {
-    fetchData(format(currentDate, 'yyyy-MM-dd'));
-  }, [currentDate, courseId]);
-
-  useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch('http://localhost:8000/api/dashboard-data/', {
@@ -81,7 +89,8 @@ export default function Attendance() {
       } catch (error) {
         console.error('Error:', error);
         alert('Error occurred while fetching dashboard data.');
-      }setLoadingProgress(100);
+      }
+      setLoadingProgress(100);
     };
 
     fetchData()
@@ -102,43 +111,6 @@ export default function Attendance() {
         return student;
       })
     );
-  };
-
-  const submitAttendanceData = async () => {
-    try {
-      const modifiedAttendanceData = attendanceData.map((student) => ({
-        enrolment_no: student.enrolment_no,
-        attendance__status: student.attendance__status,
-        attendance_date: student.attendance_date,
-      }));
-
-      const requestBody = {
-        course_id: courseId,
-        attendance_data: modifiedAttendanceData,
-        attendance_date: format(currentDate, 'yyyy-MM-dd'),
-      };
-
-      const response = await fetch('http://localhost:8000/api/submit-attendance/', {
-        method: 'POST',
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(requestBody),
-      });
-
-      if (response.status === 200) {
-        setIsSubmitted(true);
-        setTimeout(() => {
-          setIsSubmitted(false);
-        }, 3000);
-      } else {
-        alert('Error occurred while submitting attendance.');
-      }
-    } catch (error) {
-      console.error('Error:', error);
-      alert('Error occurred while submitting attendance.');
-    }
   };
 
   const handleKeyPress = (event, eno) => {
@@ -186,6 +158,7 @@ export default function Attendance() {
       }
     }
   };
+  
   const movePrevious = (eno) => {
     const studentIndex = attendanceData.findIndex((student) => student.enrolment_no === eno);
     const previousIndex = studentIndex - 1;

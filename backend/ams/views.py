@@ -178,6 +178,7 @@ def dashboard_data(request):
                 'name': faculty.faculty_name,
                 'email': faculty.faculty_email,
                 'image_url': faculty_image_url,
+                'role': faculty.role,
             }
 
             assigned_classes = faculty.get_assigned_classes()
@@ -350,6 +351,7 @@ def faculty_profile(request):
                 'department': faculty_data.department,
                 'qualification': faculty_data.qualifications,
                 'email': faculty_data.faculty_email,
+                # 'role': faculty_data.role,
             }
             return JsonResponse(faculty_profile_data)
 

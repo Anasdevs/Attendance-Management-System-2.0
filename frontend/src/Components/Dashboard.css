@@ -21,14 +21,12 @@
   font-weight: bold;
 }
 
-.faculty-info .faculty-qualification {
-  color: rgb(54, 54, 54);
+.heading{
+  display: flex;
 }
-
 .faculty-info .faculty-email {
   color: rgb(54, 54, 54);
 }
-
 .rightside .image .date {
     position: absolute;
     right: 50px;

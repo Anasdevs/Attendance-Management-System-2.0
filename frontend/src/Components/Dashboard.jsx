@@ -82,7 +82,7 @@ const Dashboard = () => {
             <Skeleton circle height={70} width={70}/>
           )}
           <div className="faculty-info">
-            <div classname='heading'>
+            <div className="faculty-info-name">
             {facultyName ? (
               <p className="faculty-name">{facultyName}</p>
             ) : (

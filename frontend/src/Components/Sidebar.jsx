@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChartBar, faCalendarAlt, faCalendarCheck, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faChartBar, faCalendarAlt, faCalendarCheck, faUser, faFileAlt } from '@fortawesome/free-solid-svg-icons';
 import './Sidebar.css';
 import msilogo from './Images/msilogo.png';
 
@@ -24,19 +24,19 @@ export default function Sidebar() {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/holidays" activeclassname="active">
-              <span className="icon">
-                <FontAwesomeIcon icon={faCalendarAlt} />
-              </span>
-              Holidays
-            </NavLink>
-          </li>
-          <li>
             <NavLink to="/calendar" activeclassname="active">
               <span className="icon">
                 <FontAwesomeIcon icon={faCalendarCheck} />
               </span>
               Calendar
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/reports" activeclassname="active">
+              <span className="icon">
+                <FontAwesomeIcon icon={faFileAlt} />
+              </span>
+              Reports
             </NavLink>
           </li>
           <li><NavLink to="/profile" activeclassname="active">

@@ -54,7 +54,6 @@
   background-color: #555;
   color: #ccc;
 
-
 }
 
 .sidebar li a .icon {
@@ -91,7 +90,7 @@
 }
 
 .profile-button {
-  position: relative;
+  position: fixed;
   bottom: 0;
   width: 100%;
   padding-bottom: 20px;

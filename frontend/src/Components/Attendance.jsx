@@ -42,11 +42,12 @@ export default function Attendance() {
       const timeZone = 'Asia/Kolkata';
       const zonedDate = utcToZonedTime(date, timeZone);
       const formattedDate = format(zonedDate, 'yyyy-MM-dd');
-
+  
       const response = await fetch(`http://localhost:8000/api/take-attendance/?course_id=${courseId}&date=${formattedDate}`, {
         method: 'GET',
         credentials: 'include',
       });
+  
       if (response.status === 200) {
         const data = await response.json();
         setClassName(data.class_name);
@@ -59,6 +60,10 @@ export default function Attendance() {
             inputElement.focus();
           }
         }
+      } else if (response.status === 403) {
+        setClassName("Class Name Not Found");
+        setAttendanceData([]);
+        setIsDataFetched(true);
       } else {
         alert('Error occurred while fetching student records.');
       }
@@ -68,6 +73,7 @@ export default function Attendance() {
     }
     setLoadingProgress(100);
   };
+  
 
   useEffect(() => {
     const fetchData = async () => {

@@ -442,11 +442,12 @@ export default function Attendance() {
         </table>
       </div>
       <button
-        className={`submit-button${isSubmitting ? ' submitting' : ''}`}
-        onClick={handleSubmitAttendance}
-      >
-        {isSubmitting ? 'Submitting...' : 'Submit Attendance'}
-      </button>
+      className={`submit-button${isSubmitting ? ' submitting' : ''}`}
+      onClick={handleSubmitAttendance}
+      disabled={attendanceData.length === 0 || className === 'Class Name Not Found' || isSubmitting}
+    >
+      {isSubmitting ? 'Submitting...' : 'Submit Attendance'}
+    </button>
     </div>
   </div>
   </WithRightbarLayout>

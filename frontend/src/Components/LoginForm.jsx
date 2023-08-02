@@ -4,7 +4,7 @@ import attendanceTracking from './Images/noteslist.svg';
 import attendanceTaking from './Images/onlinecalendar.svg';
 import attendanceCompiling from './Images/segmentanalysis.svg';
 
-import './Auth.css';
+import './LoginForm.css';
 
 function LoginForm() {
   const navigate = useNavigate();
@@ -282,6 +282,7 @@ function LoginForm() {
           </div>
         </div>
         <div className="box-right">
+          
           <div className="contact">
             {isForgotPassword ? (
               <>

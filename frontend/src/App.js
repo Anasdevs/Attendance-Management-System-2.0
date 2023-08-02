@@ -8,6 +8,7 @@ import Holidays from './Components/Holidays';
 import Calendar from './Components/Calendar';
 import Profile from './Components/Profile';
 import NotFound from './Components/NotFound'
+import Reports from './Components/Reports';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css'
 
@@ -85,6 +86,7 @@ const WithSidebar = ({ handleLogout }) => {
         <Route path="/holidays" element={<Holidays />} />
         <Route path="/calendar" element={<Calendar />} />
         <Route path="/profile" element={<Profile handleLogout={handleLogout} />} />
+        <Route path="/reports" element={<Reports />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </>

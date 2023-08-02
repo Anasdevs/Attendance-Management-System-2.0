@@ -66,12 +66,16 @@
   padding: 6px 12px;
   border: none;
   border-radius: 4px;
-  background-color: #04293A;
+  background-color: var(--button-color);
   color: #ffffff;
   font-size: 14px;
   font-weight: bold;
   cursor: pointer;
   margin-right: 5px;
+}
+
+.navigation-button:hover{
+  background-color: var(--button-color-hover);
 }
 
 
@@ -237,12 +241,16 @@
   left:35rem;
   border: none;
   border-radius: 4px;
-  background-color: #04293A;
+  background-color: var(--button-color);
   color: #ffffff;
   font-size: 16px;
   font-weight: bold;
   cursor: pointer;
   margin-top: 30px;
+}
+
+.submit-button:hover{
+  background-color: var(--button-color-hover);
 }
 
 .submit-button:disabled{
@@ -275,11 +283,15 @@
 }
 
 .filters-container button.download-button {
-  background-color: #04293A;
+  background-color: var(--button-color);
   color: #fff;
   padding: 8px 16px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
   margin-left: 20px;
+}
+
+.filters-container button.download-button:hover{
+  background-color: var(--button-color-hover);
 }

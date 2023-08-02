@@ -70,7 +70,7 @@
   padding: 10px 20px;
   font-size: px;
   color: #fff;
-  background-color: #060dfa;
+  background-color: var(--button-color);
   border: none;
   border-radius: 4px;
   overflow: hidden;
@@ -110,7 +110,7 @@
 }
 
 .action-button:hover {
-  background-color: #050740;
+  background-color: var(--button-color-hover);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 

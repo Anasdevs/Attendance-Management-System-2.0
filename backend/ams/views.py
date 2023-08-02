@@ -209,44 +209,60 @@ def dashboard_data(request):
     except Faculty.DoesNotExist:
         return JsonResponse({'error': 'Faculty not found'})
 
-    
+
 @csrf_exempt
 def take_attendance(request):
     if request.method == 'GET':
         course_id = request.GET.get('course_id')
         date = request.GET.get('date')
 
-        attendance_subquery = Attendance.objects.filter(
-            student_id=OuterRef('pk'),
-            date=date
-        ).values('status', 'date')
-        student_data = Student.objects.filter(class_attendance__course_id=course_id).values(
-            'enrolment_no',
-            'name',
-        ).annotate(
-            filtered_status=Coalesce(Subquery(attendance_subquery.values('status')), Value(None)),
-            filtered_date=Coalesce(Subquery(attendance_subquery.values('date')), Value(None)),
-        ).distinct()
-        students = []
-        for data in student_data:
-            student = {
-                'enrolment_no': data['enrolment_no'],
-                'name': data['name'],
-                'attendance__status': data['filtered_status'],
-                'attendance__date': data['filtered_date'],
-            }
-            students.append(student)
+        email = request.session.get('faculty_email')
+        if not is_course_assigned_to_faculty(email, course_id):
+            return JsonResponse({'error': 'Unauthorized access to the course.'}, status=403)
+
         try:
             class_obj = Class.objects.get(course_id=course_id)
-            class_name = f"{class_obj.course}-{class_obj.semester}-{class_obj.section} {class_obj.subject}"
+            class_name = f"{class_obj.course} - {class_obj.semester} - {class_obj.section} {class_obj.subject}"
+            attendance_subquery = Attendance.objects.filter(
+                student_id=OuterRef('pk'),
+                date=date
+            ).values('status', 'date')
+
+            student_data = Student.objects.filter(class_attendance__course_id=course_id).values(
+                'enrolment_no',
+                'name',
+            ).annotate(
+                filtered_status=Coalesce(Subquery(attendance_subquery.values('status')), Value(None)),
+                filtered_date=Coalesce(Subquery(attendance_subquery.values('date')), Value(None)),
+            ).distinct()
+            students = []
+            for data in student_data:
+                student = {
+                    'enrolment_no': data['enrolment_no'],
+                    'name': data['name'],
+                    'attendance__status': data['filtered_status'],
+                    'attendance__date': data['filtered_date'],
+                }
+                students.append(student)
         except Class.DoesNotExist:
-            class_name = "Class Name Not Found" 
-        
+            class_name = "Class Name Not Found"
+            students = []
+
         response_data = {
             'class_name': class_name,
             'students': students,
         }
         return JsonResponse(response_data)
+
+    return JsonResponse({'error': 'Invalid request method.'}, status=400)
+
+def is_course_assigned_to_faculty(email, course_id):
+    try:
+        faculty = Faculty.objects.get(faculty_email=email)
+        assigned_courses = Class.objects.filter(assigned_to=faculty)
+        return assigned_courses.filter(course_id=course_id).exists()
+    except Faculty.DoesNotExist:
+        return False
 
 
 @require_POST

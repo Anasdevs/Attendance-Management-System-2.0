@@ -2,7 +2,7 @@
 .rightbar {
     width: 85%;
     padding: 20px;
-    padding-bottom: 20%;
+    /* padding-bottom: 20%; */
     margin-left: 12%;
     overflow-y: auto;
     /* background: var(--rightbar-background); */
@@ -14,6 +14,6 @@
       padding-right: 0;
       padding-left: 0;
       background: var(--rightbar-background);
-      padding-bottom: 30%;
+      /* padding-bottom: 30%;rightbar */
     }
   }

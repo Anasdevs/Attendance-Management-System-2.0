@@ -32,13 +32,25 @@
   font-size: 14px;
 }
 
-/* .rightside .image {
+.rightside .image {
   display: flex;
   align-items: center;
   border-radius: 10px;
   background:white;
 
-} */
+}
+
+.rightside .image .date {
+  position: relative;
+  top: 0;
+  left:65%;
+  color: rgb(6, 6, 6);
+  font-size: 25px;
+  font-weight: bolder;
+  padding: 10px;
+  border-radius: 10px;
+ 
+}
 
 .today-date {
   font-size: 18px;
@@ -74,7 +86,7 @@
   text-align: center; 
 }
 
-/* .classInfo h1 {
+.classInfo h1 {
   margin-top: 0;
   font-size: 30px;
   font-weight: bold;
@@ -87,8 +99,9 @@
   border-radius: 8px; 
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
   transition: background-color 0.3s ease; 
+
   cursor: pointer;
-} */
+}
 
 .success-message {
   position: fixed;

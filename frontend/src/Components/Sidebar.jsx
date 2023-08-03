@@ -22,7 +22,7 @@ export default function Sidebar() {
         <hr />
         <ul>
           <li>
-            <NavLink to="/dashboard" activeClassName="active">
+            <NavLink to="/dashboard" activeclassname="active">
               <span className="icon">
                 <FontAwesomeIcon icon={faChartBar} />
               </span>
@@ -30,7 +30,7 @@ export default function Sidebar() {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/calendar" activeClassName="active">
+            <NavLink to="/calendar" activeclassname="active">
               <span className="icon">
                 <FontAwesomeIcon icon={faCalendarCheck} />
               </span>
@@ -38,7 +38,7 @@ export default function Sidebar() {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/reports" activeClassName="active">
+            <NavLink to="/reports" activeclassname="active">
               <span className="icon">
                 <FontAwesomeIcon icon={faFileAlt} />
               </span>
@@ -46,7 +46,7 @@ export default function Sidebar() {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/profile" activeClassName="active">
+            <NavLink to="/profile" activeclassname="active">
               <span className="icon">
                 <FontAwesomeIcon icon={faUser} />
               </span>

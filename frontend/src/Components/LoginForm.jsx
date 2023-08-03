@@ -4,8 +4,6 @@ import attendanceTracking from './Images/noteslist.svg';
 import attendanceTaking from './Images/onlinecalendar.svg';
 import attendanceCompiling from './Images/segmentanalysis.svg';
 import msilogo from './Images/msilogo.png';
-
-
 import './LoginForm.css';
 
 function LoginForm() {

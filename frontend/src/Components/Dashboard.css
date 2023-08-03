@@ -1,17 +1,29 @@
 .dashboard-container{
-  height: 100vh;
+  height: 100%;
 }
 
 .rightside .image {
   display: flex;
   align-items: center;
   border-radius: 10px;
+  background:white;
 }
 
 .rightside .image img {
   height: 70px;
   width: 70px;
   border-radius: 50%;
+}
+.rightside .image .date {
+  position: relative;
+  top: 0;
+  left:60%;
+  color: rgb(6, 6, 6);
+  font-size: 25px;
+  font-weight: bolder;
+  padding: 10px;
+  border-radius: 10px;
+ 
 }
 
 .rightside .image .faculty-info p {
@@ -65,7 +77,6 @@
 }
 
 .action-button {
-  position: relative;
   display: inline-block;
   padding: 10px 20px;
   font-size: px;
@@ -142,4 +153,43 @@
   border-radius: 4px;
   font-size: 16px;
   width: 200px;
+}
+
+
+@media (max-width: 768px) {
+  .rightside .image .date {
+    position: relative;
+    top:-5;
+    left:32%;
+    color: rgb(6, 6, 6);
+    font-size: 25px;
+    font-weight: bolder;
+  }
+  .rightside .image{
+    display: flex;
+    align-items: center;
+    border-radius: 10px;
+    position: absolute;
+    background:white;
+    top: 5%;
+    width: 100%;
+  }
+  .classInfo input {
+    padding: 10px 10px;
+    border: 1px solid #b0afce;
+    border-radius: 4px;
+    font-size: 16px;
+    width: 200px;
+  }
+
+  .classInfo h1{ 
+    font-size: 30px;
+    font-weight: bold;
+    color: #333; 
+    padding-top:5%;
+    text-transform: uppercase; 
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+  }
 }

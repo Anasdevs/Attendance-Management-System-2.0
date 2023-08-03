@@ -3,8 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import attendanceTracking from './Images/noteslist.svg';
 import attendanceTaking from './Images/onlinecalendar.svg';
 import attendanceCompiling from './Images/segmentanalysis.svg';
+import msilogo from './Images/msilogo.png';
 
-import './Auth.css';
+
+import './LoginForm.css';
 
 function LoginForm() {
   const navigate = useNavigate();
@@ -282,6 +284,7 @@ function LoginForm() {
           </div>
         </div>
         <div className="box-right">
+          
           <div className="contact">
             {isForgotPassword ? (
               <>
@@ -408,9 +411,14 @@ function LoginForm() {
               </form>
             )}
           </div>
+
+        </div>
+    </div>
+    <div className="mobile-footer">
+    <img src={msilogo} alt="MSI Logo" className="mobile-footer-image" />
+        <p>AMS</p>
         </div>
       </div>
-    </div>
   );
 }
 

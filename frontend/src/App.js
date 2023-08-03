@@ -11,6 +11,7 @@ import NotFound from './Components/NotFound'
 import Reports from './Components/Reports';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css'
+import './App.css';
 
 
 const App = () => {
@@ -58,7 +59,7 @@ const App = () => {
   };
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <div className="custom-loading-spinner"></div>;
   }
 
   return (

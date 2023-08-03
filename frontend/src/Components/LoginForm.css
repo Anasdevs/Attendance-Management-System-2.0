@@ -221,20 +221,55 @@ body {
   font-weight: 500;
 }
 
-@media only screen and (max-width: 767px) {
+.mobile-footer{
+  display: none;
+}
+
+@media only screen and (max-width: 900px) {
   .box {
     flex-direction: column;
     height: auto;
     width: 100%;
+
   }
-  .box-right,
-  .box-left {
-    width: 100%;
-    height: auto;
-    padding: 160px 0px 0px 0px;
+  .box-left{
+    display: none;
   }
 
-  .box-left {
-    margin-top: 50px;
+  .box-right{
+    box-shadow: rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
+    width: 100%;
+    height: 75%;
+    margin-top: 10%;
+    background: none;
   }
+
+  .submit{
+    margin-top: 50px
+  }
+
+  .mobile-footer{
+    display: flex;
+    align-items: center; 
+    justify-content: center;
+    gap: 5px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 10px;
+    background: #000d53;
+    font-size: 12px;
+    color: #ffffff;
+  }
+
+  .mobile-footer p{
+    font-weight: 500;
+  }
+  .mobile-footer-image{
+    height: 30px;
+    width: 30px;
+  }
+
 }
+

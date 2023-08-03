@@ -222,7 +222,7 @@ def take_attendance(request):
 
         try:
             class_obj = Class.objects.get(course_id=course_id)
-            class_name = f"{class_obj.course} - {class_obj.semester} - {class_obj.section} {class_obj.subject}"
+            class_name = f"{class_obj.course}-{class_obj.semester}-{class_obj.section} {class_obj.subject}"
             attendance_subquery = Attendance.objects.filter(
                 student_id=OuterRef('pk'),
                 date=date
@@ -312,11 +312,17 @@ def generate_attendance_report(request):
         start_date = request.GET.get('startDate')
         end_date = request.GET.get('endDate')
         course_id = request.GET.get('courseId') 
+        if not all([start_date, end_date, course_id]):
+            return JsonResponse({'error': 'Please provide valid start date, end date, and course ID.'}, status=400)
+
 
         attendance_data = Attendance.objects.filter(
             date__range=[start_date, end_date],
             class_attendance__course_id=course_id
         )
+
+        if not attendance_data.exists():
+            return JsonResponse({'error': 'No attendance data found for the given date range and course ID.'}, status=404)
 
         # Prepare the CSV response
         response = HttpResponse(content_type='text/csv')

@@ -282,28 +282,45 @@ export default function Attendance() {
       alert('Please select both the start date and end date to download the report.');
       return;
     }
+  
     setIsLoading(true);
     const url = `http://localhost:8000/api/attendance/reports/?startDate=${startDate}&endDate=${endDate}&courseId=${courseId}`;
+    
     fetch(url)
-      .then((response) => response.blob())
+      .then(async (response) => {
+        if (!response.ok) {
+          let errorMessage;
+          try {
+            const errorResponse = await response.json();
+            errorMessage = errorResponse.error || 'An error occurred while generating the report.';
+          } catch (error) {
+            errorMessage = 'An error occurred while generating the report.';
+          }
+          throw new Error(errorMessage);
+        }
+  
+        return response.blob();
+      })
       .then((blob) => {
         const blobUrl = URL.createObjectURL(blob);
-
+  
         // Create a temporary anchor element
         const anchor = document.createElement('a');
         anchor.href = blobUrl;
         anchor.download = `attendance_report_${startDate}_${endDate}.csv`;
+        
         // Programmatically trigger the download
         anchor.click();
         URL.revokeObjectURL(blobUrl);
       })
       .catch((error) => {
-        console.error('Error:', error);
+        alert(error.message);
       })
       .finally(() => {
         setIsLoading(false);
       });
   };
+  
 
   return (
     <WithRightbarLayout>

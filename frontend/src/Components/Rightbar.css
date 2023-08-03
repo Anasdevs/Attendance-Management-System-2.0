@@ -7,9 +7,10 @@
     overflow-y: auto;
     /* background: var(--rightbar-background); */
   }
-  @media(max-width:768px){
+  @media(max-width: 1024px){
     .rightbar{
       width: 100%;
+      margin-top: 8%;
       margin-left: 0;
       padding-right: 0;
       padding-left: 0;

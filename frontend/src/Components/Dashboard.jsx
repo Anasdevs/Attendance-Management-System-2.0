@@ -98,14 +98,14 @@ const Dashboard = () => {
                 <Skeleton count={1} />
                 )}
                 </div>
-          <div className="date">
-            <div className="today-date">Today</div>
-            <div className="today-date">{today}</div>
+          <div className="dashboard-date">
+            <div className="today-dashboard-date">Today</div>
+            <div className="today-dashboard-date">{today}</div>
           </div>
         </div>
         <div className="classInfo">
           <h1>Your Classes</h1>
-          <input
+          <input className='class-search-input'
             type="text"
             placeholder="Search..."
             value={searchTerm}

@@ -121,16 +121,19 @@
   background-color: rgb(199, 52, 52);
 }
 
-@media screen and (max-width: 768px) {
-  .profile-left {
-    flex-direction: column;
-    align-items: flex-start;
+@media screen and (max-width: 1024px) {
+  .profile-container {
+    flex-direction: column; /* Adjust flex direction for smaller screens */
   }
 
-  .faculty-image {
-    width: 150px;
-    height: 150px;
-    margin-right: 0;
-    margin-bottom: 10px;
+  .profile-left {
+    width: 100%;
+    margin-bottom: 20px; /* Add margin at the bottom to separate from the profile-right section */
+  }
+
+  .profile-right {
+    margin: 0;
+    padding: 20px; /* Adjust padding for better spacing */
+    width: 100%;
   }
 }

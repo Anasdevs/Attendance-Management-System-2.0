@@ -37,29 +37,21 @@
   align-items: center;
   border-radius: 10px;
   background:white;
-
 }
 
-.rightside .image .date {
-  position: relative;
-  top: 0;
-  left:65%;
-  color: rgb(6, 6, 6);
-  font-size: 25px;
+.date{
+  font-size: 1rem;
   font-weight: bolder;
-  padding: 10px;
-  border-radius: 10px;
- 
+  color: #00001a;
 }
 
-.today-date {
-  font-size: 18px;
-  font-weight: bold;
-}
 
 .date-navigation {
-  display: flex;
-  margin-top: 10px;
+  text-align: right; 
+  flex-grow: 1;
+  margin-top: 1vw;
+  margin-right: 3vw;
+
 }
 
 .navigation-button {
@@ -77,9 +69,6 @@
 .navigation-button:hover{
   background-color: var(--button-color-hover);
 }
-
-
-
 
 .classInfo {
   margin-bottom: 20px;
@@ -296,6 +285,32 @@
   background-color: var(--button-color-hover);
 }
 
-@media(max-width:768){
+@media (min-width: 350px) and (max-width: 511px) {
+  .classInfo {
+    margin-top: 40%; 
+    margin-bottom: 20%;
+  }
+}
 
+@media (min-width: 511px) and (max-width: 620px) {
+  .classInfo {
+    margin-top: 35%;  
+    margin-bottom: 20%;
+
+  }
+}
+
+@media (min-width: 620px) and (max-width: 768px) {
+  .classInfo {
+    margin-top: 30%; 
+    margin-bottom: 20%;
+
+  }
+}
+
+@media (max-width: 768px) {
+  .date{
+    margin-top: 20%;
+    margin-bottom: 10%;
+  }
 }

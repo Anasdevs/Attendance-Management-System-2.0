@@ -4,8 +4,9 @@
 
 .rightside .image {
   display: flex;
-  align-items: center;
   border-radius: 10px;
+  justify-content: space-between; /* Align items in a row with space between */
+  align-items: center; /* Vertically center items */
 }
 
 .rightside .image img {
@@ -31,8 +32,20 @@
 .faculty-info .faculty-department {
   font-size: 12px;
   color: #383f6e;
-
 }
+
+.dashboard-date {
+  text-align: right; 
+  flex-grow: 1;
+  margin-right: 2vw;
+}
+
+.dashboard-date .today-dashboard-date {
+  font-size: 1rem;
+  font-weight: bolder;
+  color: #00001a;
+}
+
 
 .classInfo {
   margin-top: 65px;
@@ -130,10 +143,17 @@
   text-decoration: none; /* Remove underline when clicked */
 }
 
-
 .classInfo {
-  margin-top: 65px;
-  font-size: 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 6vw;
+}
+
+.classInfo .class-search-input {
+  /* Remove unnecessary styles */
+  text-align: center;
+  margin-top: 10px; 
 }
 
 .classInfo input {
@@ -145,22 +165,32 @@
 }
 
 
+
 @media (max-width: 768px) {
-  .rightside .image .date {
-    position: relative;
-    top:-5;
-    left:32%;
-    color: rgb(6, 6, 6);
-    font-size: 25px;
-    font-weight: bolder;
+  .rightside .image .dashboard-date {
+    display: none;
   }
+
+  .dashboard-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .rightside{
+    width: 100%;
+    margin-top: 15%;
+  }
+
   .rightside .image{
     display: flex;
     align-items: center;
+    flex-direction: column;
     border-radius: 10px;
     position: absolute;
     background:white;
-    top: 5%;
+    top: 8%;
+    height: 18vh;
     width: 100%;
   }
   .classInfo input {
@@ -169,10 +199,15 @@
     border-radius: 4px;
     font-size: 16px;
     width: 200px;
+    background-color: black;
+  }
+
+  .classInfo {
+    text-align: center;
+    margin-bottom: 20px;/* Add some margin to separate the Your Classes section from the table */
   }
 
   .classInfo h1{ 
-    font-size: 30px;
     font-weight: bold;
     color: #333; 
     padding-top:5%;
@@ -182,3 +217,42 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
   }
 }
+
+@media (min-width: 410px) and (max-width: 511px) {
+  .classInfo {
+    margin-top: 25%; 
+  }
+}
+
+@media (min-width: 511px) and (max-width: 620px) {
+  .classInfo {
+    margin-top: 20%; 
+  }
+}
+
+@media (min-width: 620px) and (max-width: 768px) {
+  .classInfo {
+    margin-top: 15%; 
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .table-container {
+    overflow-x: auto; /* Enable horizontal scrolling for small screens */
+  }
+
+  .table {
+    width: 100%; /* Make the table take full width on small screens */
+  }
+
+  .table th,
+  .table td {
+    padding: 8px 5px; /* Adjust cell padding for better spacing on small screens */
+    font-size: 12px; /* Reduce font size for better readability on small screens */
+  }
+
+  .action-button {
+    font-size: 10px; /* Reduce font size for the action button on small screens */
+  }
+}
+

@@ -1,29 +1,17 @@
 .dashboard-container{
-  height: 100%;
+  height: calc(100% - 20px);
 }
 
 .rightside .image {
   display: flex;
   align-items: center;
   border-radius: 10px;
-  background:white;
 }
 
 .rightside .image img {
   height: 70px;
   width: 70px;
   border-radius: 50%;
-}
-.rightside .image .date {
-  position: relative;
-  top: 0;
-  left:60%;
-  color: rgb(6, 6, 6);
-  font-size: 25px;
-  font-weight: bolder;
-  padding: 10px;
-  border-radius: 10px;
- 
 }
 
 .rightside .image .faculty-info p {
@@ -77,6 +65,7 @@
 }
 
 .action-button {
+  position: relative;
   display: inline-block;
   padding: 10px 20px;
   font-size: px;

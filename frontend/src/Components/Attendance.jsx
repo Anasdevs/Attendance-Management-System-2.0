@@ -333,7 +333,7 @@ export default function Attendance() {
           </div>
         </div>
       )}
-      <div className="rightside">
+      <div className="attendance-rightside">
         <div className="image">
           {facultyImage ? (
             <img src={facultyImage} alt="Faculty" />

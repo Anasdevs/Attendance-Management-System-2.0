@@ -164,34 +164,9 @@
   width: 200px;
 }
 
-
-
-@media (max-width: 768px) {
-  .rightside .image .dashboard-date {
-    display: none;
-  }
-
-  .dashboard-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .rightside{
-    width: 100%;
-    margin-top: 15%;
-  }
-
+@media (min-width: 300px) and (max-width: 768px) {
   .rightside .image{
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    border-radius: 10px;
-    position: absolute;
-    background:white;
-    top: 8%;
-    height: 18vh;
-    width: 100%;
+    margin-top: 5%;
   }
   .classInfo input {
     padding: 10px 10px;
@@ -204,10 +179,11 @@
 
   .classInfo {
     text-align: center;
-    margin-bottom: 20px;/* Add some margin to separate the Your Classes section from the table */
+    margin-bottom: 20px;
   }
 
   .classInfo h1{ 
+    margin-top: -50;
     font-weight: bold;
     color: #333; 
     padding-top:5%;
@@ -215,44 +191,6 @@
     letter-spacing: 2px;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); 
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
-  }
-}
-
-@media (min-width: 410px) and (max-width: 511px) {
-  .classInfo {
-    margin-top: 25%; 
-  }
-}
-
-@media (min-width: 511px) and (max-width: 620px) {
-  .classInfo {
-    margin-top: 20%; 
-  }
-}
-
-@media (min-width: 620px) and (max-width: 768px) {
-  .classInfo {
-    margin-top: 15%; 
-  }
-}
-
-@media screen and (max-width: 500px) {
-  .table-container {
-    overflow-x: auto; /* Enable horizontal scrolling for small screens */
-  }
-
-  .table {
-    width: 100%; /* Make the table take full width on small screens */
-  }
-
-  .table th,
-  .table td {
-    padding: 8px 5px; /* Adjust cell padding for better spacing on small screens */
-    font-size: 12px; /* Reduce font size for better readability on small screens */
-  }
-
-  .action-button {
-    font-size: 10px; /* Reduce font size for the action button on small screens */
   }
 }
 

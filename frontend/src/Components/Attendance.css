@@ -80,9 +80,10 @@
 }
 
 .classInfo h1 {
-  margin-top: 0;
+  margin-top: -5%;
   font-size: 30px;
   font-weight: bold;
+  width: 100%;
   text-align: center !important;
   color: #333; 
   text-transform: uppercase; 
@@ -292,13 +293,8 @@
 }
 
 
-@media (max-width: 768px) {
-  .attendance-rightside{
-    width: 100%;
-    margin-top: 15%;
-  }
-
-  .attendance-rightside .image{
+ @media (min-width: 300px) and (max-width: 768px) {
+  /* .attendance-rightside .image{
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -308,7 +304,7 @@
     top: 8%;
     height: 18vh;
     width: 100%;
-  }
+  } */
   .classInfo input {
     padding: 10px 10px;
     border: 1px solid #b0afce;
@@ -320,12 +316,14 @@
 
   .classInfo {
     text-align: center;
-    margin-bottom: 20px;/* Add some margin to separate the Your Classes section from the table */
+    margin-bottom: 20px;
   }
 
   .classInfo h1{ 
+    margin-top: -10%;
     font-weight: bold;
     color: #333; 
+    width: 100%;
     padding-top:5%;
     text-transform: uppercase; 
     letter-spacing: 2px;
@@ -335,36 +333,7 @@
 }
 
 @media (min-width: 300px) and (max-width: 450px) {
-  .classInfo {
-    margin-top: 40%; 
-    margin-bottom: 20%;
-  }
-}
-@media (max-width:320px) {
-  .classInfo {
-    margin-top: 47%;  
-
-  }
-}
-@media (min-width: 511px) and (max-width: 620px) {
-  .classInfo {
-    margin-top: 35%;  
-    margin-bottom: 20%;
-
-  }
-}
-
-@media (min-width: 620px) and (max-width: 768px) {
-  .classInfo { 
-    margin-top: 5%;
-    margin-bottom: 25%;
-
-  }
-}
-
-@media (max-width: 768px) {
-  .date{
-    margin-top: 20%;
-    margin-bottom: 10%;
+  .attendance-rightside .image{
+    margin-top: 10%;
   }
 }

@@ -194,3 +194,22 @@
   }
 }
 
+@media screen and (max-width: 500px) {
+  .table-container {
+    overflow-x: auto; /* Enable horizontal scrolling for small screens */
+  }
+
+  .table {
+    width: 100%; /* Make the table take full width on small screens */
+  }
+
+  .table th,
+  .table td {
+    padding: 8px 5px; /* Adjust cell padding for better spacing on small screens */
+    font-size: 12px; /* Reduce font size for better readability on small screens */
+  }
+
+  .action-button {
+    font-size: 10px; /* Reduce font size for the action button on small screens */
+  }
+}

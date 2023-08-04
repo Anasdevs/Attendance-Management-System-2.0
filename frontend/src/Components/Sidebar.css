@@ -324,14 +324,25 @@
   }
 
 }
-@media (min-width:1025px) and (max-width: 1100px){
+@media (min-width:1079px) and (max-width: 1210px){
   .sidebar{
-    width: 15%;
+    width: 13%;
   }
   .sidebar .logo{
-    margin-left: 30px;
+    margin-left: 25px;
   }
   .ams{
-    margin-left: 45px;
+    margin-left: 35px;
+  }
+}
+@media (min-width:1025px) and (max-width: 1100px){
+  .sidebar{
+    width: 13%;
+  }
+  .sidebar .logo{
+    margin-left: 25px;
+  }
+  .ams{
+    margin-left: 35px;
   }
 }

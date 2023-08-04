@@ -304,7 +304,7 @@
     top: 8%;
     height: 18vh;
     width: 100%;
-  } */
+  }
   .classInfo input {
     padding: 10px 10px;
     border: 1px solid #b0afce;
@@ -316,14 +316,12 @@
 
   .classInfo {
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 20px;/* Add some margin to separate the Your Classes section from the table */
   }
 
   .classInfo h1{ 
-    margin-top: -10%;
     font-weight: bold;
     color: #333; 
-    width: 100%;
     padding-top:5%;
     text-transform: uppercase; 
     letter-spacing: 2px;

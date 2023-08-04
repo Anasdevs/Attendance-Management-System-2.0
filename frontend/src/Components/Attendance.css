@@ -32,17 +32,21 @@
   font-size: 14px;
 }
 
-.rightside .image {
+.attendance-rightside .image {
   display: flex;
-  align-items: center;
+  justify-content: space-between;
   border-radius: 10px;
   background:white;
 }
 
 .date{
+  /* text-align: right; */
+  /* flex-grow: 1; */
   font-size: 1rem;
   font-weight: bolder;
   color: #00001a;
+  margin-right: 2vw;
+
 }
 
 
@@ -50,7 +54,7 @@
   text-align: right; 
   flex-grow: 1;
   margin-top: 1vw;
-  margin-right: 3vw;
+  /* margin-right: 3vw; */
 
 }
 
@@ -283,6 +287,49 @@
 
 .filters-container button.download-button:hover{
   background-color: var(--button-color-hover);
+}
+
+
+@media (max-width: 768px) {
+  .attendance-rightside{
+    width: 100%;
+    margin-top: 15%;
+  }
+
+  .attendance-rightside .image{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 10px;
+    position: absolute;
+    background:white;
+    top: 8%;
+    height: 18vh;
+    width: 100%;
+  }
+  .classInfo input {
+    padding: 10px 10px;
+    border: 1px solid #b0afce;
+    border-radius: 4px;
+    font-size: 16px;
+    width: 200px;
+    background-color: black;
+  }
+
+  .classInfo {
+    text-align: center;
+    margin-bottom: 20px;/* Add some margin to separate the Your Classes section from the table */
+  }
+
+  .classInfo h1{ 
+    font-weight: bold;
+    color: #333; 
+    padding-top:5%;
+    text-transform: uppercase; 
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+  }
 }
 
 @media (min-width: 350px) and (max-width: 511px) {

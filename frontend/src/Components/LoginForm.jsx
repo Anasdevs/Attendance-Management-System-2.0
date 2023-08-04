@@ -169,12 +169,15 @@ function LoginForm() {
         alert('Password reset successfully!');
         navigate('/signin');
       } else {
+        setIsLoading(false);
         alert(data.message);
       }
       setIsLoading(false);
     } catch (error) {
       console.error('Error:', error);
       alert('Error occurred while resetting the password: ' + error);
+      setIsLoading(false);
+
     }
   };
 

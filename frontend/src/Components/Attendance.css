@@ -236,6 +236,8 @@
   font-weight: bold;
   cursor: pointer;
   margin-top: 30px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .submit-button:hover{
@@ -285,13 +287,18 @@
   background-color: var(--button-color-hover);
 }
 
-@media (min-width: 350px) and (max-width: 511px) {
+@media (min-width: 300px) and (max-width: 450px) {
   .classInfo {
     margin-top: 40%; 
     margin-bottom: 20%;
   }
 }
+@media (max-width:320px) {
+  .classInfo {
+    margin-top: 47%;  
 
+  }
+}
 @media (min-width: 511px) and (max-width: 620px) {
   .classInfo {
     margin-top: 35%;  
@@ -301,9 +308,9 @@
 }
 
 @media (min-width: 620px) and (max-width: 768px) {
-  .classInfo {
-    margin-top: 30%; 
-    margin-bottom: 20%;
+  .classInfo { 
+    margin-top: 5%;
+    margin-bottom: 25%;
 
   }
 }

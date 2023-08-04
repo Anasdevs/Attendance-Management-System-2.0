@@ -309,29 +309,6 @@
     height: 18vh;
     width: 100%;
   }
-  .classInfo input {
-    padding: 10px 10px;
-    border: 1px solid #b0afce;
-    border-radius: 4px;
-    font-size: 16px;
-    width: 200px;
-    background-color: black;
-  }
-
-  .classInfo {
-    text-align: center;
-    margin-bottom: 20px;/* Add some margin to separate the Your Classes section from the table */
-  }
-
-  .classInfo h1{ 
-    font-weight: bold;
-    color: #333; 
-    padding-top:5%;
-    text-transform: uppercase; 
-    letter-spacing: 2px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); 
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
-  }
 }
 
 @media (min-width: 300px) and (max-width: 450px) {

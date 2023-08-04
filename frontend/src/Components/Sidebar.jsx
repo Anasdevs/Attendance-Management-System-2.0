@@ -58,7 +58,7 @@ export default function Sidebar() {
             </NavLink>
           </li>
         </ul>
-        <div className="profile-button"></div>
+        {/* <div className="profile-button"></div> */}
       </div>
     </div>
   );

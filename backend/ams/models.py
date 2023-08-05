@@ -60,11 +60,12 @@ class Class(models.Model):
 
     def __str__(self):
         return f"{self.course} - {self.semester} - {self.section}"
-
+    class meta:
+        db_table = 'class'
 
 class Student(models.Model):
     name = models.CharField(max_length=100)
-    enrolment_no = models.CharField(max_length=20)
+    enrolment_no = models.CharField(max_length=20, unique=True)
     class_attendance = models.ForeignKey(Class, on_delete=models.CASCADE, related_name='students')
 
     def __str__(self):

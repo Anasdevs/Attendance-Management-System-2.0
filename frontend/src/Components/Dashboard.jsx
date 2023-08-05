@@ -100,7 +100,7 @@ const Dashboard = () => {
                 </div>
           <div className="dashboard-date">
             <div className="today-dashboard-date">Today</div>
-            <div className="today-dashboard-date">{today}</div>
+            <div className="date">{today}</div>
           </div>
         </div>
         <div className="classInfo">

@@ -60,8 +60,7 @@ class Class(models.Model):
 
     def __str__(self):
         return f"{self.course} - {self.semester} - {self.section}"
-    class meta:
-        db_table = 'class'
+
 
 class Student(models.Model):
     name = models.CharField(max_length=100)
@@ -70,6 +69,8 @@ class Student(models.Model):
 
     def __str__(self):
         return self.name
+    class Meta:
+         ordering = ['enrolment_no']
 
 
 class Attendance(models.Model):

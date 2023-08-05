@@ -345,6 +345,7 @@ def generate_attendance_report(request):
         # Write attendance data to the CSV file
         for stats in attendance_stats:
             enrollment_no = stats['student__enrolment_no']
+            print(enrollment_no)
             name = stats['student__name']
             subject = stats['class_attendance__subject']
             present_days = stats['total_present']

@@ -5,12 +5,28 @@ import { faChartBar, faCalendarAlt, faCalendarCheck, faUser, faFileAlt, faBars }
 import './Sidebar.css';
 import msilogo from './Images/msilogo.png';
 
-export default function Sidebar() {
+export default function Sidebar(props) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const { role } = props;
 
-  // Function to toggle the sidebar
+  console.log('Sidebar role:', role);
+
   const toggleSidebar = () => {
     setSidebarOpen((prevState) => !prevState);
+  };
+
+  const getReportsLink = () => {
+    const role = localStorage.getItem('role');
+    switch (role) {
+      case 'Head Of Department(HOD)':
+        return '/reports/hod';
+      case 'Class Coordinator':
+        return '/reports/class-coordinator';
+      case 'Subject Teacher':
+        return '/reports/subject-teacher';
+      default:
+        return '/dashboard';
+    }
   };
 
   return (
@@ -42,7 +58,7 @@ export default function Sidebar() {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/reports" activeClassName="active" onClick={toggleSidebar}>
+            <NavLink to={getReportsLink()} activeClassName="active" onClick={toggleSidebar}>
               <span className="icon">
                 <FontAwesomeIcon icon={faFileAlt} />
               </span>
@@ -58,7 +74,6 @@ export default function Sidebar() {
             </NavLink>
           </li>
         </ul>
-        {/* <div className="profile-button"></div> */}
       </div>
     </div>
   );

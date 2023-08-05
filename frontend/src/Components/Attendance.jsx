@@ -298,7 +298,6 @@ export default function Attendance() {
           }
           throw new Error(errorMessage);
         }
-  
         return response.blob();
       })
       .then((blob) => {
@@ -379,6 +378,15 @@ export default function Attendance() {
         {isSubmitted && (
           <div className="success-message">Attendance has been successfully submitted!</div>
         )}
+        <div className="filters-container">
+          <label htmlFor="start-date">Start Date:</label>
+          <input type="date" id="start-date" value={startDate} onChange={handleStartDateChange} />
+          <label htmlFor="end-date">End Date:</label>
+          <input type="date" id="end-date" value={endDate} onChange={handleEndDateChange} />
+          <button className="download-button" onClick={handleDownloadReports} disabled={isLoading}>
+            {isLoading ? 'Downloading...' : 'Download Reports'}
+          </button>
+        </div>
         <div className="statistics-container">
         <div className="statistics-card" style={{ background: `linear-gradient(to right, #7e7c80, #97959a ${totalStudentsPercentage}%, transparent 0%)` }}>
           <h3>Total Students</h3>

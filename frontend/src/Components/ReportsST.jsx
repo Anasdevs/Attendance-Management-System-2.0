@@ -150,16 +150,15 @@ export default function ReportsST() {
       </div>
       <hr />
       <div className="filters-container">
-        <label htmlFor="subject">Select Subject:</label>
+        <label htmlFor="subject">Select Class:</label>
         <select id="subject" value={selectedSubject} onChange={handleSubjectChange}>
-          <option value="">Select a Subject</option>
+          <option value="">Select a Class</option>
           {assignedSubjects.map((course) => (
             <option key={course.course_id} value={course.subject}>
-              {course.subject}
+              {`${course.course} - ${course.semester} - ${course.section} - ${course.subject}`}
             </option>
           ))}
         </select>
-
         <label htmlFor="start-date">Start Date:</label>
         <input type="date" id="start-date" value={startDate} onChange={handleStartDateChange} />
 

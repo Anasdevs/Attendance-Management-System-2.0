@@ -21,8 +21,8 @@ Post=(
 )
 Role=(
         ('Head Of Department(HOD)','Head Of Department(HOD)'),
-        ('(Class Coordinator)','(Class Coordinator)'),
-        ('(Subject Teacher)','(Subject Teacher)'),
+        ('Class Coordinator','Class Coordinator'),
+        ('Subject Teacher','Subject Teacher'),
 )
 class Faculty(AbstractBaseUser):
     def get_assigned_classes(self):

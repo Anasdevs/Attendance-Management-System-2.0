@@ -6,6 +6,8 @@ import './Dashboard.css';
 import { format } from 'date-fns';
 import LoadingBar from 'react-top-loading-bar';
 import WithRightbarLayout from './WithRightbarLayout';
+import Sidebar from './Sidebar';
+
 // import defaultFacultyImage from './Images/faculty.png'
 
 
@@ -40,6 +42,7 @@ const Dashboard = () => {
           setFacultyDepartment(data.faculty.department);
           setFacultyImage(data.faculty.image_url); // Set the faculty image URL
           setClasses(data.classes);
+          localStorage.setItem('role', data.faculty.role);
         } else if (response.status === 302) {
           navigate('/login');
         } else {

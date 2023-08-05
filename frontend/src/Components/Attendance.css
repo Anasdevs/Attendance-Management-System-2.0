@@ -20,6 +20,7 @@
 
 .faculty-info p {
   margin: 0;
+  font-weight: bold;
 }
 
 .faculty-name {
@@ -34,16 +35,17 @@
 
 .attendance-rightside .image {
   display: flex;
-  justify-content: space-between;
   border-radius: 10px;
-  background:white;
+  background: lightgrey;
+  padding: 2%;
 }
 
 .date{
   font-size: 1rem;
   font-weight: bolder;
   color: #00001a;
-
+  text-align: right;
+  flex-grow: 1;
 }
 
 
@@ -289,68 +291,29 @@
 }
 
 
- @media (min-width: 300px) and (max-width: 768px) {
-  /* .attendance-rightside .image{
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    border-radius: 10px;
-    position: absolute;
-    background:white;
-    top: 8%;
-    height: 18vh;
-    width: 100%;
-  }
-  .classInfo input {
-    padding: 10px 10px;
-    border: 1px solid #b0afce;
-    border-radius: 4px;
-    font-size: 16px;
-    width: 200px;
-    background-color: black;
-  }
-
-  .classInfo {
-    text-align: center;
-    margin-bottom: 20px;/* Add some margin to separate the Your Classes section from the table */
-  }
-
+ @media (min-width: 500px) and (max-width: 768px) {
   .classInfo h1{ 
     font-weight: bold;
     color: #333; 
     padding-top:5%;
+    margin-top: -10%;
     text-transform: uppercase; 
     letter-spacing: 2px;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); 
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
   }
+ }
 
-@media (min-width: 300px) and (max-width: 450px) {
+@media (min-width: 300px) and (max-width: 500px) {
   .attendance-rightside .image{
     margin-top: 10%;
   }
+  .date{
+    font-size: 1rem;
+    font-weight: bolder;
+    color: #00001a;
+    text-align: right;
+    flex-grow: 1;
+  }
 }
 
-@media screen and (min-width: 1024px){
-  /* Keep the content of .image and .faculty-info side by side */
-.attendance-header .image {
-  background-color: blue;
-  display: flex; /* Add this to make the contents side by side */
-  align-items: center; /* Optional: Align items vertically in the center */
-}
-
-.faculty-info {
-  margin-left: 5px;
-}
-
-.date {
-  text-align: right;
-  flex-grow: 1; 
-}
-.date-navigation{
-  margin-right: -5px;
-}
-.navigation-button{
-  margin-right: 3px;
-}
-}

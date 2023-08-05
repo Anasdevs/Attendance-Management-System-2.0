@@ -1,0 +1,34 @@
+
+.filters-container {
+    position: relative;
+    margin: 5% auto;
+    text-align: center;
+  }
+  
+  .filters-container label {
+    font-weight: bold;
+    margin-left: 10px;
+  }
+  
+  .filters-container input[type="date"] {
+    width: 200px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 16px;
+    margin-left: 15px;
+  }
+  
+  .filters-container button.download-button {
+    background-color: var(--button-color);
+    color: #fff;
+    padding: 10px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 20px;
+  }
+  
+  .filters-container button.download-button:hover{
+    background-color: var(--button-color-hover);
+  }

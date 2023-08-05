@@ -4,7 +4,7 @@ import { format } from 'date-fns';
 import LoadingBar from 'react-top-loading-bar';
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
-import './Reports.css'
+import './ReportsCC.css'
 
 
 export default function Reports() {

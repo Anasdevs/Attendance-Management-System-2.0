@@ -18,6 +18,14 @@
     margin-bottom: 16px;
     margin-left: 15px;
   }
+  .filters-container select {
+    width: 190px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 16px;
+    margin-left: 15px;
+  }
   
   .filters-container button.download-button {
     background-color: var(--button-color);

@@ -74,7 +74,6 @@ const Dashboard = () => {
       <div className="dashboard-container">
        <LoadingBar progress={loadingProgress} color="#111137" height={4} />
       <div className="rightside">
-      
         <div className="image">
         {facultyImage ? (
             <img src={facultyImage} alt="Faculty" />
@@ -103,6 +102,7 @@ const Dashboard = () => {
             <div className="date">{today}</div>
           </div>
         </div>
+        <hr />
         <div className="classInfo">
           <h1>Your Classes</h1>
           <input className='class-search-input'

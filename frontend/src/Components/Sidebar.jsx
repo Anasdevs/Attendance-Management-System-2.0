@@ -7,10 +7,6 @@ import msilogo from './Images/msilogo.png';
 
 export default function Sidebar(props) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const { role } = props;
-
-  console.log('Sidebar role:', role);
-
   const toggleSidebar = () => {
     setSidebarOpen((prevState) => !prevState);
   };

@@ -62,10 +62,10 @@ class Class(models.Model):
         return f"{self.course} - {self.semester} - {self.section}"
 
 
-class Student(models.Model):
+class Bca_Student(models.Model):
     name = models.CharField(max_length=100)
-    enrolment_no = models.CharField(max_length=20, unique=True)
-    class_attendance = models.ForeignKey(Class, on_delete=models.CASCADE, related_name='students')
+    enrolment_no = models.CharField(max_length=20)
+    class_attendance = models.ForeignKey(Class, on_delete=models.CASCADE, related_name='Bca_students')
 
     def __str__(self):
         return self.name
@@ -73,8 +73,8 @@ class Student(models.Model):
          ordering = ['enrolment_no']
 
 
-class Attendance(models.Model):
-    student = models.ForeignKey('Student', on_delete=models.CASCADE)
+class Bca_Attendance(models.Model):
+    student = models.ForeignKey('Bca_student', on_delete=models.CASCADE)
     class_attendance = models.ForeignKey('Class', on_delete=models.CASCADE, default=1)
     date = models.DateField()
     status = models.CharField(
@@ -95,3 +95,162 @@ class Attendance(models.Model):
     class Meta:
             unique_together = ('student', 'date',)
 
+class Bba_Student(models.Model):
+    name = models.CharField(max_length=100)
+    enrolment_no = models.CharField(max_length=20)
+    class_attendance = models.ForeignKey(Class, on_delete=models.CASCADE, related_name='Bba_students')
+
+    def __str__(self):
+        return self.name
+    class Meta:
+         ordering = ['enrolment_no']
+
+class Bba_Attendance(models.Model):
+    student = models.ForeignKey('Bba_Student', on_delete=models.CASCADE)
+    class_attendance = models.ForeignKey('Class', on_delete=models.CASCADE, default=1)
+    date = models.DateField()
+    status = models.CharField(
+    max_length=10,
+    choices=(
+        (None, 'Not marked'), 
+        ('Present', 'Present'),
+        ('Absent', 'Absent'),
+    ),
+    null=True,
+    default=None
+)
+
+
+    def __str__(self):
+            return f"{self.student.name} - {self.class_attendance} - {self.date.strftime('%d %m %Y')}"
+
+    class Meta:
+            unique_together = ('student', 'date',)
+
+class B_Ed_Student(models.Model):
+    name = models.CharField(max_length=100)
+    enrolment_no = models.CharField(max_length=20)
+    class_attendance = models.ForeignKey(Class, on_delete=models.CASCADE, related_name='B_Ed_students')
+
+    def __str__(self):
+        return self.name
+    class Meta:
+         ordering = ['enrolment_no']
+
+class B_Ed_Attendance(models.Model):
+    student = models.ForeignKey('B_Ed_Student', on_delete=models.CASCADE)
+    class_attendance = models.ForeignKey('Class', on_delete=models.CASCADE, default=1)
+    date = models.DateField()
+    status = models.CharField(
+    max_length=10,
+    choices=(
+        (None, 'Not marked'), 
+        ('Present', 'Present'),
+        ('Absent', 'Absent'),
+    ),
+    null=True,
+    default=None
+)
+
+
+    def __str__(self):
+            return f"{self.student.name} - {self.class_attendance} - {self.date.strftime('%d %m %Y')}"
+
+    class Meta:
+            unique_together = ('student', 'date',)
+
+class B_Com_Student(models.Model):
+    name = models.CharField(max_length=100)
+    enrolment_no = models.CharField(max_length=20)
+    class_attendance = models.ForeignKey(Class, on_delete=models.CASCADE, related_name='B_Com_students')
+
+    def __str__(self):
+        return self.name
+    class Meta:
+         ordering = ['enrolment_no']
+
+class B_com_Attendance(models.Model):
+    student = models.ForeignKey('B_Com_Student', on_delete=models.CASCADE)
+    class_attendance = models.ForeignKey('Class', on_delete=models.CASCADE, default=1)
+    date = models.DateField()
+    status = models.CharField(
+    max_length=10,
+    choices=(
+        (None, 'Not marked'), 
+        ('Present', 'Present'),
+        ('Absent', 'Absent'),
+    ),
+    null=True,
+    default=None
+)
+
+
+    def __str__(self):
+            return f"{self.student.name} - {self.class_attendance} - {self.date.strftime('%d %m %Y')}"
+
+    class Meta:
+            unique_together = ('student', 'date',)
+
+class Mba_Student(models.Model):
+    name = models.CharField(max_length=100)
+    enrolment_no = models.CharField(max_length=20)
+    class_attendance = models.ForeignKey(Class, on_delete=models.CASCADE, related_name='Mba_students')
+
+    def __str__(self):
+        return self.name
+    class Meta:
+         ordering = ['enrolment_no']
+
+class Mba_Attendance(models.Model):
+    student = models.ForeignKey('Mba_Student', on_delete=models.CASCADE)
+    class_attendance = models.ForeignKey('Class', on_delete=models.CASCADE, default=1)
+    date = models.DateField()
+    status = models.CharField(
+    max_length=10,
+    choices=(
+        (None, 'Not marked'), 
+        ('Present', 'Present'),
+        ('Absent', 'Absent'),
+    ),
+    null=True,
+    default=None
+)
+
+
+    def __str__(self):
+            return f"{self.student.name} - {self.class_attendance} - {self.date.strftime('%d %m %Y')}"
+
+    class Meta:
+            unique_together = ('student', 'date',)
+
+class Law_Student(models.Model):
+    name = models.CharField(max_length=100)
+    enrolment_no = models.CharField(max_length=20)
+    class_attendance = models.ForeignKey(Class, on_delete=models.CASCADE, related_name='Law_students')
+
+    def __str__(self):
+        return self.name
+    class Meta:
+         ordering = ['enrolment_no']
+
+class Law_Attendance(models.Model):
+    student = models.ForeignKey('Law_Student', on_delete=models.CASCADE)
+    class_attendance = models.ForeignKey('Class', on_delete=models.CASCADE, default=1)
+    date = models.DateField()
+    status = models.CharField(
+    max_length=10,
+    choices=(
+        (None, 'Not marked'), 
+        ('Present', 'Present'),
+        ('Absent', 'Absent'),
+    ),
+    null=True,
+    default=None
+)
+
+
+    def __str__(self):
+            return f"{self.student.name} - {self.class_attendance} - {self.date.strftime('%d %m %Y')}"
+
+    class Meta:
+            unique_together = ('student', 'date',)

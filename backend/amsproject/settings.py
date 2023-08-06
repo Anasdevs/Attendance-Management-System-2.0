@@ -40,6 +40,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 ]
@@ -48,9 +49,11 @@ AUTHENTICATION_BACKENDS = [
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'  # Use database-backed sessions
 SESSION_COOKIE_SECURE = False  # Use secure cookies for session
 SESSION_COOKIE_HTTPONLY = True  # Set the session cookie as http-only
-SESSION_COOKIE_AGE = 86400
+SESSION_COOKIE_AGE = 20
+REMEMBER_ME_SESSION_AGE = 2592000
 SESSION_COOKIE_NAME = 'my_session_cookie'
-SESSION_SAVE_EVERY_REQUEST = True
+SESSION_SAVE_EVERY_REQUEST = False
+
 
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True

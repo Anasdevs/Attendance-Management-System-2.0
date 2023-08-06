@@ -17,6 +17,10 @@ from django.http import HttpResponse
 from django.urls import reverse
 import os
 import dotenv
+from datetime import timedelta
+from django.utils import timezone
+from django.conf import settings
+
 
 dotenv.load_dotenv()
 
@@ -97,32 +101,46 @@ def validate_password(request):
 
     return JsonResponse({'success': False, 'message': 'Invalid request'})
 
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
+from django.contrib.auth.hashers import check_password
+from datetime import timedelta
+from django.utils import timezone
+
 @csrf_exempt
 def signin(request):
     if request.method == 'POST':
         data = json.loads(request.body)
         email = data.get('email')
         password_entered = data.get('password')
-        
+        remember_me = data.get('rememberMe', False)  # Default to False if not provided in the request data
+
         try:
             faculty = Faculty.objects.get(faculty_email=email)
-            
-            
+
             if check_password(password_entered, faculty.password):
                 # Create a session for the authenticated user
                 request.session['faculty_email'] = faculty.faculty_email
+
+                if remember_me:
+                    # If "Remember Me" is checked, set a longer session age
+                    request.session.set_expiry(settings.REMEMBER_ME_SESSION_AGE)
+                else:
+                    # If "Remember Me" is not checked, use the default session age
+                    request.session.set_expiry(settings.SESSION_COOKIE_AGE)
+
                 request.session.save()
 
                 return JsonResponse({'success': True, 'message': 'Password validated successfully!'})
             else:
                 return JsonResponse({'success': False, 'message': 'Invalid email or password.'})
-        
+
         except Faculty.DoesNotExist:
             return JsonResponse({'success': False, 'message': 'Invalid email or password.'})
-    
+
     else:
         return JsonResponse({'success': False, 'message': 'Invalid request'})
-    
+
 
 
 #To check if user is authenticated (for react)
@@ -130,7 +148,11 @@ def signin(request):
 def check_session(request):
     faculty_email = request.session.get('faculty_email')
     is_authenticated = bool(faculty_email)
-    return JsonResponse({'is_authenticated': is_authenticated})
+
+    if is_authenticated:
+        return JsonResponse({'is_authenticated': True})
+    else:
+        return JsonResponse({'is_authenticated': False}, status=401)
 
 
 @csrf_exempt
@@ -202,13 +224,11 @@ def dashboard_data(request):
             }
 
             return JsonResponse(response_data, safe=False)
-
         else:
-            return JsonResponse({'error': 'Authentication required'})
+            return JsonResponse({'error': 'User is not authenticated'}, status=401)
 
     except Faculty.DoesNotExist:
-        return JsonResponse({'error': 'Faculty not found'})
-
+        return JsonResponse({'error': 'Faculty not found'}, status=404)
 
 @csrf_exempt
 def take_attendance(request):

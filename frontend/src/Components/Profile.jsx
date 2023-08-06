@@ -34,6 +34,7 @@ export default function Profile({ handleLogout }) {
       } catch (error) {
         console.error('Error:', error);
         alert('Error occurred while fetching faculty profile.');
+        navigate('/login')
       } finally {
         setLoadingProgress(100);
       }

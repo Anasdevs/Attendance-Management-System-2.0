@@ -119,7 +119,7 @@ function LoginForm() {
 
   const handleSignInSubmit = async (e) => {
     e.preventDefault();
-
+  
     try {
       setIsLoading(true);
       const response = await fetch('http://localhost:8000/api/signin/', {
@@ -130,9 +130,9 @@ function LoginForm() {
         body: JSON.stringify(formData),
         credentials: 'include',
       });
-
+  
       const data = await response.json();
-
+  
       if (data.success) {
         console.log('User authenticated!');
         setIsAuthenticated(true);
@@ -140,7 +140,7 @@ function LoginForm() {
       } else {
         alert(data.message);
       }
-
+  
       setIsLoading(false);
     } catch (error) {
       console.error('Error:', error);
@@ -148,6 +148,7 @@ function LoginForm() {
       setIsLoading(false);
     }
   };
+  
 
   const handleReset = async (e) => {
     e.preventDefault();
@@ -394,6 +395,17 @@ function LoginForm() {
                   onChange={handleChange}
                   required
                 />
+                <input
+  type="checkbox"
+  id="rememberMe"
+  name="rememberMe"
+  checked={formData.rememberMe}
+  onChange={(e) =>
+    setFormData({ ...formData, rememberMe: e.target.checked })
+  }
+/>
+<label htmlFor="rememberMe">Remember Me</label>
+
                 <p>
                   Forgot your password?{' '}
                   <button className="link-button" onClick={handleForgotPassword}>

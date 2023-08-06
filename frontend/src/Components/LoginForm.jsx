@@ -395,17 +395,18 @@ function LoginForm() {
                   onChange={handleChange}
                   required
                 />
+                <div className="remember-me">
+                <label className='rememberme' htmlFor="rememberMe">Remember Me</label>
                 <input
-  type="checkbox"
-  id="rememberMe"
-  name="rememberMe"
-  checked={formData.rememberMe}
-  onChange={(e) =>
-    setFormData({ ...formData, rememberMe: e.target.checked })
-  }
-/>
-<label htmlFor="rememberMe">Remember Me</label>
-
+                  type="checkbox"
+                  id="rememberMe"
+                  name="rememberMe"
+                  checked={formData.rememberMe}
+                  onChange={(e) =>
+                  setFormData({ ...formData, rememberMe: e.target.checked })
+                }
+                />
+                </div>
                 <p>
                   Forgot your password?{' '}
                   <button className="link-button" onClick={handleForgotPassword}>

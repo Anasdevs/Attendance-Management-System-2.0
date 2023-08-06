@@ -40,13 +40,15 @@ const Dashboard = () => {
           setFacultyName(data.faculty.name);
           setRole(data.faculty.role);
           setFacultyDepartment(data.faculty.department);
-          setFacultyImage(data.faculty.image_url); // Set the faculty image URL
+          setFacultyImage(data.faculty.image_url); 
           setClasses(data.classes);
           localStorage.setItem('role', data.faculty.role);
         } else if (response.status === 302) {
-          navigate('/login');
+          window.location.reload();
         } else {
-          alert('Error occurred while fetching dashboard data.');
+          // alert('Error occurred while fetching dashboard data.');
+          window.location.reload();
+          
         }
       } finally {
         setIsDataFetched(true);

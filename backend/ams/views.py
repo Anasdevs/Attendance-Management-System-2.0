@@ -225,7 +225,7 @@ def dashboard_data(request):
 
             return JsonResponse(response_data, safe=False)
         else:
-            return JsonResponse({'error': 'User is not authenticated'}, status=401)
+            return JsonResponse({'error': 'User is not authenticated'}, status=302)
 
     except Faculty.DoesNotExist:
         return JsonResponse({'error': 'Faculty not found'}, status=404)
@@ -273,6 +273,8 @@ def take_attendance(request):
             'students': students,
         }
         return JsonResponse(response_data)
+    else:
+        return JsonResponse({'error': 'User is not authenticated'}, status=302)
 
     return JsonResponse({'error': 'Invalid request method.'}, status=400)
 

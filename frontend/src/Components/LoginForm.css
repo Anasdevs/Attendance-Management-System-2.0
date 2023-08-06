@@ -164,7 +164,6 @@ body {
 
 .box-right input {
   border: none;
-  /* width: 80%; */
   margin: 15px 0px;
   border-bottom: 1px solid #4f30677d;
   padding: 7px 9px;
@@ -173,6 +172,15 @@ body {
   background: transparent;
   font-weight: 600;
   font-size: 14px;
+}
+.remember-me{
+  display: flex;
+  align-items: center;
+}
+
+#rememberMe{
+  width: 10%;
+
 }
 
 .contact h3 {

@@ -18,23 +18,22 @@ export default function Profile({ handleLogout }) {
   useEffect(() => {
     const fetchFacultyData = async () => {
       try {
-        setLoadingProgress(30); // Set initial loading progress
+        setLoadingProgress(30); 
 
         const response = await fetch('http://localhost:8000/api/faculty-profile/', {
           method: 'GET',
-          credentials: 'include', // Include cookies in the request
+          credentials: 'include', 
         });
 
         if (response.status === 200) {
           const data = await response.json();
           setFacultyData(data);
         } else {
-          alert('Error occurred while fetching faculty profile.');
+          window.location.reload();
         }
       } catch (error) {
         console.error('Error:', error);
-        alert('Error occurred while fetching faculty profile.');
-        navigate('/login')
+        window.location.reload();
       } finally {
         setLoadingProgress(100);
       }

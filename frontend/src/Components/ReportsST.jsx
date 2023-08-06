@@ -41,9 +41,8 @@ export default function ReportsST() {
           setAssignedSubjects(data.classes); // Assuming assigned subjects are in the data.classes array
           setIsLoading(false);
         } else if (response.status === 302) {
-          navigate('/login');
+          window.location.reload();
         } else {
-          navigate('/login');
           alert('Error occurred while fetching dashboard data.');
           setIsLoading(false);
         }

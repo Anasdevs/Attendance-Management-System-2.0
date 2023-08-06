@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { format, addDays, subDays, isToday } from 'date-fns';
 import { utcToZonedTime } from 'date-fns-tz';
 import Skeleton from 'react-loading-skeleton';
+import { useNavigate } from 'react-router-dom';
 import 'react-loading-skeleton/dist/skeleton.css';
 import './Attendance.css';
 import { useParams } from 'react-router-dom';
@@ -10,6 +11,7 @@ import WithRightbarLayout from './WithRightbarLayout';
 
 
 export default function Attendance() {
+  const navigate = useNavigate();
   const [loadingProgress, setLoadingProgress] = useState(0);
   const { courseId } = useParams();
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -61,14 +63,20 @@ export default function Attendance() {
           }
         }
       } else if (response.status === 403) {
+        window.location.reload();
         setClassName("Class Name Not Found");
         setAttendanceData([]);
         setIsDataFetched(true);
-      } else {
+      } else if(response.status===302){
+        window.location.reload();
+      }else {
+        window.location.reload();
         alert('Error occurred while fetching student records.');
+        
       }
     } catch (error) {
       console.error('Error:', error);
+      window.location.reload();
       alert('Error occurred while fetching student records.');
     }
     setLoadingProgress(100);
@@ -89,12 +97,12 @@ export default function Attendance() {
           setRole(data.faculty.role);
           setFacultyDepartment(data.faculty.department);
           setFacultyImage(data.faculty.image_url);
-        } else {
-          alert('Error occurred while fetching dashboard data.');
-        }
+        } else if (response.status === 302) {
+          window.location.reload();
+        } 
       } catch (error) {
+        window.location.reload();
         console.error('Error:', error);
-        alert('Error occurred while fetching dashboard data.');
       }
       setLoadingProgress(100);
     };

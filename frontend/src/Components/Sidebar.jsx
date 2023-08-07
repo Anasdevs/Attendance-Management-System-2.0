@@ -38,7 +38,7 @@ export default function Sidebar(props) {
         <hr className='horizontal-line' />
         <ul>
           <li>
-            <NavLink to="/dashboard" activeClassName="active" onClick={toggleSidebar}>
+            <NavLink to="/dashboard" activeclassname="active" onClick={toggleSidebar}>
               <span className="icon">
                 <FontAwesomeIcon icon={faChartBar} />
               </span>
@@ -46,7 +46,7 @@ export default function Sidebar(props) {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/calendar" activeClassName="active" onClick={toggleSidebar}>
+            <NavLink to="/calendar" activeclassname="active" onClick={toggleSidebar}>
               <span className="icon">
                 <FontAwesomeIcon icon={faCalendarCheck} />
               </span>
@@ -54,7 +54,7 @@ export default function Sidebar(props) {
             </NavLink>
           </li>
           <li>
-            <NavLink to={getReportsLink()} activeClassName="active" onClick={toggleSidebar}>
+            <NavLink to={getReportsLink()} activeclassname="active" onClick={toggleSidebar}>
               <span className="icon">
                 <FontAwesomeIcon icon={faFileAlt} />
               </span>
@@ -62,7 +62,7 @@ export default function Sidebar(props) {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/profile" activeClassName="active" onClick={toggleSidebar}>
+            <NavLink to="/profile" activeclassname="active" onClick={toggleSidebar}>
               <span className="icon">
                 <FontAwesomeIcon icon={faUser} />
               </span>

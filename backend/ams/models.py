@@ -14,8 +14,6 @@ class FacultyManager(BaseUserManager):
         return faculty
 
 Post=(
-     ('Associate Professor,Head ','Associate Professor,Head'),
-     ('Assistant Professor,Head','Assistant Professor,Head'),
         ('Assistant Professor','Assistant Professor'),
         ('Associate Professor','Associate Professor'),
 )
@@ -23,6 +21,14 @@ Role=(
         ('Head Of Department(HOD)','Head Of Department(HOD)'),
         ('Class Coordinator','Class Coordinator'),
         ('Subject Teacher','Subject Teacher'),
+)
+Department=(
+    ('BCA','BCA'),
+    ('BBA','BBA'),
+    ('B.Com','B.Com'),
+    ('B.Ed','B.Ed'),
+    ('MBA','MBA'),
+    ('Law','Law'),
 )
 class Faculty(AbstractBaseUser):
     def get_assigned_classes(self):
@@ -34,7 +40,7 @@ class Faculty(AbstractBaseUser):
     password = models.CharField(max_length=128, blank=True, default= None)
     faculty_image = models.ImageField(upload_to='faculty_images/', blank=True, null=True)
     Designation=models.CharField(max_length=50,choices=Post,default=None,blank=True)
-    department=models.CharField(max_length=50,default=None)
+    department=models.CharField(max_length=50,default=None,blank=True,choices=Department)
     qualifications=models.CharField(max_length=200,default=None,blank=True)
     role=models.CharField(max_length=50,default=None,blank=True ,choices=Role)
     
@@ -46,21 +52,41 @@ class Faculty(AbstractBaseUser):
     REQUIRED_FIELDS = ['faculty_id', 'faculty_name']
 
     def __str__(self):
-        return self.faculty_name
+        return f"{self.faculty_name.upper()} - {self.Designation} - {self.department} "
     
 
+Semester=(
+        ('1 Semester','1 Semester'),
+        ('2 Semester','2 Semester'),
+        ('3 Semester','3 Semester'),
+        ('4 Semester','4 Semester'),
+        ('5 Semester','5 Semester'),
+        ('6 Semester','6 Semester'),
+        ('7 Semester','7 Semester'),
+        ('8 Semester','8 Semester'),
+)
+
+Section=(
+        ('Section A','Section A'),
+        ('Section B','Section B'),
+        ('Section C','Section C'),
+        ('Section D','Section D'),
+)
+
+shift=(
+        ('Morning Shift','Morning Shift'),
+        ('Evening Shift','Evening Shift'),
+)
 class Class(models.Model):
     course_id = models.IntegerField()
-    course = models.CharField(max_length=100)
-    semester = models.IntegerField()
-    section = models.CharField(max_length=10)
-    shift = models.CharField(max_length=20)
+    course = models.CharField(max_length=25,choices=Department)
+    semester = models.CharField(max_length=25,choices=Semester)
+    section = models.CharField(max_length=10,choices=Section)
+    shift = models.CharField(max_length=20,choices=shift)
     subject = models.CharField(max_length=100)
     assigned_to = models.ForeignKey(Faculty, on_delete=models.CASCADE)
-
     def __str__(self):
-        return f"{self.course} - {self.semester} - {self.section}"
-
+        return f"{self.course} - {self.semester} - {self.section} - {self.shift} - {self.subject} - {self.assigned_to.faculty_name}"
 
 class Bca_Student(models.Model):
     name = models.CharField(max_length=100)

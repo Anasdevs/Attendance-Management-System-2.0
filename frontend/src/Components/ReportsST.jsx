@@ -38,7 +38,7 @@ export default function ReportsST() {
           setRole(data.faculty.role);
           setFacultyDepartment(data.faculty.department);
           setFacultyImage(data.faculty.image_url);
-          setAssignedSubjects(data.classes); // Assuming assigned subjects are in the data.classes array
+          setAssignedSubjects(data.classes); 
           setIsLoading(false);
         } else if (response.status === 302) {
           window.location.reload();

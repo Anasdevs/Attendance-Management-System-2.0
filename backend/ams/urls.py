@@ -13,6 +13,7 @@ urlpatterns = [
      path('api/signin/', views.signin, name='signin'),
      path('api/reset-password/', views.reset_password, name='reset_password'),
      path('api/dashboard-data/', views.dashboard_data, name='dashboard_data'),
+     path('api/classes-by-department/', views.get_classes_by_department, name='get_classes_by_dept'),
      path('api/take-attendance/', views.take_attendance, name='take_attendance'),
      path('api/submit-attendance/', views.submit_attendance, name='submit_attendance'),
      path('api/attendance/reports/', views.generate_attendance_report, name='generate_attendance_report'),

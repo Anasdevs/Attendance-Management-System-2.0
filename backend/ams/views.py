@@ -366,8 +366,33 @@ def generate_attendance_report(request):
         if not all([start_date, end_date, course_id]):
             return JsonResponse({'error': 'Please provide valid start date, end date, and course ID.'}, status=400)
 
+        try:
+            # Retrieve the class object by course ID
+            class_obj = Class.objects.get(course_id=course_id)
 
-        attendance_data = Bca_Attendance.objects.filter(
+            # Get the course name from the class object
+            course_name = class_obj.course
+
+        except Class.DoesNotExist:
+            return JsonResponse({'error': 'Invalid course ID.'}, status=400)
+
+        # Mapping of course name to attendance_model
+        course_attendance_models = {
+            'BCA': Bca_Attendance,
+            'BBA': Bba_Attendance,
+            'BED': B_Ed_Attendance,
+            'law': Law_Attendance,
+            'mba': Mba_Attendance,
+            'bcom': B_Com_Attendance,
+        }
+
+        # Check if course name exists in the mapping
+        if course_name not in course_attendance_models:
+            return JsonResponse({'error': 'Invalid course name.'}, status=400)
+
+        attendance_model = course_attendance_models[course_name]
+
+        attendance_data = attendance_model.objects.filter(
             date__range=[start_date, end_date],
             class_attendance__course_id=course_id
         )

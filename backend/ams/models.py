@@ -169,7 +169,7 @@ class B_Com_Student(models.Model):
     class Meta:
          ordering = ['enrolment_no']
 
-class B_com_Attendance(models.Model):
+class B_Com_Attendance(models.Model):
     student = models.ForeignKey('B_Com_Student', on_delete=models.CASCADE)
     class_attendance = models.ForeignKey('Class', on_delete=models.CASCADE, default=1)
     date = models.DateField()
@@ -247,7 +247,6 @@ class Law_Attendance(models.Model):
     null=True,
     default=None
 )
-
 
     def __str__(self):
             return f"{self.student.name} - {self.class_attendance} - {self.date.strftime('%d %m %Y')}"

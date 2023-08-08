@@ -84,7 +84,9 @@ class Class(models.Model):
     section = models.CharField(max_length=10,choices=Section)
     shift = models.CharField(max_length=20,choices=shift)
     subject = models.CharField(max_length=100)
-    assigned_to = models.ForeignKey(Faculty, on_delete=models.CASCADE)
+    assigned_to = models.ForeignKey(Faculty, on_delete=models.CASCADE,related_name='assigned_classes')
+    coordinator = models.ForeignKey(Faculty, on_delete=models.SET_NULL, null=True)
+
     def __str__(self):
         return f"{self.course} - {self.semester} - {self.section} - {self.shift} - {self.subject} - {self.assigned_to.faculty_name}"
 

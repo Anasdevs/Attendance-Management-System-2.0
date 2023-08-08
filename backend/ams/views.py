@@ -5,7 +5,7 @@ import json
 from django.core.mail import send_mail
 from django.contrib.auth.hashers import make_password, check_password
 from django.http import JsonResponse
-from ams.models import Faculty, Class, Bca_Student, Bca_Attendance
+from .models import Faculty, Class, Bca_Student, Bca_Attendance, Bba_Student, Bba_Attendance, B_Com_Student,B_com_Attendance,B_Ed_Student,B_Ed_Attendance,Mba_Student,Mba_Attendance,Law_Student,Law_Attendance
 from django.views.decorators.csrf import csrf_exempt
 from django.core.exceptions import ObjectDoesNotExist
 from django.views.decorators.http import require_POST
@@ -243,12 +243,27 @@ def take_attendance(request):
         try:
             class_obj = Class.objects.get(course_id=course_id)
             class_name = f"{class_obj.course}-{class_obj.semester}-{class_obj.section} {class_obj.subject}"
-            attendance_subquery = Bca_Attendance.objects.filter(
+
+            course_student_models = {
+                'BCA': (Bca_Student, Bca_Attendance),
+                'BBA': (Bba_Student, Bba_Attendance),
+                'BED': (B_Ed_Student, B_Ed_Attendance),
+                'law': (Law_Student, Law_Attendance),
+                'mba': (Mba_Student, Mba_Attendance),
+                'bcom': (B_Com_Student, B_com_Attendance),
+            }
+
+            if class_obj.course in course_student_models:
+                student_model, attendance_model = course_student_models[class_obj.course]
+            else:
+                return JsonResponse({'error': 'Invalid course ID.'}, status=400)
+
+            attendance_subquery = attendance_model.objects.filter(
                 student_id=OuterRef('pk'),
                 date=date
             ).values('status', 'date')
 
-            student_data = Bca_Student.objects.filter(class_attendance__course_id=course_id).values(
+            student_data = student_model.objects.filter(class_attendance__course_id=course_id).values(
                 'enrolment_no',
                 'name',
             ).annotate(
@@ -297,7 +312,21 @@ def submit_attendance(request):
 
         # Retrieve the class object by course ID
         class_obj = Class.objects.get(course_id=course_id)
+        # Mapping of course_id to student_model and attendance_model
+        course_student_models = {
+            'BCA': (Bca_Student, Bca_Attendance),
+            'BBA': (Bba_Student, Bba_Attendance),
+            'BED': (B_Ed_Student, B_Ed_Attendance),
+            'law': (Law_Student, Law_Attendance),
+            'mba': (Mba_Student, Mba_Attendance),
+            'bcom': (B_Com_Student, B_com_Attendance),
+        }
 
+        # Check if course_id exists in the mapping
+        if class_obj.course not in course_student_models:
+            return JsonResponse({'error': 'Invalid course ID.'}, status=400)
+
+        student_model, attendance_model = course_student_models[class_obj.course]
         for fields in attendance_data:
             enrolment_no = fields.get('enrolment_no')
             attendance_status = fields.get('attendance__status')
@@ -309,10 +338,10 @@ def submit_attendance(request):
             attendance_date = datetime.fromisoformat(attendance_date_str)
 
             # Retrieve the student by enrolment_no
-            student_obj = Bca_Student.objects.get(enrolment_no=enrolment_no, class_attendance=class_obj)
+            student_obj = student_model.objects.get(enrolment_no=enrolment_no, class_attendance=class_obj)
 
             # Retrieve the existing attendance record for the student and date
-            attendance = Bca_Attendance.objects.filter(student=student_obj, class_attendance=class_obj, date=attendance_date).first()
+            attendance = attendance_model.objects.filter(student=student_obj, class_attendance=class_obj, date=attendance_date).first()
 
             # If the attendance record exists, update the attendance status
             if attendance:
@@ -320,7 +349,7 @@ def submit_attendance(request):
                 attendance.save()
             else:
                 # Create a new attendance record
-                attendance = Bca_Attendance.objects.create(student=student_obj, class_attendance=class_obj, date=attendance_date, status=attendance_status)
+                attendance = attendance_model.objects.create(student=student_obj, class_attendance=class_obj, date=attendance_date, status=attendance_status)
 
         return JsonResponse({'message': 'Attendance submitted successfully'})
     except Exception as e:

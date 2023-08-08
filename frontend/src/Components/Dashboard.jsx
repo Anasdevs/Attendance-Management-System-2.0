@@ -43,6 +43,7 @@ const Dashboard = () => {
           setFacultyImage(data.faculty.image_url); 
           setClasses(data.classes);
           localStorage.setItem('role', data.faculty.role);
+          localStorage.setItem('department', data.faculty.department);
         } else if (response.status === 302) {
           window.location.reload();
         } else {

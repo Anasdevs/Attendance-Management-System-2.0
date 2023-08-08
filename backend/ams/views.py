@@ -468,3 +468,31 @@ def handle_logout(request):
         return JsonResponse({'message': 'Logout successful'})
     return JsonResponse({'error': 'Invalid request'})
 
+
+def get_classes_by_department(request):
+    if request.method == 'GET':
+        department = request.GET.get('department')
+        print(department)
+
+        if not department:
+            return JsonResponse({'error': 'Please provide a valid department.'}, status=400)
+
+        # Get all instances of the Class model that match the provided department
+        class_instances = Class.objects.filter(course=department)
+
+        class_list = []
+        for instance in class_instances:
+            class_list.append({
+                'course_id': instance.course_id,
+                'course' : instance.course,
+                'semester': instance.semester,
+                'section': instance.section,
+                'shift': instance.shift,
+                'subject': instance.subject,
+                'assigned_to': instance.assigned_to.faculty_name if instance.assigned_to else None,
+                'coordinator': instance.coordinator.faculty_name if instance.coordinator else None,
+            })
+
+        return JsonResponse({'classes': class_list})
+
+    return JsonResponse({'error': 'Invalid request'})

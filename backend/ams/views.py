@@ -4,23 +4,21 @@ import random
 import json
 from django.core.mail import send_mail
 from django.contrib.auth.hashers import make_password, check_password
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from .models import Faculty, Class, Subject, Bca_Student, Bca_Attendance, Bba_Student, Bba_Attendance, B_Com_Student, B_Com_Attendance,B_Ed_Student,B_Ed_Attendance,Mba_Student,Mba_Attendance,Law_Student,Law_Attendance
 from django.views.decorators.csrf import csrf_exempt
 from django.core.exceptions import ObjectDoesNotExist
 from django.views.decorators.http import require_POST
 from datetime import datetime
-from django.db.models import Q, Value, Subquery, OuterRef
+from django.db.models import Q, Value, Subquery, OuterRef,Count
 from django.db.models.functions import Coalesce
 import csv
-from django.http import HttpResponse
 from django.urls import reverse
 import os
 import dotenv
 from datetime import timedelta
 from django.utils import timezone
 from django.conf import settings
-
 
 dotenv.load_dotenv()
 
@@ -100,12 +98,6 @@ def validate_password(request):
             return JsonResponse({'success': False, 'message': 'Faculty not found'})
 
     return JsonResponse({'success': False, 'message': 'Invalid request'})
-
-from django.views.decorators.csrf import csrf_exempt
-from django.http import JsonResponse
-from django.contrib.auth.hashers import check_password
-from datetime import timedelta
-from django.utils import timezone
 
 @csrf_exempt
 def signin(request):
@@ -231,10 +223,6 @@ def dashboard_data(request):
     except Faculty.DoesNotExist:
         return JsonResponse({'error': 'Faculty not found'}, status=404)
 
-
-from django.db.models import OuterRef, Subquery, Value
-from django.db.models.functions import Coalesce
-
 @csrf_exempt
 def take_attendance(request):
     if request.method == 'GET':
@@ -307,9 +295,6 @@ def is_course_assigned_to_faculty(email, course_id):
     except Faculty.DoesNotExist:
         return False
 
-
-
-
 @require_POST
 @csrf_exempt
 def submit_attendance(request):
@@ -364,7 +349,6 @@ def submit_attendance(request):
         return JsonResponse({'error': str(e)})
     
 
-from django.db.models import Count, F
 @csrf_exempt
 def generate_attendance_report(request):
     if request.method == 'GET':
@@ -414,13 +398,12 @@ def generate_attendance_report(request):
 
         # Create the CSV writer
         writer = csv.writer(response)
-        writer.writerow(['Enrollment Number', 'Name', 'Subject', 'Present Days', 'Total Days', 'Percentage'])
+        writer.writerow(['Enrollment Number', 'Name', 'Present Days', 'Total Days', 'Percentage'])
 
         # Calculate attendance statistics for each student
         attendance_stats = attendance_data.values(
             'student__enrolment_no',
             'student__name',
-            'class_attendance__subject',
         ).annotate(
             total_present=Count('id', filter=Q(status='Present')),
             total_days=Count('id')
@@ -431,17 +414,14 @@ def generate_attendance_report(request):
             enrollment_no = stats['student__enrolment_no']
             print(enrollment_no)
             name = stats['student__name']
-            subject = stats['class_attendance__subject']
             present_days = stats['total_present']
             total_days = stats['total_days']
-            percentage = (present_days / total_days) * 100 if total_days > 0 else 0
-
-            writer.writerow([enrollment_no, name, subject, present_days, total_days, percentage])
+            percentage = "{:.2f}%".format((present_days / total_days) * 100) if total_days > 0 else "0.00%"
+            writer.writerow([enrollment_no, name, present_days, total_days, percentage])
 
         return response
 
     return JsonResponse({'error': 'Invalid request'})
-
 
 @csrf_exempt
 def faculty_profile(request):
@@ -504,14 +484,6 @@ def get_classes_by_department(request):
         return JsonResponse({'classes': class_list})
 
     return JsonResponse({'error': 'Invalid request'})
-
-
-from django.views.decorators.csrf import csrf_exempt
-from django.http import JsonResponse, HttpResponse  
-import csv
-from django.db.models import Count, Q
-
-from .models import Bca_Attendance, Bba_Attendance, B_Ed_Attendance, Law_Attendance, Mba_Attendance, B_Com_Attendance, Class
 
 @csrf_exempt
 def generate_attendance_report_hod(request):

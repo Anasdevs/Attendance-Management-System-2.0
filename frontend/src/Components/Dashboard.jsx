@@ -37,6 +37,7 @@ const Dashboard = () => {
 
         if (response.status === 200) {
           const data = await response.json();
+          console.log(data)
           setFacultyName(data.faculty.name);
           setRole(data.faculty.role);
           setFacultyDepartment(data.faculty.department);
@@ -68,6 +69,7 @@ const Dashboard = () => {
   const handleTakeAttendance = (courseId) => {
     navigate(`/dashboard/take-attendance/${courseId}`);
   };
+
 
   const filteredRows = classes.filter((row) =>
     Object.values(row).some(

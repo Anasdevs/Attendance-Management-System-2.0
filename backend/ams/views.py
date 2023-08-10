@@ -5,7 +5,7 @@ import json
 from django.core.mail import send_mail
 from django.contrib.auth.hashers import make_password, check_password
 from django.http import JsonResponse
-from .models import Faculty, Class, Bca_Student, Bca_Attendance, Bba_Student, Bba_Attendance, B_Com_Student, B_Com_Attendance,B_Ed_Student,B_Ed_Attendance,Mba_Student,Mba_Attendance,Law_Student,Law_Attendance
+from .models import Faculty, Class, Subject, Bca_Student, Bca_Attendance, Bba_Student, Bba_Attendance, B_Com_Student, B_Com_Attendance,B_Ed_Student,B_Ed_Attendance,Mba_Student,Mba_Attendance,Law_Student,Law_Attendance
 from django.views.decorators.csrf import csrf_exempt
 from django.core.exceptions import ObjectDoesNotExist
 from django.views.decorators.http import require_POST
@@ -204,24 +204,25 @@ def dashboard_data(request):
                 'department': faculty.department
             }
 
-            assigned_classes = faculty.get_assigned_classes()
-            classes_list = []
+            assigned_subjects = Subject.objects.filter(assigned_to=faculty)
+            subjects_list = []
 
-            for assigned_class in assigned_classes:
-                class_data = {
-                    'course_id': assigned_class.course_id,
-                    'course': assigned_class.course,
-                    'semester': assigned_class.semester,
-                    'section': assigned_class.section,
-                    'shift': assigned_class.shift,
-                    'subject': assigned_class.subject,
-                }
-                classes_list.append(class_data)
+
+            for assigned_subject in assigned_subjects:
+                class_data = assigned_subject.class_subject
+                class_info = {
+                    'course_id': class_data.course_id,
+                    'course': class_data.course,
+                    'semester': class_data.semester,
+                    'section': class_data.section,
+                    'subject': assigned_subject.subject_name,
+                    }
+                subjects_list.append(class_info)
 
             response_data = {
                 'faculty': faculty_data,
-                'classes': classes_list
-            }
+                'classes': subjects_list 
+        }
 
             return JsonResponse(response_data, safe=False)
         else:
@@ -229,6 +230,9 @@ def dashboard_data(request):
 
     except Faculty.DoesNotExist:
         return JsonResponse({'error': 'Faculty not found'}, status=404)
+
+
+
 
 @csrf_exempt
 def take_attendance(request):
@@ -496,3 +500,109 @@ def get_classes_by_department(request):
         return JsonResponse({'classes': class_list})
 
     return JsonResponse({'error': 'Invalid request'})
+
+
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse, HttpResponse  
+import csv
+from django.db.models import Count, Q
+
+from .models import Bca_Attendance, Bba_Attendance, B_Ed_Attendance, Law_Attendance, Mba_Attendance, B_Com_Attendance, Class
+
+@csrf_exempt
+def generate_attendance_report_hod(request):
+    if request.method == 'GET':
+        start_date = request.GET.get('startDate')
+        end_date = request.GET.get('endDate')
+        course_id = request.GET.get('courseId')
+        class_name = request.GET.get('className')  # New parameter for class name
+        
+        if not all([start_date, end_date]):
+            return JsonResponse({'error': 'Please provide valid start date and end date.'}, status=400)
+        
+        # Determine if all subjects or a specific subject is selected
+        if class_name:
+            try:
+                # Get the course name from the class name
+                course_name = class_name.split(' - ')[0]
+
+                # Mapping of course name to attendance_model
+                course_attendance_models = {
+                    'BCA': Bca_Attendance,
+                    'BBA': Bba_Attendance,
+                    'BED': B_Ed_Attendance,
+                    'law': Law_Attendance,
+                    'mba': Mba_Attendance,
+                    'bcom': B_Com_Attendance,
+                }
+
+                # Check if course name exists in the mapping
+                if course_name not in course_attendance_models:
+                    return JsonResponse({'error': 'Invalid course name.'}, status=400)
+
+                attendance_model = course_attendance_models[course_name]
+                attendance_data = attendance_model.objects.filter(
+                    date__range=[start_date, end_date],
+                    class_attendance__course_id=course_id,
+                )
+
+                if not attendance_data.exists():
+                    return JsonResponse({'error': 'No attendance data found for the given parameters.'}, status=404)
+
+                # Prepare the CSV response
+                response = HttpResponse(content_type='text/csv')
+                response['Content-Disposition'] = f'attachment; filename="attendance_report_{start_date}_{end_date}.csv"'
+
+                # Create the CSV writer
+                writer = csv.writer(response)
+                writer.writerow(['Enrollment Number', 'Name'] + [f'Subject {i}' for i in range(1, 6)] + ['Total Days', 'Percentage'])  # Assuming max 5 subjects
+
+                # Calculate attendance statistics for each student
+                attendance_stats = attendance_data.values(
+                    'student__enrolment_no',
+                    'student__name',
+                    'class_attendance__subject',
+                ).annotate(
+                    total_present=Count('id', filter=Q(status='Present')),
+                    total_days=Count('id')
+                ).order_by('student__enrolment_no')
+
+                # Write attendance data to the CSV file
+                for stats in attendance_stats:
+                    enrollment_no = stats['student__enrolment_no']
+                    name = stats['student__name']
+                    present_days = stats['total_present']
+                    total_days = stats['total_days']
+                    percentage = (present_days / total_days) * 100 if total_days > 0 else 0
+
+                    # Generate a list to store subject-wise attendance data
+                    subject_attendance = []
+
+                    # Fetch attendance data for each subject and add to the list
+                    for subj_num in range(1, 6):  # Assuming max 5 subjects
+                        subj_attendance = attendance_model.objects.filter(
+                            date__range=[start_date, end_date],
+                            class_attendance__course_id=course_id,
+                            class_attendance__subject=f'Subject {subj_num}',
+                            student__enrolment_no=enrollment_no,
+                        ).aggregate(total_present=Count('id', filter=Q(status='Present')))
+                        subject_attendance.append(subj_attendance['total_present'])
+
+                    # Add total days and percentage to the list
+                    subject_attendance += [total_days, percentage]
+
+                    writer.writerow([enrollment_no, name] + subject_attendance)
+
+                return response
+
+            except Class.DoesNotExist:
+                return JsonResponse({'error': 'Invalid course details.'}, status=400)
+        
+        # If class name is not provided, handle the case for generating report for all subjects
+        else:
+            return JsonResponse({'error': 'Invalid request'})
+
+
+
+
+

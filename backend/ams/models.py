@@ -83,12 +83,20 @@ class Class(models.Model):
     semester = models.CharField(max_length=25,choices=Semester)
     section = models.CharField(max_length=10,choices=Section)
     shift = models.CharField(max_length=20,choices=shift)
-    subject = models.CharField(max_length=100)
-    assigned_to = models.ForeignKey(Faculty, on_delete=models.CASCADE,related_name='assigned_classes')
+    # subject = models.CharField(max_length=100)
+    # assigned_to = models.ForeignKey(Faculty, on_delete=models.CASCADE,related_name='assigned_classes')
     coordinator = models.ForeignKey(Faculty, on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
-        return f"{self.course} - {self.semester} - {self.section} - {self.shift} - {self.subject} - {self.assigned_to.faculty_name}"
+        return f"{self.course} - {self.semester} - {self.section} - {self.shift}"
+
+class Subject(models.Model):
+    subject_name=models.CharField(max_length=100)
+    class_subject=models.ForeignKey(Class,on_delete=models.CASCADE,related_name='class_subject')
+    assigned_to = models.ForeignKey(Faculty, on_delete=models.CASCADE,related_name='assigned_to')
+
+    def __str__(self):
+        return f"{self.subject_name} - {self.class_subject} - {self.assigned_to.faculty_name}"
 
 class Bca_Student(models.Model):
     name = models.CharField(max_length=100)

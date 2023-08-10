@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Faculty, Class, Bca_Student, Bca_Attendance, Bba_Student, Bba_Attendance, B_Com_Student, B_Com_Attendance,B_Ed_Student,B_Ed_Attendance,Mba_Student,Mba_Attendance,Law_Student,Law_Attendance
+from .models import Faculty, Class, Subject, Bca_Student, Bca_Attendance, Bba_Student, Bba_Attendance, B_Com_Student, B_Com_Attendance,B_Ed_Student,B_Ed_Attendance,Mba_Student,Mba_Attendance,Law_Student,Law_Attendance
 
 admin.site.register(Faculty)
 admin.site.register(Class)
@@ -15,6 +15,6 @@ admin.site.register(Mba_Student)
 admin.site.register(Mba_Attendance)
 admin.site.register(Law_Student)
 admin.site.register(Law_Attendance)
-
+admin.site.register(Subject)
 
 

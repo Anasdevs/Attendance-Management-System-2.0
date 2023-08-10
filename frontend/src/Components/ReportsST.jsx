@@ -39,6 +39,7 @@ export default function ReportsST() {
           setFacultyDepartment(data.faculty.department);
           setFacultyImage(data.faculty.image_url);
           setAssignedSubjects(data.classes); 
+          console.log(data);
           setIsLoading(false);
         } else if (response.status === 302) {
           window.location.reload();

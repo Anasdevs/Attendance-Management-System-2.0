@@ -232,7 +232,8 @@ def dashboard_data(request):
         return JsonResponse({'error': 'Faculty not found'}, status=404)
 
 
-
+from django.db.models import OuterRef, Subquery, Value
+from django.db.models.functions import Coalesce
 
 @csrf_exempt
 def take_attendance(request):
@@ -246,7 +247,8 @@ def take_attendance(request):
 
         try:
             class_obj = Class.objects.get(course_id=course_id)
-            class_name = f"{class_obj.course}-{class_obj.semester}-{class_obj.section} {class_obj.subject}"
+            class_subject = class_obj.class_subject.first()  # Retrieve the related Subject object
+            class_name = f"{class_obj.course}-{class_obj.semester}-{class_obj.section} {class_subject.subject_name}"
 
             course_student_models = {
                 'BCA': (Bca_Student, Bca_Attendance),
@@ -300,10 +302,12 @@ def take_attendance(request):
 def is_course_assigned_to_faculty(email, course_id):
     try:
         faculty = Faculty.objects.get(faculty_email=email)
-        assigned_courses = Class.objects.filter(assigned_to=faculty)
-        return assigned_courses.filter(course_id=course_id).exists()
+        assigned_subjects = Subject.objects.filter(assigned_to=faculty, class_subject__course_id=course_id)
+        return assigned_subjects.exists()
     except Faculty.DoesNotExist:
         return False
+
+
 
 
 @require_POST

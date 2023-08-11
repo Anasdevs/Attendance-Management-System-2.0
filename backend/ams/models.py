@@ -56,21 +56,21 @@ class Faculty(AbstractBaseUser):
     
 
 Semester=(
-        ('1 Semester','1 Semester'),
-        ('2 Semester','2 Semester'),
-        ('3 Semester','3 Semester'),
-        ('4 Semester','4 Semester'),
-        ('5 Semester','5 Semester'),
-        ('6 Semester','6 Semester'),
-        ('7 Semester','7 Semester'),
-        ('8 Semester','8 Semester'),
+        ('1','1'),
+        ('2','2'),
+        ('3','3'),
+        ('4','4'),
+        ('5','5'),
+        ('6','6'),
+        ('7','7'),
+        ('8','8'),
 )
 
 Section=(
-        ('Section A','Section A'),
-        ('Section B','Section B'),
-        ('Section C','Section C'),
-        ('Section D','Section D'),
+        ('A','A'),
+        ('B','B'),
+        ('C','C'),
+        ('D','D'),
 )
 
 shift=(

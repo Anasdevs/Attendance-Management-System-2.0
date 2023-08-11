@@ -91,6 +91,7 @@ class Class(models.Model):
         return f"{self.course} - {self.semester} - {self.section} - {self.shift}"
 
 class Subject(models.Model):
+    subject_id=models.IntegerField(default=None)
     subject_name=models.CharField(max_length=100)
     class_subject=models.ForeignKey(Class,on_delete=models.CASCADE,related_name='class_subject')
     assigned_to = models.ForeignKey(Faculty, on_delete=models.CASCADE,related_name='assigned_to')
@@ -111,6 +112,7 @@ class Bca_Student(models.Model):
 
 class Bca_Attendance(models.Model):
     student = models.ForeignKey('Bca_student', on_delete=models.CASCADE)
+    subject_name=models.ForeignKey(Subject,on_delete=models.CASCADE,default=None,null=True)
     class_attendance = models.ForeignKey('Class', on_delete=models.CASCADE, default=1)
     date = models.DateField()
     status = models.CharField(
@@ -143,6 +145,7 @@ class Bba_Student(models.Model):
 
 class Bba_Attendance(models.Model):
     student = models.ForeignKey('Bba_Student', on_delete=models.CASCADE)
+    subject_name=models.ForeignKey(Subject,on_delete=models.CASCADE,default=None,null=True)
     class_attendance = models.ForeignKey('Class', on_delete=models.CASCADE, default=1)
     date = models.DateField()
     status = models.CharField(
@@ -175,6 +178,7 @@ class B_Ed_Student(models.Model):
 
 class B_Ed_Attendance(models.Model):
     student = models.ForeignKey('B_Ed_Student', on_delete=models.CASCADE)
+    subject_name=models.ForeignKey(Subject,on_delete=models.CASCADE,default=None,null=True)
     class_attendance = models.ForeignKey('Class', on_delete=models.CASCADE, default=1)
     date = models.DateField()
     status = models.CharField(
@@ -207,6 +211,7 @@ class B_Com_Student(models.Model):
 
 class B_Com_Attendance(models.Model):
     student = models.ForeignKey('B_Com_Student', on_delete=models.CASCADE)
+    subject_name=models.ForeignKey(Subject,on_delete=models.CASCADE,default=None,null=True)
     class_attendance = models.ForeignKey('Class', on_delete=models.CASCADE, default=1)
     date = models.DateField()
     status = models.CharField(
@@ -239,6 +244,7 @@ class Mba_Student(models.Model):
 
 class Mba_Attendance(models.Model):
     student = models.ForeignKey('Mba_Student', on_delete=models.CASCADE)
+    subject_name=models.ForeignKey(Subject,on_delete=models.CASCADE,default=None,null=True)
     class_attendance = models.ForeignKey('Class', on_delete=models.CASCADE, default=1)
     date = models.DateField()
     status = models.CharField(
@@ -271,6 +277,7 @@ class Law_Student(models.Model):
 
 class Law_Attendance(models.Model):
     student = models.ForeignKey('Law_Student', on_delete=models.CASCADE)
+    subject_name=models.ForeignKey(Subject,on_delete=models.CASCADE,default=None,null=True)
     class_attendance = models.ForeignKey('Class', on_delete=models.CASCADE, default=1)
     date = models.DateField()
     status = models.CharField(

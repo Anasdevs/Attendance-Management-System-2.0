@@ -350,42 +350,35 @@ def generate_attendance_report(request):
         start_date = request.GET.get('startDate')
         end_date = request.GET.get('endDate')
         course_id = request.GET.get('courseId') 
-        if not all([start_date, end_date, course_id]):
-            return JsonResponse({'error': 'Please provide valid start date, end date, and course ID.'}, status=400)
+        subject_id = request.GET.get('subjectId')
+
+        if not all([start_date, end_date, course_id, subject_id]):
+            return JsonResponse({'error': 'Please provide valid start date, end date, course ID, and subject ID.'}, status=400)
 
         try:
             # Retrieve the class object by course ID
             class_obj = Class.objects.get(course_id=course_id)
 
-            # Get the course name from the class object
+            # Get the attendance model based on the course name
             course_name = class_obj.course
+            attendance_model = get_attendance_model(course_name)
+
+            # Retrieve the subject object by subject ID
+            subject_obj = Subject.objects.get(subject_id=subject_id)
 
         except Class.DoesNotExist:
             return JsonResponse({'error': 'Invalid course ID.'}, status=400)
-
-        # Mapping of course name to attendance_model
-        course_attendance_models = {
-            'BCA': Bca_Attendance,
-            'BBA': Bba_Attendance,
-            'BED': B_Ed_Attendance,
-            'law': Law_Attendance,
-            'mba': Mba_Attendance,
-            'bcom': B_Com_Attendance,
-        }
-
-        # Check if course name exists in the mapping
-        if course_name not in course_attendance_models:
-            return JsonResponse({'error': 'Invalid course name.'}, status=400)
-
-        attendance_model = course_attendance_models[course_name]
+        except Subject.DoesNotExist:
+            return JsonResponse({'error': 'Invalid subject ID.'}, status=400)
 
         attendance_data = attendance_model.objects.filter(
             date__range=[start_date, end_date],
-            class_attendance__course_id=course_id
+            class_attendance__course_id=course_id,
+            subject_name=subject_obj  # Filter by subject
         )
 
         if not attendance_data.exists():
-            return JsonResponse({'error': 'No attendance data found for the given date range and course ID.'}, status=404)
+            return JsonResponse({'error': 'No attendance data found for the given date range, course ID, and subject ID.'}, status=404)
 
         # Prepare the CSV response
         response = HttpResponse(content_type='text/csv')
@@ -393,6 +386,13 @@ def generate_attendance_report(request):
 
         # Create the CSV writer
         writer = csv.writer(response)
+
+        # Write the class name and subject name in the first row
+        writer.writerow(['Class Name:', f'{class_obj}'])
+        writer.writerow(['Subject Name:', f'{subject_obj.subject_name}'])
+        writer.writerow([])  # Blank row
+
+        # Write header for attendance data
         writer.writerow(['Enrollment Number', 'Name', 'Present Days', 'Total Days', 'Percentage'])
 
         # Calculate attendance statistics for each student
@@ -407,7 +407,6 @@ def generate_attendance_report(request):
         # Write attendance data to the CSV file
         for stats in attendance_stats:
             enrollment_no = stats['student__enrolment_no']
-            print(enrollment_no)
             name = stats['student__name']
             present_days = stats['total_present']
             total_days = stats['total_days']
@@ -417,6 +416,18 @@ def generate_attendance_report(request):
         return response
 
     return JsonResponse({'error': 'Invalid request'})
+
+def get_attendance_model(course_name):
+    course_attendance_models = {
+        'BCA': Bca_Attendance,
+        'BBA': Bba_Attendance,
+        'BED': B_Ed_Attendance,
+        'law': Law_Attendance,
+        'mba': Mba_Attendance,
+        'bcom': B_Com_Attendance,
+    }
+    return course_attendance_models.get(course_name, None)
+
 
 @csrf_exempt
 def faculty_profile(request):
@@ -455,7 +466,6 @@ def handle_logout(request):
 def get_classes_by_department(request):
     if request.method == 'GET':
         department = request.GET.get('department')
-        print(department)
 
         if not department:
             return JsonResponse({'error': 'Please provide a valid department.'}, status=400)

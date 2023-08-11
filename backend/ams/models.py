@@ -126,12 +126,8 @@ class Bca_Attendance(models.Model):
     default=None
 )
 
-
     def __str__(self):
             return f"{self.student.name} - {self.class_attendance} - {self.date.strftime('%d %m %Y')}"
-
-    class Meta:
-            unique_together = ('student', 'date',)
 
 class Bba_Student(models.Model):
     name = models.CharField(max_length=100)
@@ -159,12 +155,8 @@ class Bba_Attendance(models.Model):
     default=None
 )
 
-
     def __str__(self):
             return f"{self.student.name} - {self.class_attendance} - {self.date.strftime('%d %m %Y')}"
-
-    class Meta:
-            unique_together = ('student', 'date',)
 
 class B_Ed_Student(models.Model):
     name = models.CharField(max_length=100)
@@ -196,8 +188,6 @@ class B_Ed_Attendance(models.Model):
     def __str__(self):
             return f"{self.student.name} - {self.class_attendance} - {self.date.strftime('%d %m %Y')}"
 
-    class Meta:
-            unique_together = ('student', 'date',)
 
 class B_Com_Student(models.Model):
     name = models.CharField(max_length=100)
@@ -229,8 +219,6 @@ class B_Com_Attendance(models.Model):
     def __str__(self):
             return f"{self.student.name} - {self.class_attendance} - {self.date.strftime('%d %m %Y')}"
 
-    class Meta:
-            unique_together = ('student', 'date',)
 
 class Mba_Student(models.Model):
     name = models.CharField(max_length=100)
@@ -262,8 +250,6 @@ class Mba_Attendance(models.Model):
     def __str__(self):
             return f"{self.student.name} - {self.class_attendance} - {self.date.strftime('%d %m %Y')}"
 
-    class Meta:
-            unique_together = ('student', 'date',)
 
 class Law_Student(models.Model):
     name = models.CharField(max_length=100)
@@ -293,6 +279,3 @@ class Law_Attendance(models.Model):
 
     def __str__(self):
             return f"{self.student.name} - {self.class_attendance} - {self.date.strftime('%d %m %Y')}"
-
-    class Meta:
-            unique_together = ('student', 'date',)

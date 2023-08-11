@@ -22,6 +22,7 @@ export default function ReportsST() {
   const [assignedSubjects, setAssignedSubjects] = useState([]);
   const [selectedSubject, setSelectedSubject] = useState('');
   const [selectedCourseId, setSelectedCourseId] = useState('');
+  const [selectedSubjectId, setSelectedSubjectId] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -68,13 +69,17 @@ export default function ReportsST() {
   };
 
   const handleSubjectChange = (event) => {
-    setSelectedSubject(event.target.value);
-    // Find the course_id for the selected subject and set it in the state
-    const selectedCourse = assignedSubjects.find((course) => course.subject === event.target.value);
+    const selectedSubjectValue = event.target.value;
+    setSelectedSubject(selectedSubjectValue);
+  
+    // Find the course_id and subject_id for the selected subject and set them in the state
+    const selectedCourse = assignedSubjects.find((course) => course.subject === selectedSubjectValue);
     if (selectedCourse) {
-      setSelectedCourseId(selectedCourse.course_id); // Assuming course_id is a property in the class data returned from the API
+      setSelectedCourseId(selectedCourse.course_id);
+      setSelectedSubjectId(selectedCourse.subject_id); // Assuming subject_id is a property in the class data returned from the API
     }
   };
+  
 
   const handleDownloadReports = () => {
     if (!startDate || !endDate || !selectedSubject || !selectedCourseId) {
@@ -84,7 +89,7 @@ export default function ReportsST() {
 
     setIsLoading(true);
     // Fetch the report data with selected subject, start date, and end date
-    const url = `http://localhost:8000/api/attendance/reports/?startDate=${startDate}&endDate=${endDate}&courseId=${selectedCourseId}`;
+    const url = `http://localhost:8000/api/attendance/reports/?startDate=${startDate}&endDate=${endDate}&courseId=${selectedCourseId}&subjectId=${selectedSubjectId}`;
 
     fetch(url)
       .then(async (response) => {
@@ -155,13 +160,13 @@ export default function ReportsST() {
       <div className="filters-container">
         <label htmlFor="subject">Select Class:</label>
         <select id="subject" value={selectedSubject} onChange={handleSubjectChange}>
-          <option value="">Select a Class</option>
-          {assignedSubjects.map((course) => (
-            <option key={course.course_id} value={course.subject}>
-              {`${course.course} - ${course.semester} - ${course.section} - ${course.subject}`}
-            </option>
-          ))}
-        </select>
+        <option value="">Select a Class</option>
+       {assignedSubjects.map((course) => (
+        <option key={`${course.course_id}-${course.subject_id}`} value={course.subject}>
+        {`${course.course} - ${course.semester} - ${course.section} - ${course.subject}`}
+        </option>
+  ))}
+</select>
         <label htmlFor="start-date">Start Date:</label>
         <input type="date" id="start-date" value={startDate} onChange={handleStartDateChange} />
 

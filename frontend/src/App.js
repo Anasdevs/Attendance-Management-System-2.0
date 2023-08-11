@@ -113,7 +113,7 @@ const WithSidebar = ({ handleLogout, role }) => {
       <Sidebar handleLogout={handleLogout} role={role} />
       <Routes>
         <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/dashboard/take-attendance/:courseId" element={<Attendance />} />
+        <Route path="/dashboard/take-attendance/:courseId/:subjectId" element={<Attendance />} />
         <Route path="/holidays" element={<Holidays />} />
         <Route path="/calendar" element={<Calendar />} />
         <Route path="/profile" element={<Profile handleLogout={handleLogout} />} />

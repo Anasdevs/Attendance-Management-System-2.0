@@ -66,8 +66,8 @@ const Dashboard = () => {
 
   const navigate = useNavigate();
 
-  const handleTakeAttendance = (courseId) => {
-    navigate(`/dashboard/take-attendance/${courseId}`);
+  const handleTakeAttendance = (courseId, subjectId) => {
+    navigate(`/dashboard/take-attendance/${courseId}/${subjectId}`);
   };
 
 
@@ -143,12 +143,12 @@ const Dashboard = () => {
                     <td>{row.section}</td>
                     <td>{row.subject}</td>
                     <td> 
-                      <button
-                        onClick={() => handleTakeAttendance(row.course_id)}
-                        className="action-button"
-                      >
-                        TAKE ATTENDANCE
-                      </button>
+                    <button
+                    onClick={() => handleTakeAttendance(row.course_id, row.subject_id)}
+                    className="action-button"
+                    >
+        TAKE ATTENDANCE
+      </button>
                     </td>
                   </tr>
                 ))

@@ -10,7 +10,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.core.exceptions import ObjectDoesNotExist
 from django.views.decorators.http import require_POST
 from datetime import datetime
-from django.db.models import Q, Value, Subquery, OuterRef,Count
+from django.db.models import Q, Value, Subquery, OuterRef,Count, F
 from django.db.models.functions import Coalesce
 import csv
 from django.urls import reverse
@@ -207,6 +207,7 @@ def dashboard_data(request):
                     'course': class_data.course,
                     'semester': class_data.semester,
                     'section': class_data.section,
+                    'subject_id': assigned_subject.subject_id,
                     'subject': assigned_subject.subject_name,
                     }
                 subjects_list.append(class_info)
@@ -223,20 +224,19 @@ def dashboard_data(request):
     except Faculty.DoesNotExist:
         return JsonResponse({'error': 'Faculty not found'}, status=404)
 
-@csrf_exempt
+
+from django.db.models import OuterRef, Subquery
+
 def take_attendance(request):
     if request.method == 'GET':
         course_id = request.GET.get('course_id')
+        subject_id = request.GET.get('subject_id')
         date = request.GET.get('date')
-
-        email = request.session.get('faculty_email')
-        if not is_course_assigned_to_faculty(email, course_id):
-            return JsonResponse({'error': 'Unauthorized access to the course.'}, status=403)
 
         try:
             class_obj = Class.objects.get(course_id=course_id)
-            class_subject = class_obj.class_subject.first()  # Retrieve the related Subject object
-            class_name = f"{class_obj.course}-{class_obj.semester}-{class_obj.section} {class_subject.subject_name}"
+            subject_obj = Subject.objects.get(subject_id=subject_id)
+            class_name = f"{class_obj.course}-{class_obj.semester}-{class_obj.section} {subject_obj.subject_name}"
 
             course_student_models = {
                 'BCA': (Bca_Student, Bca_Attendance),
@@ -252,25 +252,26 @@ def take_attendance(request):
             else:
                 return JsonResponse({'error': 'Invalid course ID.'}, status=400)
 
-            attendance_subquery = attendance_model.objects.filter(
-                student_id=OuterRef('pk'),
-                date=date
-            ).values('status', 'date')
-
             student_data = student_model.objects.filter(class_attendance__course_id=course_id).values(
                 'enrolment_no',
                 'name',
             ).annotate(
-                filtered_status=Coalesce(Subquery(attendance_subquery.values('status')), Value(None)),
-                filtered_date=Coalesce(Subquery(attendance_subquery.values('date')), Value(None)),
+                filtered_status=Subquery(
+                    attendance_model.objects.filter(
+                        student=OuterRef('pk'),
+                        subject_name=subject_obj,
+                        date=date
+                    ).values('status')[:1]
+                ),
             ).distinct()
+            
             students = []
             for data in student_data:
                 student = {
                     'enrolment_no': data['enrolment_no'],
                     'name': data['name'],
                     'attendance__status': data['filtered_status'],
-                    'attendance__date': data['filtered_date'],
+                    'attendance__date': date,  # You might set the date here
                 }
                 students.append(student)
         except Class.DoesNotExist:
@@ -287,32 +288,27 @@ def take_attendance(request):
 
     return JsonResponse({'error': 'Invalid request method.'}, status=400)
 
-def is_course_assigned_to_faculty(email, course_id):
-    try:
-        faculty = Faculty.objects.get(faculty_email=email)
-        assigned_subjects = Subject.objects.filter(assigned_to=faculty, class_subject__course_id=course_id)
-        return assigned_subjects.exists()
-    except Faculty.DoesNotExist:
-        return False
 
-@require_POST
 @csrf_exempt
 def submit_attendance(request):
     try:
         data = json.loads(request.body)
         course_id = data.get('course_id')
+        subject_id = data.get('subject_id')
+        print("Subject id submit attend:", subject_id)
         attendance_data = data.get('attendance_data')
 
         # Retrieve the class object by course ID
         class_obj = Class.objects.get(course_id=course_id)
+        subject_obj = Subject.objects.get(subject_id=subject_id)
         # Mapping of course_id to student_model and attendance_model
         course_student_models = {
             'BCA': (Bca_Student, Bca_Attendance),
-            'BBA': (Bba_Student, Bba_Attendance),
-            'BED': (B_Ed_Student, B_Ed_Attendance),
-            'law': (Law_Student, Law_Attendance),
-            'mba': (Mba_Student, Mba_Attendance),
-            'bcom': (B_Com_Student, B_Com_Attendance),
+                'BBA': (Bba_Student, Bba_Attendance),
+                'BED': (B_Ed_Student, B_Ed_Attendance),
+                'law': (Law_Student, Law_Attendance),
+                'mba': (Mba_Student, Mba_Attendance),
+                'bcom': (B_Com_Student, B_Com_Attendance),
         }
 
         # Check if course_id exists in the mapping
@@ -320,21 +316,29 @@ def submit_attendance(request):
             return JsonResponse({'error': 'Invalid course ID.'}, status=400)
 
         student_model, attendance_model = course_student_models[class_obj.course]
+
+
         for fields in attendance_data:
             enrolment_no = fields.get('enrolment_no')
             attendance_status = fields.get('attendance__status')
             attendance_date_str = fields.get('attendance_date')
-            if(attendance_date_str == None):
+            
+            if attendance_date_str is None:
                 continue
-
+            
             # Convert the date string to a datetime object
             attendance_date = datetime.fromisoformat(attendance_date_str)
-
+            
             # Retrieve the student by enrolment_no
             student_obj = student_model.objects.get(enrolment_no=enrolment_no, class_attendance=class_obj)
 
-            # Retrieve the existing attendance record for the student and date
-            attendance = attendance_model.objects.filter(student=student_obj, class_attendance=class_obj, date=attendance_date).first()
+            # Retrieve the existing attendance record for the student, subject, and date
+            attendance = attendance_model.objects.filter(
+                student=student_obj,
+                class_attendance=class_obj,
+                subject_name=subject_obj,
+                date=attendance_date
+            ).first()
 
             # If the attendance record exists, update the attendance status
             if attendance:
@@ -342,11 +346,18 @@ def submit_attendance(request):
                 attendance.save()
             else:
                 # Create a new attendance record
-                attendance = attendance_model.objects.create(student=student_obj, class_attendance=class_obj, date=attendance_date, status=attendance_status)
+                attendance = attendance_model.objects.create(
+                    student=student_obj,
+                    subject_name=subject_obj,
+                    class_attendance=class_obj,
+                    date=attendance_date,
+                    status=attendance_status
+                )
 
         return JsonResponse({'message': 'Attendance submitted successfully'})
     except Exception as e:
         return JsonResponse({'error': str(e)})
+
     
 
 @csrf_exempt

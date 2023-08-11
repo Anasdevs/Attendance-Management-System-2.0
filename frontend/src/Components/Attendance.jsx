@@ -13,7 +13,7 @@ import WithRightbarLayout from './WithRightbarLayout';
 export default function Attendance() {
   const navigate = useNavigate();
   const [loadingProgress, setLoadingProgress] = useState(0);
-  const { courseId } = useParams();
+  const { courseId, subjectId } = useParams();
   const [currentDate, setCurrentDate] = useState(new Date());
   const timeZone = 'Asia/Kolkata';
   const zonedDate = utcToZonedTime(currentDate, timeZone);
@@ -45,7 +45,7 @@ export default function Attendance() {
       const zonedDate = utcToZonedTime(date, timeZone);
       const formattedDate = format(zonedDate, 'yyyy-MM-dd');
   
-      const response = await fetch(`http://localhost:8000/api/take-attendance/?course_id=${courseId}&date=${formattedDate}`, {
+      const response = await fetch(`http://localhost:8000/api/take-attendance/?course_id=${courseId}&subject_id=${subjectId}&date=${formattedDate}`, {
         method: 'GET',
         credentials: 'include',
       });
@@ -162,6 +162,7 @@ export default function Attendance() {
 
       const requestBody = {
         course_id: courseId,
+        subject_id: subjectId,
         attendance_data: modifiedAttendanceData,
         attendance_date: format(currentDate, 'yyyy-MM-dd'),
       };

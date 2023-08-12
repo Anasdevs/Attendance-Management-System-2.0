@@ -139,6 +139,7 @@ class Bba_Student(models.Model):
     class Meta:
          ordering = ['enrolment_no']
 
+
 class Bba_Attendance(models.Model):
     student = models.ForeignKey('Bba_Student', on_delete=models.CASCADE)
     subject_name=models.ForeignKey(Subject,on_delete=models.CASCADE,default=None,null=True)
@@ -204,15 +205,12 @@ class B_Com_Attendance(models.Model):
     subject_name=models.ForeignKey(Subject,on_delete=models.CASCADE,default=None,null=True)
     class_attendance = models.ForeignKey('Class', on_delete=models.CASCADE, default=1)
     date = models.DateField()
-    status = models.CharField(
-    max_length=10,
+    status = models.CharField(max_length=10,
     choices=(
         (None, 'Not marked'), 
         ('Present', 'Present'),
         ('Absent', 'Absent'),
-    ),
-    null=True,
-    default=None
+    ),null=True,default=None
 )
 
 

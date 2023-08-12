@@ -20,6 +20,10 @@ export default function ReportsHOD() {
   const [selectedClass, setSelectedClass] = useState('');
   const [selectedSubject, setSelectedSubject] = useState('');
   const [selectedCourseId, setSelectedCourseId] = useState('');
+  const [selectedClassSubjects, setSelectedClassSubjects] = useState([]);
+  const [selectedSubjectId, setSelectedSubjectId] = useState('');
+
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -87,8 +91,8 @@ export default function ReportsHOD() {
         return response.json();
       })
       .then((data) => {
+        console.log(data);
         setDepartmentClasses(data.classes);
-        console.log("Department classes fetched");
       })
       .catch((error) => {
         alert(error.message);
@@ -97,21 +101,30 @@ export default function ReportsHOD() {
         setIsLoading(false);
       });
   };
-
   const handleSubjectChange = (event) => {
     const selectedSubjectValue = event.target.value;
-    console.log("Selected Subject Value:", selectedSubjectValue);
-    setSelectedSubject(selectedSubjectValue); // Update selectedSubject state
-
+    setSelectedSubject(selectedSubjectValue);
+    
     if (selectedSubjectValue === 'all') {
       setSelectedCourseId(''); // Clear the selectedCourseId
+      setSelectedSubjectId(''); // Clear the selectedSubjectId
     } else {
-      const selectedCourse = departmentClasses.find((course) => course.subject === selectedSubjectValue);
-      if (selectedCourse) {
-        setSelectedCourseId(selectedCourse.course_id);
+      const selectedSubjectObject = selectedClassSubjects.find(
+        (subjectObj) => subjectObj.subject_name === selectedSubjectValue
+      );
+    
+      if (selectedSubjectObject) {
+        setSelectedSubjectId(selectedSubjectObject.subject_id);
+        console.log('Selected Subject ID:', selectedSubjectObject.subject_id);
+      } else {
+        setSelectedSubjectId(''); // Reset the selectedSubjectId if subject_id is not found
       }
     }
   };
+  
+  
+  
+  
 
   const handleStartDateChange = (event) => {
     setStartDate(event.target.value);
@@ -124,8 +137,21 @@ export default function ReportsHOD() {
   const handleClassChange = (event) => {
     const selectedClassValue = event.target.value;
     setSelectedClass(selectedClassValue);
-    console.log("Selected class:", selectedClassValue);
+  
+    // Find the class object in departmentClasses
+    const selectedClassObject = departmentClasses.find(
+      (course) => `${course.course} - ${course.semester} - ${course.section}` === selectedClassValue
+    );
+  
+    if (selectedClassObject) {
+      setSelectedClassSubjects(selectedClassObject.subjects);
+      setSelectedSubject(''); // Clear the selected subject when class changes
+      setSelectedCourseId(selectedClassObject.course_id); // Set the selected course ID
+      setSelectedSubjectId(''); // Clear the selected subject ID
+      console.log('Selected Class Object:', selectedClassObject);
+    }
   };
+  
   
   const handleGenerateReport = () => {
     if (!startDate || !endDate) {
@@ -139,11 +165,16 @@ export default function ReportsHOD() {
   
     if (selectedSubject === 'all') {
       if (selectedClass) {
-        url += `&className=${selectedClass}`;
+        const selectedClassObject = departmentClasses.find(
+          (course) => `${course.course} - ${course.semester} - ${course.section}` === selectedClass
+        );
+        if (selectedClassObject) {
+          url += `&courseId=${selectedClassObject.course_id}`;
+        }
       }
     } else {
-      if (selectedCourseId && selectedSubject) {
-        url += `&courseId=${selectedCourseId}`;
+      if (selectedCourseId && selectedSubjectId) {
+        url += `&courseId=${selectedCourseId}&subjectId=${selectedSubjectId}`;
       } else {
         alert('Please select subject.');
         setIsLoading(false);
@@ -186,6 +217,7 @@ export default function ReportsHOD() {
       });
   };
   
+  
 
 
   return (
@@ -222,36 +254,36 @@ export default function ReportsHOD() {
       </div>
       <hr />
       <div className="filters-container">
-      
-      <label htmlFor="class">Select Class:</label>
-<select id="class" value={selectedClass} onChange={handleClassChange}>
-  <option value="">Select a Class</option>
-  {Array.from(new Set(departmentClasses.map(course => `${course.course} - ${course.semester} - ${course.section}`))).map(uniqueCourse => (
-    <option key={uniqueCourse} value={uniqueCourse}>
-      {uniqueCourse}
-    </option>
-  ))}
-</select>
+  <label htmlFor="class">Select Class:</label>
+  <select id="class" value={selectedClass} onChange={handleClassChange}>
+    <option value="">Select a Class</option>
+    {Array.from(new Set(departmentClasses.map(course => `${course.course} - ${course.semester} - ${course.section}`))).map(uniqueCourse => (
+      <option key={uniqueCourse} value={uniqueCourse}>
+        {uniqueCourse}
+      </option>
+    ))}
+  </select>
 
-
-<label htmlFor="subject">Select Subject:</label>
-<select id="subject" value={selectedSubject} onChange={handleSubjectChange}>
+  <label htmlFor="subject">Select Subject:</label>
+<select id="subject" value={selectedSubject} onChange={handleSubjectChange}> {/* Use selectedSubject here */}
   <option value="">Select Subject</option>
   <option value="all">All Subjects</option>
-  {Array.from(new Set(departmentClasses.map((course) => course.subject))).map((subject) => (
-    <option key={subject} value={subject}>
-      {subject}
+  {selectedClassSubjects.map((subjectObj) => (
+    <option key={subjectObj.subject_id} value={subjectObj.subject_name}> {/* Use subject_name as value */}
+      {subjectObj.subject_name}
     </option>
   ))}
 </select>
-        <label htmlFor="start-date">Start Date:</label>
-        <input type="date" id="start-date" value={startDate} onChange={handleStartDateChange} />
-        <label htmlFor="end-date">End Date:</label>
-        <input type="date" id="end-date" value={endDate} onChange={handleEndDateChange} />
-        <button className="download-button" onClick={handleGenerateReport} disabled={isLoading}>
-          {isLoading ? 'Generating...' : 'Generate Report'}
-        </button>
-      </div>
+
+  
+  <label htmlFor="start-date">Start Date:</label>
+  <input type="date" id="start-date" value={startDate} onChange={handleStartDateChange} />
+  <label htmlFor="end-date">End Date:</label>
+  <input type="date" id="end-date" value={endDate} onChange={handleEndDateChange} />
+  <button className="download-button" onClick={handleGenerateReport} disabled={isLoading}>
+    {isLoading ? 'Generating...' : 'Generate Report'}
+  </button>
+</div>
     </WithRightbarLayout>
   );
 }

@@ -4,4 +4,4 @@ env/Scripts/python.exe
 __pycache__
 **/__pycache__/
 db.sqlite3
-
+migrations/

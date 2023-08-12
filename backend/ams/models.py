@@ -83,7 +83,7 @@ class Class(models.Model):
     semester = models.CharField(max_length=25,choices=Semester)
     section = models.CharField(max_length=10,choices=Section)
     shift = models.CharField(max_length=20,choices=shift)
-    coordinator = models.ForeignKey(Faculty, on_delete=models.SET_NULL, null=True, unique=True)
+    coordinator = models.OneToOneField(Faculty, on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
         return f"{self.course} - {self.semester} - {self.section} - {self.shift}"

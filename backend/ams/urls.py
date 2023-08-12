@@ -19,8 +19,6 @@ urlpatterns = [
      path('api/attendance/reports/', views.generate_attendance_report, name='generate_attendance_report'),
      path('api/attendance/reports-hod/', views.generate_attendance_report_hod, name='generate_attendance_report_hod'),
      path('api/faculty-profile/', views.faculty_profile, name='faculty_profile'),
-     path('api/logout/', views.handle_logout, name="logout")
-
-
-
+     path('api/logout/', views.handle_logout, name="logout"),
+     path('api/dashboard-data-CC/', views.dashboard_data_CC, name='dashboard_data_CC'),
 ]

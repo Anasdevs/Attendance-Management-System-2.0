@@ -640,3 +640,60 @@ def generate_attendance_report_hod(request):
             return JsonResponse({'error': 'Invalid course details.'}, status=400)
 
     return JsonResponse({'error': 'Invalid request'})
+
+@csrf_exempt
+def dashboard_data_CC(request):
+    try:
+        faculty_email = request.session.get('faculty_email')
+
+        if faculty_email:
+            faculty = Faculty.objects.get(faculty_email=faculty_email)
+
+            # Get the faculty image URL
+            faculty_image_url = faculty.faculty_image.url if faculty.faculty_image else None
+
+            # Build the absolute URL for the faculty image
+            if faculty_image_url:
+                faculty_image_url = request.build_absolute_uri(faculty_image_url)
+
+            faculty_data = {
+                'name': faculty.faculty_name,
+                'email': faculty.faculty_email,
+                'image_url': faculty_image_url,
+                'role': faculty.role,
+                'department': faculty.department
+            }
+            if faculty.role == 'Class Coordinator':
+                assigned_subjects = Subject.objects.filter()
+            else:
+                assigned_subjects = Subject.objects.filter(assigned_to=faculty)
+            subjects_list = []
+
+
+            for assigned_subject in assigned_subjects:
+                class_data = assigned_subject.class_subject
+                course = Class.objects.filter(course_id=class_data.course_id)
+                for c in course:
+                    print(c.coordinator)  
+                    if c.coordinator == faculty:
+                        class_info = {
+                        'course_id': class_data.course_id,
+                        'course': class_data.course,
+                        'semester': class_data.semester,
+                        'section': class_data.section,
+                        'subject_id': assigned_subject.subject_id,
+                        'subject': assigned_subject.subject_name,
+                        }
+                        subjects_list.append(class_info)
+
+            response_data = {
+                'faculty': faculty_data,
+                'classes': subjects_list 
+        }
+
+            return JsonResponse(response_data, safe=False)
+        else:
+            return JsonResponse({'error': 'User is not authenticated'}, status=302)
+
+    except Faculty.DoesNotExist:
+        return JsonResponse({'error': 'Faculty not found'}, status=404)

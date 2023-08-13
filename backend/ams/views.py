@@ -504,16 +504,16 @@ def get_classes_by_department(request):
     return JsonResponse({'error': 'Invalid request'})
 
 
-def get_attendance_model(course_name):
-    course_attendance_models = {
-        'BCA': Bca_Attendance,
-        'BBA': Bba_Attendance,
-        'BED': B_Ed_Attendance,
-        'law': Law_Attendance,
-        'mba': Mba_Attendance,
-        'bcom': B_Com_Attendance,
+def get_attendance_and_student_models(course_name):
+    course_student_models = {
+        'BCA': (Bca_Student, Bca_Attendance),
+        'BBA': (Bba_Student, Bba_Attendance),
+        'BED': (B_Ed_Student, B_Ed_Attendance),
+        'law': (Law_Student, Law_Attendance),
+        'mba': (Mba_Student, Mba_Attendance),
+        'bcom': (B_Com_Student, B_Com_Attendance),
     }
-    return course_attendance_models.get(course_name, None)
+    return course_student_models.get(course_name, (None, None))
 
 @csrf_exempt
 def generate_attendance_report_hod(request):
@@ -522,12 +522,15 @@ def generate_attendance_report_hod(request):
         end_date = request.GET.get('endDate')
         course_id = request.GET.get('courseId')
         subject_id = request.GET.get('subjectId')
+        print(course_id)
         
         if not all([start_date, end_date]):
             return JsonResponse({'error': 'Please provide valid start date and end date.'}, status=400)
         
         try:
             class_obj = Class.objects.get(course_id=course_id)
+            course_name = class_obj.course
+            student_model, attendance_model = get_attendance_and_student_models(course_name)
 
             if subject_id:
                 try:
@@ -535,9 +538,6 @@ def generate_attendance_report_hod(request):
                 except Subject.DoesNotExist:
                     return JsonResponse({'error': 'Invalid subject ID.'}, status=400)
 
-                course_name = class_obj.course
-                attendance_model = get_attendance_model(course_name)
-                
                 if not attendance_model:
                     return JsonResponse({'error': 'Attendance model not found for the given course name.'}, status=404)
                 
@@ -587,7 +587,6 @@ def generate_attendance_report_hod(request):
 
             else:
                 # Generate report for all subjects
-
                 # Retrieve all subjects for the class
                 course_subjects = Subject.objects.filter(class_subject=class_obj)
 
@@ -607,18 +606,18 @@ def generate_attendance_report_hod(request):
                     header_row.append(subject.subject_name)
                     subject_columns.append(subject)
 
-                header_row.extend(['Total Days', 'Percentage'])
+                header_row.extend(['Total Present Days', 'Total Classes', 'Percentage'])
                 writer.writerow(header_row)
 
-                # Iterate through students
-                for student in class_obj.Bca_students.all():
+                # Iterate through students using the student_model
+                for student in student_model.objects.filter(class_attendance=class_obj):
                     student_row = [student.enrolment_no, student.name]
                     total_present = 0
                     total_days = 0
 
                     # Calculate attendance statistics for each subject
                     for subject in subject_columns:
-                        subject_attendance_data = Bca_Attendance.objects.filter(
+                        subject_attendance_data = attendance_model.objects.filter(
                             date__range=[start_date, end_date],
                             class_attendance=class_obj,
                             subject_name=subject,
@@ -631,7 +630,7 @@ def generate_attendance_report_hod(request):
                         total_present += present_days
                         total_days += total_subject_days
 
-                    student_row.extend([total_days, "{:.2f}%".format((total_present / total_days) * 100) if total_days > 0 else "0.00%"])
+                    student_row.extend([total_present, total_days, "{:.2f}%".format((total_present / total_days) * 100) if total_days > 0 else "0.00%"])
                     writer.writerow(student_row)
 
                 return response
@@ -640,6 +639,7 @@ def generate_attendance_report_hod(request):
             return JsonResponse({'error': 'Invalid course details.'}, status=400)
 
     return JsonResponse({'error': 'Invalid request'})
+
 
 @csrf_exempt
 def dashboard_data_CC(request):
@@ -674,7 +674,6 @@ def dashboard_data_CC(request):
                 class_data = assigned_subject.class_subject
                 course = Class.objects.filter(course_id=class_data.course_id)
                 for c in course:
-                    print(c.coordinator)  
                     if c.coordinator == faculty:
                         class_info = {
                         'course_id': class_data.course_id,

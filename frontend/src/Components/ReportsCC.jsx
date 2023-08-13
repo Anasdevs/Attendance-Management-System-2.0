@@ -1,21 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import WithRightbarLayout from './WithRightbarLayout';
 import { format } from 'date-fns';
-import { useNavigate } from 'react-router-dom';
-import LoadingBar from 'react-top-loading-bar';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 import './ReportsST.css';
 
 export default function ReportsST() {
-  const navigate = useNavigate();
   const [facultyName, setFacultyName] = useState('');
   const [role, setRole] = useState('');
   const [facultyDepartment, setFacultyDepartment] = useState('');
   const [facultyImage, setFacultyImage] = useState(null);
-  const [isDataFetched, setIsDataFetched] = useState(false);
-  const today = format(new Date(), 'EEE, dd-MMM-yyyy');
-  const [loadingProgress, setLoadingProgress] = useState(0);
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -26,7 +20,6 @@ export default function ReportsST() {
 
   useEffect(() => {
     const fetchData = async () => {
-      setLoadingProgress(30);
       try {
         const response = await fetch('http://localhost:8000/api/dashboard-data-CC/', {
           method: 'GET',
@@ -39,25 +32,19 @@ export default function ReportsST() {
           setRole(data.faculty.role);
           setFacultyDepartment(data.faculty.department);
           setFacultyImage(data.faculty.image_url);
-          setAssignedSubjects(data.classes); 
-          console.log(data);
-          setIsLoading(false);
+          setAssignedSubjects(data.classes);
+          setSelectedCourseId(data.classes[0]?.course_id || ''); // Set the selected course ID
         } else if (response.status === 302) {
           window.location.reload();
         } else {
           alert('Error occurred while fetching dashboard data.');
-          setIsLoading(false);
         }
-      } finally {
-        setIsDataFetched(true);
-        setLoadingProgress(100);
-        setIsLoading(false); // Set the loading bar progress when data fetching is completed
+      } catch (error) {
+        console.error('Error fetching data:', error);
       }
     };
 
-    fetchData()
-      .then(() => setIsDataFetched(true))
-      .catch(() => setIsDataFetched(true));
+    fetchData();
   }, []);
 
   const handleStartDateChange = (event) => {
@@ -71,25 +58,31 @@ export default function ReportsST() {
   const handleSubjectChange = (event) => {
     const selectedSubjectValue = event.target.value;
     setSelectedSubject(selectedSubjectValue);
-  
-    // Find the course_id and subject_id for the selected subject and set them in the state
-    const selectedCourse = assignedSubjects.find((course) => course.subject === selectedSubjectValue);
-    if (selectedCourse) {
-      setSelectedCourseId(selectedCourse.course_id);
-      setSelectedSubjectId(selectedCourse.subject_id); // Assuming subject_id is a property in the class data returned from the API
+
+    if (selectedSubjectValue === 'All subjects') {
+      setSelectedSubjectId('');
+    } else {
+      // Find the subject_id for the selected subject and set it in the state
+      const selectedCourse = assignedSubjects.find((course) => course.subject === selectedSubjectValue);
+      if (selectedCourse) {
+        setSelectedSubjectId(selectedCourse.subject_id);
+      }
     }
   };
-  
 
   const handleDownloadReports = () => {
-    if (!startDate || !endDate || !selectedSubject || !selectedCourseId) {
+    if (!startDate || !endDate || !selectedCourseId) {
       alert('Please select both the subject, start date, and end date to download the report.');
       return;
     }
 
     setIsLoading(true);
-    // Fetch the report data with selected subject, start date, and end date
-    const url = `http://localhost:8000/api/attendance/reports/?startDate=${startDate}&endDate=${endDate}&courseId=${selectedCourseId}&subjectId=${selectedSubjectId}`;
+
+    let url = `http://localhost:8000/api/attendance/reports-hod/?startDate=${startDate}&endDate=${endDate}&courseId=${selectedCourseId}`;
+
+    if (selectedSubject !== 'All subjects') {
+      url += `&subjectId=${selectedSubjectId}`;
+    }
 
     fetch(url)
       .then(async (response) => {
@@ -123,6 +116,8 @@ export default function ReportsST() {
         setIsLoading(false);
       });
   };
+
+  const today = format(new Date(), 'EEE, dd-MMM-yyyy');
 
   return (
     <WithRightbarLayout>
@@ -160,13 +155,15 @@ export default function ReportsST() {
       <div className="filters-container">
         <label htmlFor="subject">Select Class:</label>
         <select id="subject" value={selectedSubject} onChange={handleSubjectChange}>
-        <option value="">Select a Class</option>
-       {assignedSubjects.map((course) => (
-        <option key={`${course.course_id}-${course.subject_id}`} value={course.subject}>
-        {`${course.course} - ${course.semester} - ${course.section} - ${course.subject}`}
-        </option>
+  <option value="">Select a Class</option>
+  {assignedSubjects.map((course) => (
+    <option key={`${course.course_id}-${course.subject_id}`} value={course.subject}>
+      {`${course.course} ${course.semester} ${course.section} - ${course.subject}`}
+    </option>
   ))}
+  <option value="All subjects">All Subjects</option>
 </select>
+
         <label htmlFor="start-date">Start Date:</label>
         <input type="date" id="start-date" value={startDate} onChange={handleStartDateChange} />
 

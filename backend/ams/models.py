@@ -78,7 +78,7 @@ shift=(
         ('Evening Shift','Evening Shift'),
 )
 class Class(models.Model):
-    course_id = models.IntegerField()
+    course_id = models.IntegerField(unique=True)
     course = models.CharField(max_length=25,choices=Department)
     semester = models.CharField(max_length=25,choices=Semester)
     section = models.CharField(max_length=10,choices=Section)
@@ -89,7 +89,7 @@ class Class(models.Model):
         return f"{self.course} - {self.semester} - {self.section} - {self.shift}"
 
 class Subject(models.Model):
-    subject_id=models.IntegerField(default=None)
+    subject_id=models.IntegerField(default=None,unique=True)
     subject_name=models.CharField(max_length=100)
     class_subject=models.ForeignKey(Class,on_delete=models.CASCADE,related_name='class_subject')
     assigned_to = models.ForeignKey(Faculty, on_delete=models.CASCADE,related_name='assigned_to')

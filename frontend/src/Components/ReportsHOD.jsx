@@ -2,11 +2,14 @@ import React, { useState, useEffect } from 'react';
 import WithRightbarLayout from './WithRightbarLayout';
 import { format } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
+import LoadingBar from 'react-top-loading-bar';
 import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 import './ReportsHOD.css';
 
 export default function ReportsHOD() {
   const navigate = useNavigate();
+  const [loadingProgress, setLoadingProgress] = useState(0);
   const [facultyName, setFacultyName] = useState('');
   const [role, setRole] = useState('');
   const [facultyDepartment, setFacultyDepartment] = useState('');
@@ -60,6 +63,7 @@ export default function ReportsHOD() {
         setIsLoading(false);
         setIsDataFetched(true);
       });
+      setLoadingProgress(30);
   }, []);
 
   const fetchDepartmentClasses = () => {
@@ -70,7 +74,7 @@ export default function ReportsHOD() {
       return;
     }
 
-    setIsLoading(true);
+    setIsLoading(false);
 
     // Fetch department classes based on stored department
     const url = `http://localhost:8000/api/classes-by-department/?department=${storedDepartment}`;
@@ -100,6 +104,8 @@ export default function ReportsHOD() {
       .finally(() => {
         setIsLoading(false);
       });
+      setLoadingProgress(100);
+
   };
   const handleSubjectChange = (event) => {
     const selectedSubjectValue = event.target.value;
@@ -222,6 +228,7 @@ export default function ReportsHOD() {
 
   return (
     <WithRightbarLayout>
+      <LoadingBar progress={loadingProgress} color="#111137" height={4} />
       <div className="rightside">
       <div className="image">
           {facultyImage ? (
@@ -281,7 +288,7 @@ export default function ReportsHOD() {
   <label htmlFor="end-date">End Date:</label>
   <input type="date" id="end-date" value={endDate} onChange={handleEndDateChange} />
   <button className="download-button" onClick={handleGenerateReport} disabled={isLoading}>
-    {isLoading ? 'Generating...' : 'Generate Report'}
+    {isLoading ? 'Downloading...' : 'Download Report'}
   </button>
 </div>
     </WithRightbarLayout>

@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { format, addDays, subDays, isToday } from 'date-fns';
 import { utcToZonedTime } from 'date-fns-tz';
+import { useParams, useNavigate } from 'react-router-dom';
 import Skeleton from 'react-loading-skeleton';
-import { useNavigate } from 'react-router-dom';
 import 'react-loading-skeleton/dist/skeleton.css';
 import './Attendance.css';
-import { useParams } from 'react-router-dom';
 import LoadingBar from 'react-top-loading-bar';
 import WithRightbarLayout from './WithRightbarLayout';
 
@@ -402,7 +401,11 @@ export default function Attendance() {
         </div>
       </div>
         <div className="attendance-container">
-
+        <div className="table-description">
+            <p>
+              Use keyboard shortcuts: <strong>P</strong> for present, <strong>A</strong> for absent, <strong>U</strong> to move up, <strong>D</strong> to move down.
+            </p>
+          </div>
           <table className="attendance-table">
             <thead>
               <tr>

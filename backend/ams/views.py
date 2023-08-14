@@ -598,22 +598,38 @@ def generate_attendance_report_hod(request):
                 # Write the class name in the first row
                 writer.writerow(['Class Name:', f'{class_obj}'])
                 writer.writerow([])  # Blank row
+                writer.writerow([])  # Blank row
+                
 
+                subject_dict  = {}
                 # Write header for attendance data
-                header_row = ['Enrollment Number', 'Name']
+                header_row = ['S.NO','Enrollment Number', 'Name']
+                above_header_row = ['','','']
+                # below_header_row = ['','','']
                 subject_columns = []
                 for subject in course_subjects:
+                    above_header_row.append(f'{class_obj.course}-{subject.subject_id}')
                     header_row.append(subject.subject_name)
                     subject_columns.append(subject)
-
+                    subject_dict[subject.subject_name] = 0
+                
+                total_classes_row = ['TOTAL CLASSES','','']  # Total classes row
                 header_row.extend(['Total Present Days', 'Total Classes', 'Percentage'])
+                writer.writerow(above_header_row)
                 writer.writerow(header_row)
-
-                # Iterate through students using the student_model
+                writer.writerow([])  # Blank row
+                serial_no = 1  # Firts serial number
+                # writer.writerow(total_classes_row)
+               
+                excel_clms = []
+                
+               # Iterate through students using the student_model
                 for student in student_model.objects.filter(class_attendance=class_obj):
-                    student_row = [student.enrolment_no, student.name]
+                    student_row = [serial_no,student.enrolment_no, student.name]
                     total_present = 0
                     total_days = 0
+                    serial_no += 1  # Increment the serial number
+
 
                     # Calculate attendance statistics for each subject
                     for subject in subject_columns:
@@ -622,17 +638,22 @@ def generate_attendance_report_hod(request):
                             class_attendance=class_obj,
                             subject_name=subject,
                             student=student,
+                            
                         )
+                        # print(subject.subject_name)
                         present_days = subject_attendance_data.filter(status='Present').count()
                         total_subject_days = subject_attendance_data.count()
-
+                        # total_classes_row.append(total_subject_days)
+                        subject_dict[subject.subject_name] = total_subject_days
                         student_row.append(present_days)
                         total_present += present_days
                         total_days += total_subject_days
-
                     student_row.extend([total_present, total_days, "{:.2f}%".format((total_present / total_days) * 100) if total_days > 0 else "0.00%"])
-                    writer.writerow(student_row)
-
+                    # writer.writerow(student_row)
+                    excel_clms.append(student_row)
+                total_classes_row.extend(list(subject_dict.values()))
+                excel_clms.insert(0,total_classes_row)
+                writer.writerows(excel_clms)
                 return response
 
         except Class.DoesNotExist:

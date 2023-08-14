@@ -388,12 +388,12 @@ def generate_attendance_report(request):
 
         # Write the class name and subject name in the first row
         writer.writerow(['Class Name:', f'{class_obj}'])
-        writer.writerow(['Subject Name:', f'{subject_obj.subject_name}'])
+        writer.writerow(['Subject Name:', f'{subject_obj.subject_name}-{subject_obj.subject_id}'])
         writer.writerow([])  # Blank row
 
         # Write header for attendance data
-        writer.writerow(['Enrollment Number', 'Name', 'Present Days', 'Total Days', 'Percentage'])
-
+        writer.writerow(['S.NO.','ROLL NO.', 'NAME', 'PRESENT DAYS', 'TOTAL', 'PERCENTAGE'])
+        serial_no = 1  # Firts serial number
         # Calculate attendance statistics for each student
         attendance_stats = attendance_data.values(
             'student__enrolment_no',
@@ -410,8 +410,8 @@ def generate_attendance_report(request):
             present_days = stats['total_present']
             total_days = stats['total_days']
             percentage = "{:.2f}%".format((present_days / total_days) * 100) if total_days > 0 else "0.00%"
-            writer.writerow([enrollment_no, name, present_days, total_days, percentage])
-
+            writer.writerow([serial_no,enrollment_no, name, present_days, total_days, percentage])
+            serial_no += 1  # Increment the serial number
         return response
 
     return JsonResponse({'error': 'Invalid request'})
@@ -558,11 +558,12 @@ def generate_attendance_report_hod(request):
 
                 # Write the class name and subject name in the first row
                 writer.writerow(['Class Name:', f'{class_obj}'])
-                writer.writerow(['Subject Name:', f'{subject_obj.subject_name}'])
+                writer.writerow(['Subject Name:', f'{subject_obj.subject_name}-{subject_obj.subject_id}'])
                 writer.writerow([])  # Blank row
+                serial_no = 1  # Firts serial number
 
                 # Write header for attendance data
-                writer.writerow(['Enrollment Number', 'Name', 'Present Days', 'Total Days', 'Percentage'])
+                writer.writerow(['S.NO.','ROLL NO.', 'NAME', 'PRESENT DAYS', 'TOTAL DAYS', 'PERCENTAGE'])
 
                 # Calculate attendance statistics for each student
                 attendance_stats = attendance_data.values(
@@ -580,7 +581,8 @@ def generate_attendance_report_hod(request):
                     present_days = stats['total_present']
                     total_days = stats['total_days']
                     percentage = "{:.2f}%".format((present_days / total_days) * 100) if total_days > 0 else "0.00%"
-                    writer.writerow([enrollment_no, name, present_days, total_days, percentage])
+                    writer.writerow([serial_no,enrollment_no, name, present_days, total_days, percentage])
+                    serial_no += 1  # Increment the serial number
 
                 return response
 

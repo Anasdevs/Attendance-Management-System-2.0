@@ -286,7 +286,6 @@ def take_attendance(request):
     else:
         return JsonResponse({'error': 'User is not authenticated'}, status=302)
 
-    return JsonResponse({'error': 'Invalid request method.'}, status=400)
 
 @csrf_exempt
 def submit_attendance(request):

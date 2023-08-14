@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react';
 import WithRightbarLayout from './WithRightbarLayout';
 import { format } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
-import LoadingBar from 'react-top-loading-bar';
 import Skeleton from 'react-loading-skeleton';
+import LoadingBar from 'react-top-loading-bar';
 import 'react-loading-skeleton/dist/skeleton.css';
 import './ReportsST.css';
 
 export default function ReportsST() {
+  
   const navigate = useNavigate();
   const [facultyName, setFacultyName] = useState('');
   const [role, setRole] = useState('');
@@ -58,7 +59,8 @@ export default function ReportsST() {
     fetchData()
       .then(() => setIsDataFetched(true))
       .catch(() => setIsDataFetched(true));
-  }, []);
+  }, 
+  []);
 
   const handleStartDateChange = (event) => {
     setStartDate(event.target.value);
@@ -126,6 +128,7 @@ export default function ReportsST() {
 
   return (
     <WithRightbarLayout>
+      <LoadingBar progress={loadingProgress} color="#111137" height={4} />
       <div className="rightside">
         <div className="image">
           {facultyImage ? (

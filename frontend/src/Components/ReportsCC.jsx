@@ -3,9 +3,11 @@ import WithRightbarLayout from './WithRightbarLayout';
 import { format } from 'date-fns';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
+import LoadingBar from 'react-top-loading-bar';
 import './ReportsST.css';
 
 export default function ReportsST() {
+  const [loadingProgress, setLoadingProgress] = useState(0);
   const [facultyName, setFacultyName] = useState('');
   const [role, setRole] = useState('');
   const [facultyDepartment, setFacultyDepartment] = useState('');
@@ -19,6 +21,7 @@ export default function ReportsST() {
   const [selectedSubjectId, setSelectedSubjectId] = useState('');
 
   useEffect(() => {
+    setLoadingProgress(30);
     const fetchData = async () => {
       try {
         const response = await fetch('http://localhost:8000/api/dashboard-data-CC/', {
@@ -43,9 +46,10 @@ export default function ReportsST() {
         console.error('Error fetching data:', error);
       }
     };
-
     fetchData();
-  }, []);
+    setLoadingProgress(100);
+  } ,
+   []);
 
   const handleStartDateChange = (event) => {
     setStartDate(event.target.value);
@@ -121,6 +125,7 @@ export default function ReportsST() {
 
   return (
     <WithRightbarLayout>
+      <LoadingBar progress={loadingProgress} color="#111137" height={4} />
       <div className="rightside">
         <div className="image">
           {facultyImage ? (
@@ -156,12 +161,12 @@ export default function ReportsST() {
         <label htmlFor="subject">Select Class:</label>
         <select id="subject" value={selectedSubject} onChange={handleSubjectChange}>
   <option value="">Select a Class</option>
+  <option value="All subjects">All Subjects</option>
   {assignedSubjects.map((course) => (
     <option key={`${course.course_id}-${course.subject_id}`} value={course.subject}>
-      {`${course.course} ${course.semester} ${course.section} - ${course.subject}`}
+      {`${course.course} - ${course.semester} - ${course.section} - ${course.subject}`}
     </option>
   ))}
-  <option value="All subjects">All Subjects</option>
 </select>
 
         <label htmlFor="start-date">Start Date:</label>

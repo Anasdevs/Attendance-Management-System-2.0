@@ -15,6 +15,7 @@
   height: 70px;
   width: 70px;
   border-radius: 50%;
+  z-index: 0;
 }
 
 .rightside .image .faculty-info p {

@@ -68,15 +68,16 @@ export default function ReportsHOD() {
 
   const fetchDepartmentClasses = () => {
     const storedDepartment = localStorage.getItem('department');
+    const storedRole = localStorage.getItem('role'); // Get the stored role
 
-    if (!storedDepartment) {
-      alert('Faculty department not available.');
-      return;
+    if (!storedDepartment || storedRole !== 'Head Of Department(HOD)') {
+    alert('You do not have permission to access this component.');
+    navigate('/dashboard');
+    return;
     }
 
     setIsLoading(false);
 
-    // Fetch department classes based on stored department
     const url = `http://localhost:8000/api/classes-by-department/?department=${storedDepartment}`;
 
     fetch(url)

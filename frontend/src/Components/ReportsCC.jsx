@@ -21,14 +21,17 @@ export default function ReportsST() {
   const [selectedSubject, setSelectedSubject] = useState('');
   const [selectedCourseId, setSelectedCourseId] = useState('');
   const [selectedSubjectId, setSelectedSubjectId] = useState('');
+  
+  const storedRole = localStorage.getItem('role'); // Get the stored role
+
 
   useEffect(() => {
-    setLoadingProgress(30);
-    if (role !== 'Class Coordinator') {
+    if (storedRole !== 'Class Coordinator') {
       alert('You do not have permission to access this page.');
-      navigate('/dashboard');
-      return;
-      }
+      navigate('/dashboard'); 
+      return () => {};
+    }
+    setLoadingProgress(30);
     const fetchData = async () => {
       try {
         const response = await fetch('http://localhost:8000/api/dashboard-data-CC/', {
@@ -57,6 +60,9 @@ export default function ReportsST() {
     setLoadingProgress(100);
   } ,
    []);
+
+  
+   
 
   const handleStartDateChange = (event) => {
     setStartDate(event.target.value);

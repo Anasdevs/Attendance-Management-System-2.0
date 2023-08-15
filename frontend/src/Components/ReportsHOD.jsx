@@ -73,7 +73,7 @@ export default function ReportsHOD() {
     if (!storedDepartment || storedRole !== 'Head Of Department(HOD)') {
     alert('You do not have permission to access this page.');
     navigate('/dashboard');
-    return;
+    return () => {};
     }
 
     setIsLoading(false);

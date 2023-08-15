@@ -24,10 +24,16 @@ export default function ReportsST() {
   const [selectedSubject, setSelectedSubject] = useState('');
   const [selectedCourseId, setSelectedCourseId] = useState('');
   const [selectedSubjectId, setSelectedSubjectId] = useState('');
+  const storedRole = localStorage.getItem('role');
 
   useEffect(() => {
+    if (storedRole !== 'Subject Teacher') {
+      alert('You do not have permission to access this page.');
+      navigate('/dashboard');
+      return () => {};
+      }
+      setLoadingProgress(30); 
     const fetchData = async () => {
-      setLoadingProgress(30);
       try {
         const response = await fetch('http://localhost:8000/api/dashboard-data/', {
           method: 'GET',

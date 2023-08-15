@@ -466,6 +466,12 @@ def handle_logout(request):
 def get_classes_by_department(request):
     if request.method == 'GET':
         department = request.GET.get('department')
+        role = request.GET.get('role')
+        print(department)
+        print(role)
+
+        if role != 'Head Of Department(HOD)':
+            return JsonResponse({'error': 'This component is only accessible by HOD.'}, status=403)
 
         if not department:
             return JsonResponse({'error': 'Please provide a valid department.'}, status=400)

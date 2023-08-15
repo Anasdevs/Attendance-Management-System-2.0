@@ -71,7 +71,7 @@ export default function ReportsHOD() {
     const storedRole = localStorage.getItem('role'); // Get the stored role
 
     if (!storedDepartment || storedRole !== 'Head Of Department(HOD)') {
-    alert('You do not have permission to access this component.');
+    alert('You do not have permission to access this page.');
     navigate('/dashboard');
     return;
     }

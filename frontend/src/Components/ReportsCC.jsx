@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import WithRightbarLayout from './WithRightbarLayout';
 import { format } from 'date-fns';
 import Skeleton from 'react-loading-skeleton';
@@ -7,6 +8,7 @@ import LoadingBar from 'react-top-loading-bar';
 import './ReportsST.css';
 
 export default function ReportsST() {
+  const navigate = useNavigate();
   const [loadingProgress, setLoadingProgress] = useState(0);
   const [facultyName, setFacultyName] = useState('');
   const [role, setRole] = useState('');
@@ -22,6 +24,11 @@ export default function ReportsST() {
 
   useEffect(() => {
     setLoadingProgress(30);
+    if (role !== 'Class Coordinator') {
+      alert('You do not have permission to access this page.');
+      navigate('/dashboard');
+      return;
+      }
     const fetchData = async () => {
       try {
         const response = await fetch('http://localhost:8000/api/dashboard-data-CC/', {

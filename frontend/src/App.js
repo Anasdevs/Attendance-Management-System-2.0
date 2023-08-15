@@ -7,19 +7,16 @@ import Attendance from './Components/Attendance';
 import Holidays from './Components/Holidays';
 import Calendar from './Components/Calendar';
 import Profile from './Components/Profile';
-import NotFound from './Components/NotFound'
+import NotFound from './Components/NotFound';
 import ReportsST from './Components/ReportsST';
 import ReportsCC from './Components/ReportsCC';
 import ReportsHOD from './Components/ReportsHOD';
-
-import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 import './App.css';
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [role, setRole] = useState('');
 
   useEffect(() => {
     const checkSession = async () => {
@@ -29,10 +26,9 @@ const App = () => {
         });
 
         const data = await response.json();
-        const { is_authenticated, role } = data;
+        const { is_authenticated } = data;
 
         setIsAuthenticated(is_authenticated);
-        setRole(role); // Set the user's role
         setIsLoading(false);
       } catch (error) {
         console.error('Error:', error);
@@ -79,7 +75,7 @@ const App = () => {
           path="*"
           element={
             isAuthenticated ? (
-              <WithSidebar handleLogout={handleLogout} role={role} />
+              <WithSidebar handleLogout={handleLogout} />
             ) : (
               <Navigate to="/login" />
             )
@@ -90,37 +86,19 @@ const App = () => {
   );
 };
 
-const WithSidebar = ({ handleLogout, role }) => {
-  // Define the report component based on the user's role
-  let ReportComponent;
-  switch (role) {
-    case 'Head Of Department(HOD)':
-      ReportComponent = ReportsHOD;
-      break;
-    case 'Class Coordinator':
-      ReportComponent = ReportsCC;
-      break;
-    case 'Subject Teacher':
-      ReportComponent = ReportsST;
-      break;
-    default:
-      ReportComponent = ReportsST; 
-      break;
-  }
-
+const WithSidebar = ({ handleLogout }) => {
   return (
     <>
-      <Sidebar handleLogout={handleLogout} role={role} />
+      <Sidebar handleLogout={handleLogout} />
       <Routes>
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/dashboard/take-attendance/:courseId/:subjectId" element={<Attendance />} />
         <Route path="/holidays" element={<Holidays />} />
         <Route path="/calendar" element={<Calendar />} />
-        <Route path="/profile" element={<Profile handleLogout={handleLogout} />} />
-        {/* <Route path="/reports" element={<ReportComponent />} />  */}
         <Route path="/reports/hod" element={<ReportsHOD />} />
         <Route path="/reports/class-coordinator" element={<ReportsCC />} />
         <Route path="/reports/subject-teacher" element={<ReportsST />} />
+        <Route path="/profile" element={<Profile handleLogout={handleLogout} />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </>

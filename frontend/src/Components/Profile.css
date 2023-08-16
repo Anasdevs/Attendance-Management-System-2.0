@@ -160,7 +160,7 @@
     padding-left: 11%;
     padding-right: 6%;
     margin-left: -3%;
-    margin-top: 5%;
+    margin-top: 7%;
   }
 
   .profile-left {
@@ -199,12 +199,14 @@
 @media (min-width:701px) and (max-width: 1024px) {
   .profile-container {
     justify-content: space-between;
-    margin-top: 6%;
+    margin-top: 12%;
   }
-  .profile-right{
+
+  .profile-right {
     width: 100%;
     padding-bottom: 15%;
   }
+
   .profile-left {
     width: 96%;
     margin-right: 5%;

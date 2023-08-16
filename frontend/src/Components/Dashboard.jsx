@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { setFacultyInfo } from '../redux/actions';
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import { useNavigate } from 'react-router-dom';
@@ -12,6 +14,7 @@ import Sidebar from './Sidebar';
 
 
 const Dashboard = () => {
+  const dispatch = useDispatch();
   const [facultyName, setFacultyName] = useState('');
   const [role , setRole] = useState('');
   const [facultyDepartment, setFacultyDepartment] = useState('');
@@ -22,9 +25,6 @@ const Dashboard = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [loadingProgress, setLoadingProgress] = useState(0);
 
-  const handleSearch = (event) => {
-    setSearchTerm(event.target.value.toLowerCase());
-  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,9 +34,11 @@ const Dashboard = () => {
           method: 'GET',
           credentials: 'include',
         });
-
+  
         if (response.status === 200) {
           const data = await response.json();
+          dispatch(setFacultyInfo(data.faculty));
+          console.log(data)
           setFacultyName(data.faculty.name);
           setRole(data.faculty.role);
           setFacultyDepartment(data.faculty.department);
@@ -49,21 +51,23 @@ const Dashboard = () => {
         } else {
           // alert('Error occurred while fetching dashboard data.');
           window.location.reload();
-          
         }
       } finally {
         setIsDataFetched(true);
         setLoadingProgress(100); // Set the loading bar progress when data fetching is completed
       }
     };
-
-    fetchData()
-      .then(() => setIsDataFetched(true))
-      .catch(() => setIsDataFetched(true));
-  }, []);
+  
+    fetchData();
+  }, [dispatch]);
+  
 
 
   const navigate = useNavigate();
+
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value.toLowerCase());
+  };
 
   const handleTakeAttendance = (courseId, subjectId) => {
     navigate(`/dashboard/take-attendance/${courseId}/${subjectId}`);

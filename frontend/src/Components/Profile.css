@@ -1,15 +1,9 @@
-
 .profile-container {
   display: flex;
-  border: 3px solid rgb(1, 1, 30);
-  background: rgba(255, 255, 255, 0.08);
-  border-radius: 16px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  margin-top: 5%;
   backdrop-filter: blur(18.3px);
   -webkit-backdrop-filter: blur(18.3px);
-  border: 1px solid rgba(255, 255, 255, 1);
   padding: 2em;
-  min-height: 610px;
 }
 
 .profile-left {
@@ -25,7 +19,6 @@
   border: 1px solid rgba(255, 255, 255, 0.125);
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
   backdrop-filter: blur(25px) saturate(180%)
-  
 }
 
 .faculty-image {
@@ -79,7 +72,9 @@
   margin: 5px 0;
 }
 
-.dept-heading, .qualification-heading, .email-heading{
+.dept-heading,
+.qualification-heading,
+.email-heading {
   color: wheat;
   font-weight: 400;
 }
@@ -102,7 +97,7 @@
 .contact-admin-button {
   background-color: #007bff;
   position: absolute;
-  right: 8%;
+  right: 18%;
   bottom: 10%;
 }
 
@@ -110,106 +105,127 @@
   margin-left: 10px;
   background-color: #dc3545;
   position: absolute;
-  right: 25%;
+  right: 5%;
+  width: 12%;
   bottom: 10%;
 }
 
-.contact-admin-button:hover{
+.contact-admin-button:hover {
   background-color: rgb(37, 116, 181);
 }
+
 .logout-button:hover {
   background-color: rgb(199, 52, 52);
 }
 
-@media (min-width:300px) and (max-width: 400px){
+@media (min-width:300px) and (max-width: 400px) {
   .profile-container {
-    flex-direction: column; 
+    flex-direction: column;
   }
 
   .profile-left {
     width: 96%;
     margin-left: -3%;
-    margin-bottom: 20px; 
+    margin-bottom: 20px;
   }
 
   .profile-right {
     margin-left: -5%;
-    padding: 20px; 
+    padding: 20px;
     width: 95%;
     padding-bottom: 14%;
   }
+
   .logout-button {
     margin-left: 10px;
     background-color: #dc3545;
     position: absolute;
-    right: 55%;
+    right: 6%;
     bottom: 5%;
+    width: 35%;
+  }
+
+  .contact-admin-button {
+    background-color: #007bff;
+    position: absolute;
+    right: 42%;
+    bottom: 5%;
+    width: 50%;
+  }
 }
-.contact-admin-button {
-  background-color: #007bff;
-  position: absolute;
-  right: 8%;
-  bottom: 5%;
-}
-}
-@media (min-width:400px) and (max-width: 700px){
+
+@media (min-width:400px) and (max-width: 701px) {
   .profile-container {
     flex-direction: column;
-    padding-left: 8%;
+    padding-left: 11%;
     padding-right: 6%;
-    /* margin-right: -8%; */
     margin-left: -3%;
-}
+    margin-top: 7%;
+  }
 
   .profile-left {
     width: 100%;
-    margin-left: -3%;
-    margin-bottom: 20px; 
+    margin-left: -4%;
+    margin-bottom: 20px;
+    margin-top: 2%;
   }
 
   .profile-right {
     margin-left: -5%;
-    padding: 20px; 
+    padding: 20px;
     width: 100%;
     padding-bottom: 14%;
+    padding-right: 2%;
   }
+
   .logout-button {
     margin-left: 10px;
     background-color: #dc3545;
     position: absolute;
-    right: 53%;
-    width: 41%;
+    right: 6%;
+    width: 39%;
     bottom: 5%;
-}
-.contact-admin-button {
-  background-color: #007bff;
-  position: absolute;
-  right:9%;
-  bottom: 5%;
-  width: 40%;
-}
-}
-@media (min-width:700px) and (max-width: 1024px){
-  .profile-container{
-    justify-content: space-between;
   }
+
+  .contact-admin-button {
+    background-color: #007bff;
+    position: absolute;
+    right: 46%;
+    bottom: 5%;
+    width: 45%;
+  }
+}
+
+@media (min-width:701px) and (max-width: 1024px) {
+  .profile-container {
+    justify-content: space-between;
+    margin-top: 12%;
+  }
+
+  .profile-right {
+    width: 100%;
+    padding-bottom: 15%;
+  }
+
   .profile-left {
     width: 96%;
     margin-right: 5%;
   }
+
   .logout-button {
     margin-left: 10px;
     background-color: #dc3545;
     position: absolute;
-    right: 9%;
-    width: 30%;
-    bottom: 11%;
+    right: 7.5%;
+    width: 40%;
+    bottom: 8%;
+  }
+
+  .contact-admin-button {
+    background-color: #007bff;
+    position: absolute;
+    right: 7.5%;
+    bottom: 16%;
+    width: 40%;
+  }
 }
-.contact-admin-button {
-  background-color: #007bff;
-  position: absolute;
-  right:9%;
-  bottom: 5%;
-  width: 30%;
-}
-}  

@@ -38,13 +38,15 @@
   border-radius: 10px;
   background: lightgrey;
   padding: 2%;
+  margin-bottom: -1%;
 }
 
 .date{
+  position: absolute;
+  right: 3%;
   font-size: 1rem;
   font-weight: bolder;
   color: #00001a;
-  text-align: right;
   flex-grow: 1;
 }
 
@@ -78,7 +80,7 @@
 }
 
 .classInfo h1 {
-  margin-top: -5%;
+  margin-top: -3%;
   font-size: 30px;
   font-weight: bold;
   width: 100%;
@@ -267,7 +269,44 @@
   cursor: not-allowed;
   opacity: 0.7;
 }
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .attendance-rightside .image {
+    display: flex;
+    border-radius: 10px;
+    background: lightgrey;
+    padding: 2%;
+    margin-top: 4%;
+}
+  .rightside .image {
+    display: flex;
+    margin-top: 5%;
+    border-radius: 10px;
+    background-color: lightgrey;
+    padding: 2%;
+    justify-content: space-between;
+    align-items: center;
+}
+}
+
+
  @media (min-width: 500px) and (max-width: 768px) {
+  .attendance-rightside .image {
+    display: flex;
+    border-radius: 10px;
+    background: lightgrey;
+    padding: 2%;
+    margin-top: 7%;
+}
+  .rightside .image {
+    display: flex;
+    margin-top: 6%;
+    border-radius: 10px;
+    background-color: lightgrey;
+    padding: 2%;
+    justify-content: space-between;
+    align-items: center;
+}
   .classInfo h1{ 
     font-weight: bold;
     color: #333; 
@@ -281,6 +320,15 @@
  }
 
 @media (min-width: 300px) and (max-width: 500px) {
+  .rightside .image {
+    display: flex;
+    margin-top: 9%;
+    border-radius: 10px;
+    background-color: lightgrey;
+    padding: 2%;
+    justify-content: space-between;
+    align-items: center;
+}
   .attendance-rightside .image{
     margin-top: 10%;
   }

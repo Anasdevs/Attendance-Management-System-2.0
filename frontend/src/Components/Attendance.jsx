@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux'
 import { format, addDays, subDays, isToday } from 'date-fns';
 import { utcToZonedTime } from 'date-fns-tz';
 import { useParams, useNavigate } from 'react-router-dom';
@@ -18,10 +19,10 @@ export default function Attendance() {
   const zonedDate = utcToZonedTime(currentDate, timeZone);
   const formattedDate = format(zonedDate, 'EEE, dd-MMM-yyyy');
   const isCurrentDate = isToday(zonedDate);
-  const [facultyImage, setFacultyImage] = useState(null);
-  const [role, setRole] = useState('');
-  const [facultyName, setFacultyName] = useState('');
-  const [facultyDepartment, setFacultyDepartment] = useState('');
+  // const [facultyImage, setFacultyImage] = useState(null);
+  // const [role, setRole] = useState('');
+  // const [facultyName, setFacultyName] = useState('');
+  // const [facultyDepartment, setFacultyDepartment] = useState('');
   const [attendanceData, setAttendanceData] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -33,6 +34,10 @@ export default function Attendance() {
   const [isLoading, setIsLoading] = useState(false);
   const [showMarkAllAttendanceMessage, setShowMarkAllAttendanceMessage] = useState(false);
   const [focusedEno, setFocusedEno] = useState(null);
+  const facultyImage = useSelector((state) => state.faculty.image_url);
+  const facultyName = useSelector((state) => state.faculty.name);
+  const role = useSelector((state) => state.faculty.role);
+  const facultyDepartment = useSelector((state) => state.faculty.department);
 
   useEffect(() => {
     fetchData(format(currentDate, 'yyyy-MM-dd'));
@@ -51,6 +56,7 @@ export default function Attendance() {
   
       if (response.status === 200) {
         const data = await response.json();
+        console.log(data);
         setClassName(data.class_name);
         setAttendanceData(data.students);
         setIsDataFetched(true);
@@ -82,34 +88,35 @@ export default function Attendance() {
   };
   
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch('http://localhost:8000/api/dashboard-data/', {
-          method: 'GET',
-          credentials: 'include',
-        });
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await fetch('http://localhost:8000/api/dashboard-data/', {
+  //         method: 'GET',
+  //         credentials: 'include',
+  //       });
 
-        if (response.status === 200) {
-          const data = await response.json();
-          setFacultyName(data.faculty.name);
-          setRole(data.faculty.role);
-          setFacultyDepartment(data.faculty.department);
-          setFacultyImage(data.faculty.image_url);
-        } else if (response.status === 302) {
-          window.location.reload();
-        } 
-      } catch (error) {
-        window.location.reload();
-        console.error('Error:', error);
-      }
-      setLoadingProgress(100);
-    };
+  //       if (response.status === 200) {
+  //         const data = await response.json();
+  //         console.log(data);
+  //         setFacultyName(data.faculty.name);
+  //         setRole(data.faculty.role);
+  //         setFacultyDepartment(data.faculty.department);
+  //         setFacultyImage(data.faculty.image_url);
+  //       } else if (response.status === 302) {
+  //         window.location.reload();
+  //       } 
+  //     } catch (error) {
+  //       window.location.reload();
+  //       console.error('Error:', error);
+  //     }
+  //     setLoadingProgress(100);
+  //   };
 
-    fetchData()
-      .then(() => setIsDataFetched(true))
-      .catch(() => setIsDataFetched(true));
-  }, []);
+  //   fetchData()
+  //     .then(() => setIsDataFetched(true))
+  //     .catch(() => setIsDataFetched(true));
+  // }, []);
 
   const markAttendance = (eno, status) => {
     setAttendanceData((prevAttendanceData) =>

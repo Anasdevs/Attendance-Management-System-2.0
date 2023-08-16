@@ -1,29 +1,37 @@
-import React, { useState, useEffect } from 'react';
-import './Profile.css';
-import { useNavigate } from 'react-router-dom';
-import { format } from 'date-fns';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faGraduationCap, faEnvelope, faBuilding, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
-import LoadingBar from 'react-top-loading-bar';
-import Skeleton from 'react-loading-skeleton';
-import WithRightbarLayout from './WithRightbarLayout';
-
+import React, { useState, useEffect } from "react";
+import "./Profile.css";
+import { useNavigate } from "react-router-dom";
+import { format } from "date-fns";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faUser,
+  faGraduationCap,
+  faEnvelope,
+  faBuilding,
+  faSignOutAlt,
+} from "@fortawesome/free-solid-svg-icons";
+import LoadingBar from "react-top-loading-bar";
+import Skeleton from "react-loading-skeleton";
+import WithRightbarLayout from "./WithRightbarLayout";
 
 export default function Profile({ handleLogout }) {
   const navigate = useNavigate();
   const [facultyData, setFacultyData] = useState(null);
-  const today = format(new Date(), 'EEE, dd-MMM-yyyy');
+  const today = format(new Date(), "EEE, dd-MMM-yyyy");
   const [loadingProgress, setLoadingProgress] = useState(0);
 
   useEffect(() => {
     const fetchFacultyData = async () => {
       try {
-        setLoadingProgress(30); 
+        setLoadingProgress(30);
 
-        const response = await fetch('http://localhost:8000/api/faculty-profile/', {
-          method: 'GET',
-          credentials: 'include', 
-        });
+        const response = await fetch(
+          "http://localhost:8000/api/faculty-profile/",
+          {
+            method: "GET",
+            credentials: "include",
+          }
+        );
 
         if (response.status === 200) {
           const data = await response.json();
@@ -32,7 +40,7 @@ export default function Profile({ handleLogout }) {
           window.location.reload();
         }
       } catch (error) {
-        console.error('Error:', error);
+        console.error("Error:", error);
         window.location.reload();
       } finally {
         setLoadingProgress(100);
@@ -45,18 +53,18 @@ export default function Profile({ handleLogout }) {
   const onLogoutClick = async () => {
     try {
       await handleLogout();
-      navigate('/login', { replace: true });
+      navigate("/login", { replace: true });
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
     }
   };
 
   const contactAdmin = () => {
-    const adminEmail = 'attendance.msi@gmail.com'; // Replace this with the admin's email
-  
+    const adminEmail = "attendance.msi@gmail.com"; // Replace this with the admin's email
+
     // Create the mailto link
     const mailtoLink = `mailto:${adminEmail}`;
-  
+
     // Open the default email client with the mailto link
     window.location.href = mailtoLink;
   };
@@ -92,16 +100,20 @@ export default function Profile({ handleLogout }) {
           <div className="profile-right">
             <div className="profile-item">
               <h3 className="dept-heading">
-                <FontAwesomeIcon icon={faBuilding} className="icon" /> Department
+                <FontAwesomeIcon icon={faBuilding} className="icon" />{" "}
+                Department
               </h3>
               <h3 className="faculty-dept">{facultyData.department}</h3>
             </div>
             <hr />
             <div className="profile-item">
               <h3 className="qualification-heading">
-                <FontAwesomeIcon icon={faGraduationCap} className="icon" /> Qualifications
+                <FontAwesomeIcon icon={faGraduationCap} className="icon" />{" "}
+                Qualifications
               </h3>
-              <h3 className="faculty-qualification">{facultyData.qualification}</h3>
+              <h3 className="faculty-qualification">
+                {facultyData.qualification}
+              </h3>
             </div>
             <hr />
             <div className="profile-item">
@@ -113,14 +125,17 @@ export default function Profile({ handleLogout }) {
             <hr />
             <div className="profile-actions">
               <button className="contact-admin-button" onClick={contactAdmin}>
-                <FontAwesomeIcon icon={faUser} className="action-icon" /> Contact Admin
+                <FontAwesomeIcon icon={faUser} className="action-icon" />{" "}
+                Contact Admin
               </button>
               <button className="logout-button" onClick={onLogoutClick}>
-                <FontAwesomeIcon icon={faSignOutAlt} className="action-icon" /> Logout
+                <FontAwesomeIcon icon={faSignOutAlt} className="action-icon" />{" "}
+                Logout
               </button>
             </div>
           </div>
         )}
       </div>
     </WithRightbarLayout>
-  );}  
+  );
+}

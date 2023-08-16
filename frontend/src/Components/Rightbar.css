@@ -9,11 +9,10 @@
   @media(max-width: 1024px){
     .rightbar{
       width: 100%;
-      margin-top: 8%;
       margin-left: 0;
       padding-right: 0;
       padding-left: 0;
+      padding-bottom: 16%;
       background: var(--rightbar-background);
-      /* padding-bottom: 30%;rightbar */
     }
   }

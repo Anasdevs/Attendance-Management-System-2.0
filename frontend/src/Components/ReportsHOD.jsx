@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux'
 import WithRightbarLayout from './WithRightbarLayout';
 import { format } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
@@ -10,10 +11,10 @@ import './ReportsHOD.css';
 export default function ReportsHOD() {
   const navigate = useNavigate();
   const [loadingProgress, setLoadingProgress] = useState(0);
-  const [facultyName, setFacultyName] = useState('');
-  const [role, setRole] = useState('');
-  const [facultyDepartment, setFacultyDepartment] = useState('');
-  const [facultyImage, setFacultyImage] = useState(null);
+  // const [facultyName, setFacultyName] = useState('');
+  // const [role, setRole] = useState('');
+  // const [facultyDepartment, setFacultyDepartment] = useState('');
+  // const [facultyImage, setFacultyImage] = useState(null);
   const [isDataFetched, setIsDataFetched] = useState(false);
   const today = format(new Date(), 'EEE, dd-MMM-yyyy');
   const [startDate, setStartDate] = useState('');
@@ -25,46 +26,54 @@ export default function ReportsHOD() {
   const [selectedCourseId, setSelectedCourseId] = useState('');
   const [selectedClassSubjects, setSelectedClassSubjects] = useState([]);
   const [selectedSubjectId, setSelectedSubjectId] = useState('');
+  const facultyImage = useSelector((state) => state.faculty.image_url);
+  const facultyName = useSelector((state) => state.faculty.name);
+  const role = useSelector((state) => state.faculty.role);
+  const facultyDepartment = useSelector((state) => state.faculty.department);
 
 
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       // Fetch dashboard data
+  //       const response = await fetch('http://localhost:8000/api/dashboard-data/', {
+  //         method: 'GET',
+  //         credentials: 'include',
+  //       });
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // Fetch dashboard data
-        const response = await fetch('http://localhost:8000/api/dashboard-data/', {
-          method: 'GET',
-          credentials: 'include',
-        });
+  //       if (response.status === 200) {
+  //         const data = await response.json();
+  //         console.log(data);
+  //         setFacultyImage(data.faculty.image_url);
+  //         setFacultyName(data.faculty.name);
+  //         setRole(data.faculty.role);
+  //         setFacultyDepartment(data.faculty.department);
+  //       } else if (response.status === 302) {
+  //         window.location.reload();
+  //       } else {
+  //         alert('Error occurred while fetching dashboard data.');
+  //       }
+  //     } catch (error) {
+  //       alert('An error occurred while fetching dashboard data.');
+  //     }
+  //   };
 
-        if (response.status === 200) {
-          const data = await response.json();
-          setFacultyImage(data.faculty.image_url);
-          setFacultyName(data.faculty.name);
-          setRole(data.faculty.role);
-          setFacultyDepartment(data.faculty.department);
-        } else if (response.status === 302) {
-          window.location.reload();
-        } else {
-          alert('Error occurred while fetching dashboard data.');
-        }
-      } catch (error) {
-        alert('An error occurred while fetching dashboard data.');
-      }
-    };
+  //   fetchData()
+  //     .then(() => {
+  //       setIsLoading(false);
+  //       setIsDataFetched(true);
+  //       // After fetching dashboard data, make request to fetch department classes
+  //       fetchDepartmentClasses();
+  //     })
+  //     .catch(() => {
+  //       setIsLoading(false);
+  //       setIsDataFetched(true);
+  //     });
+  //     setLoadingProgress(30);
+  // }, []);
 
-    fetchData()
-      .then(() => {
-        setIsLoading(false);
-        setIsDataFetched(true);
-        // After fetching dashboard data, make request to fetch department classes
-        fetchDepartmentClasses();
-      })
-      .catch(() => {
-        setIsLoading(false);
-        setIsDataFetched(true);
-      });
-      setLoadingProgress(30);
+  useEffect (() => {
+    fetchDepartmentClasses();
   }, []);
 
   const fetchDepartmentClasses = () => {
@@ -123,16 +132,11 @@ export default function ReportsHOD() {
     
       if (selectedSubjectObject) {
         setSelectedSubjectId(selectedSubjectObject.subject_id);
-        console.log('Selected Subject ID:', selectedSubjectObject.subject_id);
       } else {
         setSelectedSubjectId(''); // Reset the selectedSubjectId if subject_id is not found
       }
     }
   };
-  
-  
-  
-  
 
   const handleStartDateChange = (event) => {
     setStartDate(event.target.value);
@@ -156,7 +160,6 @@ export default function ReportsHOD() {
       setSelectedSubject(''); // Clear the selected subject when class changes
       setSelectedCourseId(selectedClassObject.course_id); // Set the selected course ID
       setSelectedSubjectId(''); // Clear the selected subject ID
-      console.log('Selected Class Object:', selectedClassObject);
     }
   };
   

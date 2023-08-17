@@ -96,7 +96,6 @@
   cursor: pointer;
   transition: background-color 0.3s, box-shadow 0.3s;
   text-decoration: none;
-  /* Add this line to remove underline */
 }
 
 .action-button:before,
@@ -116,6 +115,10 @@
 .action-button a {
   text-decoration: none;
   color: inherit;
+}
+
+.current-date {
+  font-weight: bold;
 }
 
 .action-button:before {
@@ -189,9 +192,10 @@
     background-color: lightgrey;
   }
 
-  /* .date{
-    display: none;
-  } */
+  .current-date {
+    display: none
+  }
+
   .today-dashboard-date {
     display: none;
   }
@@ -243,24 +247,19 @@
 @media (min-width: 500px) and (max-width: 768px) {
   .table-container {
     overflow-x: auto;
-    /* Enable horizontal scrolling for small screens */
   }
 
   .table {
     width: 100%;
-    /* Make the table take full width on small screens */
   }
 
   .table th,
   .table td {
     padding: 8px 5px;
-    /* Adjust cell padding for better spacing on small screens */
     font-size: 12px;
-    /* Reduce font size for better readability on small screens */
   }
 
   .action-button {
     font-size: 10px;
-    /* Reduce font size for the action button on small screens */
   }
 }

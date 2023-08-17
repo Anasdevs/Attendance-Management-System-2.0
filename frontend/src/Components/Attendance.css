@@ -41,7 +41,7 @@
   margin-bottom: -1%;
 }
 
-.date{
+.date {
   position: absolute;
   right: 3%;
   font-size: 1rem;
@@ -52,7 +52,7 @@
 
 
 .date-navigation {
-  text-align: right; 
+  text-align: right;
   flex-grow: 1;
   margin-top: 1vw;
 
@@ -70,29 +70,29 @@
   margin-right: 10px;
 }
 
-.navigation-button:hover{
+.navigation-button:hover {
   background-color: var(--button-color-hover);
 }
 
 .classInfo {
   margin-bottom: 20px;
-  text-align: center; 
+  text-align: center;
 }
 
 .classInfo h1 {
-  margin-top: -3%;
+  margin-top: 2%;
   font-size: 30px;
   font-weight: bold;
   width: 100%;
   text-align: center !important;
-  color: #333; 
-  text-transform: uppercase; 
+  color: #333;
+  text-transform: uppercase;
   letter-spacing: 2px;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); 
-  padding: 10px; 
-  border-radius: 8px; 
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
-  transition: background-color 0.3s ease; 
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
 
   cursor: pointer;
 }
@@ -145,6 +145,10 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
+.today {
+  text-align: right;
+}
+
 .statistics-card h3 {
   font-size: 16px;
   font-weight: bold;
@@ -162,7 +166,7 @@
 .attendance-container {
   overflow-x: auto;
   max-height: calc(100vh - 250px);
-  scrollbar-width: thin; 
+  scrollbar-width: thin;
   scrollbar-color: #888888 #f0f0f0;
 }
 
@@ -202,7 +206,7 @@
   border-collapse: collapse;
 }
 
-.attendance-table thead tr th{
+.attendance-table thead tr th {
   background-color: #72787b;
   padding: 15px;
 }
@@ -214,6 +218,7 @@
   text-align: left;
   background-color: white;
 }
+
 .attendance-table input[type='checkbox'] {
   appearance: none;
   width: 18px;
@@ -243,9 +248,9 @@
 }
 
 .submit-button {
-  position:relative;
+  position: relative;
   padding: 10px 20px;
-  left:35rem;
+  left: 35rem;
   border: none;
   border-radius: 4px;
   background-color: var(--button-color);
@@ -258,13 +263,14 @@
   transform: translateX(-50%);
 }
 
-.submit-button:hover{
+.submit-button:hover {
   background-color: var(--button-color-hover);
 }
 
-.submit-button:disabled{
+.submit-button:disabled {
   cursor: not-allowed;
 }
+
 .submitting {
   cursor: not-allowed;
   opacity: 0.7;
@@ -277,7 +283,8 @@
     background: lightgrey;
     padding: 2%;
     margin-top: 4%;
-}
+  }
+
   .rightside .image {
     display: flex;
     margin-top: 5%;
@@ -286,18 +293,19 @@
     padding: 2%;
     justify-content: space-between;
     align-items: center;
-}
+  }
 }
 
 
- @media (min-width: 500px) and (max-width: 768px) {
+@media (min-width: 501px) and (max-width: 768px) {
   .attendance-rightside .image {
     display: flex;
     border-radius: 10px;
     background: lightgrey;
     padding: 2%;
     margin-top: 7%;
-}
+  }
+
   .rightside .image {
     display: flex;
     margin-top: 6%;
@@ -306,20 +314,25 @@
     padding: 2%;
     justify-content: space-between;
     align-items: center;
-}
-  .classInfo h1{ 
-    font-weight: bold;
-    color: #333; 
-    padding-top:5%;
-    margin-top: -10%;
-    text-transform: uppercase; 
-    letter-spacing: 2px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); 
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
   }
- }
 
-@media (min-width: 300px) and (max-width: 500px) {
+  .classInfo h1 {
+    font-weight: bold;
+    color: #333;
+    padding-top: 5%;
+    margin-top: -10%;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+}
+
+@media (min-width: 300px) and (max-width: 501px) {
+  .classinfo h1 {
+    margin-top: 0;
+  }
+
   .rightside .image {
     display: flex;
     margin-top: 9%;
@@ -328,16 +341,23 @@
     padding: 2%;
     justify-content: space-between;
     align-items: center;
-}
-  .attendance-rightside .image{
+  }
+
+  .attendance-rightside .image {
     margin-top: 10%;
   }
-  .date{
+
+  .date {
     font-size: 1rem;
     font-weight: bolder;
     color: #00001a;
-    text-align: right;
+    position: absolute;
+    right: 0%;
+    top: 25%;
     flex-grow: 1;
   }
-}
 
+  .today {
+    display: none;
+  }
+}

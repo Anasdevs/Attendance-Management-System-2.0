@@ -678,13 +678,6 @@ def dashboard_data_CC(request):
             if faculty_image_url:
                 faculty_image_url = request.build_absolute_uri(faculty_image_url)
 
-            faculty_data = {
-                'name': faculty.faculty_name,
-                'email': faculty.faculty_email,
-                'image_url': faculty_image_url,
-                'role': faculty.role,
-                'department': faculty.department
-            }
             if faculty.role == 'Class Coordinator':
                 assigned_subjects = Subject.objects.filter()
             else:
@@ -708,7 +701,6 @@ def dashboard_data_CC(request):
                         subjects_list.append(class_info)
 
             response_data = {
-                'faculty': faculty_data,
                 'classes': subjects_list 
         }
 

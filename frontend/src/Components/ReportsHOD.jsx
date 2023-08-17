@@ -11,10 +11,6 @@ import './ReportsHOD.css';
 export default function ReportsHOD() {
   const navigate = useNavigate();
   const [loadingProgress, setLoadingProgress] = useState(0);
-  // const [facultyName, setFacultyName] = useState('');
-  // const [role, setRole] = useState('');
-  // const [facultyDepartment, setFacultyDepartment] = useState('');
-  // const [facultyImage, setFacultyImage] = useState(null);
   const [isDataFetched, setIsDataFetched] = useState(false);
   const today = format(new Date(), 'EEE, dd-MMM-yyyy');
   const [startDate, setStartDate] = useState('');
@@ -30,47 +26,6 @@ export default function ReportsHOD() {
   const facultyName = useSelector((state) => state.faculty.name);
   const role = useSelector((state) => state.faculty.role);
   const facultyDepartment = useSelector((state) => state.faculty.department);
-
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       // Fetch dashboard data
-  //       const response = await fetch('http://localhost:8000/api/dashboard-data/', {
-  //         method: 'GET',
-  //         credentials: 'include',
-  //       });
-
-  //       if (response.status === 200) {
-  //         const data = await response.json();
-  //         console.log(data);
-  //         setFacultyImage(data.faculty.image_url);
-  //         setFacultyName(data.faculty.name);
-  //         setRole(data.faculty.role);
-  //         setFacultyDepartment(data.faculty.department);
-  //       } else if (response.status === 302) {
-  //         window.location.reload();
-  //       } else {
-  //         alert('Error occurred while fetching dashboard data.');
-  //       }
-  //     } catch (error) {
-  //       alert('An error occurred while fetching dashboard data.');
-  //     }
-  //   };
-
-  //   fetchData()
-  //     .then(() => {
-  //       setIsLoading(false);
-  //       setIsDataFetched(true);
-  //       // After fetching dashboard data, make request to fetch department classes
-  //       fetchDepartmentClasses();
-  //     })
-  //     .catch(() => {
-  //       setIsLoading(false);
-  //       setIsDataFetched(true);
-  //     });
-  //     setLoadingProgress(30);
-  // }, []);
 
   useEffect (() => {
     fetchDepartmentClasses();
@@ -118,6 +73,11 @@ export default function ReportsHOD() {
       setLoadingProgress(100);
 
   };
+
+  const redirectSubjectTeacher = () => {
+    navigate('/reports/subject-teacher')
+  }
+
   const handleSubjectChange = (event) => {
     const selectedSubjectValue = event.target.value;
     setSelectedSubject(selectedSubjectValue);
@@ -265,6 +225,14 @@ export default function ReportsHOD() {
         </div>
       </div>
       <hr />
+      <div className="to-subject-teacher" style={{float:'right'}}>
+          <p>
+             Download reports as subject teacher{' '}
+                  <button className="link-button" onClick={redirectSubjectTeacher} >
+                    Subject Reports
+                  </button>
+                </p>
+      </div>
       <div className="filters-container">
   <label htmlFor="class">Select Class:</label>
   <select id="class" value={selectedClass} onChange={handleClassChange}>

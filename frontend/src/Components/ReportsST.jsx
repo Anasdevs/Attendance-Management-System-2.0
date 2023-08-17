@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux'
 import WithRightbarLayout from './WithRightbarLayout';
 import { format } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
@@ -10,10 +11,6 @@ import './ReportsST.css';
 export default function ReportsST() {
   
   const navigate = useNavigate();
-  const [facultyName, setFacultyName] = useState('');
-  const [role, setRole] = useState('');
-  const [facultyDepartment, setFacultyDepartment] = useState('');
-  const [facultyImage, setFacultyImage] = useState(null);
   const [isDataFetched, setIsDataFetched] = useState(false);
   const today = format(new Date(), 'EEE, dd-MMM-yyyy');
   const [loadingProgress, setLoadingProgress] = useState(0);
@@ -25,13 +22,12 @@ export default function ReportsST() {
   const [selectedCourseId, setSelectedCourseId] = useState('');
   const [selectedSubjectId, setSelectedSubjectId] = useState('');
   const storedRole = localStorage.getItem('role');
+  const facultyImage = useSelector((state) => state.faculty.image_url);
+  const facultyName = useSelector((state) => state.faculty.name);
+  const role = useSelector((state) => state.faculty.role);
+  const facultyDepartment = useSelector((state) => state.faculty.department);
 
   useEffect(() => {
-    if (storedRole !== 'Subject Teacher') {
-      alert('You do not have permission to access this page.');
-      navigate('/dashboard');
-      return () => {};
-      }
       setLoadingProgress(30); 
     const fetchData = async () => {
       try {
@@ -42,10 +38,6 @@ export default function ReportsST() {
 
         if (response.status === 200) {
           const data = await response.json();
-          setFacultyName(data.faculty.name);
-          setRole(data.faculty.role);
-          setFacultyDepartment(data.faculty.department);
-          setFacultyImage(data.faculty.image_url);
           setAssignedSubjects(data.classes); 
           console.log(data);
           setIsLoading(false);
@@ -167,9 +159,9 @@ export default function ReportsST() {
       </div>
       <hr />
       <div className="filters-container">
-        <label htmlFor="subject">Select Class:</label>
+        <label htmlFor="subject">Select Subject:</label>
         <select id="subject" value={selectedSubject} onChange={handleSubjectChange}>
-        <option value="">Select a Class</option>
+        <option value="">Select a Subject</option>
        {assignedSubjects.map((course) => (
         <option key={`${course.course_id}-${course.subject_id}`} value={course.subject}>
         {`${course.course} - ${course.semester} - ${course.section} - ${course.subject}`}

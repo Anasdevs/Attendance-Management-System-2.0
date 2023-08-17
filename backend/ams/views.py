@@ -466,7 +466,6 @@ def handle_logout(request):
 def get_classes_by_department(request):
     if request.method == 'GET':
         department = request.GET.get('department')
-        print(department)
         if not department:
             return JsonResponse({'error': 'Please provide a valid department.'}, status=400)
 
@@ -521,7 +520,6 @@ def generate_attendance_report_hod(request):
         end_date = request.GET.get('endDate')
         course_id = request.GET.get('courseId')
         subject_id = request.GET.get('subjectId')
-        print(course_id)
         
         if not all([start_date, end_date]):
             return JsonResponse({'error': 'Please provide valid start date and end date.'}, status=400)
@@ -678,13 +676,6 @@ def dashboard_data_CC(request):
             if faculty_image_url:
                 faculty_image_url = request.build_absolute_uri(faculty_image_url)
 
-            faculty_data = {
-                'name': faculty.faculty_name,
-                'email': faculty.faculty_email,
-                'image_url': faculty_image_url,
-                'role': faculty.role,
-                'department': faculty.department
-            }
             if faculty.role == 'Class Coordinator':
                 assigned_subjects = Subject.objects.filter()
             else:
@@ -708,7 +699,6 @@ def dashboard_data_CC(request):
                         subjects_list.append(class_info)
 
             response_data = {
-                'faculty': faculty_data,
                 'classes': subjects_list 
         }
 

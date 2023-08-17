@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
 import WithRightbarLayout from './WithRightbarLayout';
 import { format } from 'date-fns';
@@ -10,10 +11,6 @@ import './ReportsST.css';
 export default function ReportsST() {
   const navigate = useNavigate();
   const [loadingProgress, setLoadingProgress] = useState(0);
-  const [facultyName, setFacultyName] = useState('');
-  const [role, setRole] = useState('');
-  const [facultyDepartment, setFacultyDepartment] = useState('');
-  const [facultyImage, setFacultyImage] = useState(null);
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -21,6 +18,11 @@ export default function ReportsST() {
   const [selectedSubject, setSelectedSubject] = useState('');
   const [selectedCourseId, setSelectedCourseId] = useState('');
   const [selectedSubjectId, setSelectedSubjectId] = useState('');
+  const facultyImage = useSelector((state) => state.faculty.image_url);
+  const facultyName = useSelector((state) => state.faculty.name);
+  const role = useSelector((state) => state.faculty.role);
+  const facultyDepartment = useSelector((state) => state.faculty.department);
+
   
   const storedRole = localStorage.getItem('role'); // Get the stored role
 
@@ -41,10 +43,6 @@ export default function ReportsST() {
 
         if (response.status === 200) {
           const data = await response.json();
-          setFacultyName(data.faculty.name);
-          setRole(data.faculty.role);
-          setFacultyDepartment(data.faculty.department);
-          setFacultyImage(data.faculty.image_url);
           setAssignedSubjects(data.classes);
           setSelectedCourseId(data.classes[0]?.course_id || ''); // Set the selected course ID
         } else if (response.status === 302) {
@@ -61,8 +59,11 @@ export default function ReportsST() {
   } ,
    []);
 
+
+   const redirectSubjectTeacher = () => {
+    navigate('/reports/subject-teacher')
+  }
   
-   
 
   const handleStartDateChange = (event) => {
     setStartDate(event.target.value);
@@ -170,6 +171,14 @@ export default function ReportsST() {
         </div>
       </div>
       <hr />
+      <div className="to-subject-teacher" style={{float:'right'}}>
+          <p>
+             Download reports as subject teacher{' '}
+                  <button className="link-button" onClick={redirectSubjectTeacher} >
+                    Subject Reports
+                  </button>
+                </p>
+      </div>
       <div className="filters-container">
         <label htmlFor="subject">Select Class:</label>
         <select id="subject" value={selectedSubject} onChange={handleSubjectChange}>

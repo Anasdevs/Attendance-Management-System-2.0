@@ -16,6 +16,7 @@
     "react-scripts": "^5.0.1",
     "react-top-loading-bar": "^2.3.1",
     "redux": "^4.2.1",
+    "redux-persist": "^6.0.0",
     "redux-thunk": "^2.4.2"
   },
   "scripts": {

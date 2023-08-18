@@ -158,7 +158,7 @@ export default function ReportsST() {
         </div>
       </div>
       <hr />
-      <div className="filters-container">
+      <div className="ST-filters-container">
         <label htmlFor="subject">Select Subject:</label>
         <select id="subject" value={selectedSubject} onChange={handleSubjectChange}>
         <option value="">Select a Subject</option>

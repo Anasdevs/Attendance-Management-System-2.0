@@ -179,7 +179,7 @@ export default function ReportsST() {
                   </button>
                 </p>
       </div>
-      <div className="filters-container">
+      <div className="CC-filters-container">
         <label htmlFor="subject">Select Class:</label>
         <select id="subject" value={selectedSubject} onChange={handleSubjectChange}>
   <option value="">Select a Class</option>

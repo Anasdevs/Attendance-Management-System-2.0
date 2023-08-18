@@ -1,42 +1,91 @@
-
 .filters-container {
-    position: relative;
-    margin: 5% auto;
-    text-align: center;
+  position: relative;
+  margin: 5% auto;
+  text-align: center;
+  display: grid;
+  justify-items: start;
+}
+
+.filters-container label {
+  font-weight: bold;
+  position: relative;
+  left: 1%;
+  margin-left: 10px;
+}
+
+.filters-container input[type="date"] {
+  width: 48%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 16px;
+  margin-left: 15px;
+}
+
+.filters-container select {
+  width: 50%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 16px;
+  margin-left: 15px;
+}
+
+.filters-container button.download-button {
+  background-color: var(--button-color);
+  color: #fff;
+  padding: 10px 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 40%;
+  left: 3%;
+  position: absolute;
+  top: 100%;
+  margin-left: 20px;
+}
+
+.filters-container button.download-button:hover {
+  background-color: var(--button-color-hover);
+}
+
+.link-button {
+  color: red;
+}
+
+.to-subject-teacher {
+  display: flex;
+  position: absolute;
+  margin-top: 1%;
+  right: 1%;
+  background-color: var(--button-color-hover);
+  color: white;
+  border: 83%;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-radius: 27px;
+  top: 22%;
+}
+
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .to-subject-teacher {
+    margin-top: 6%;
   }
-  
-  .filters-container label {
-    font-weight: bold;
-    margin-left: 10px;
+
+  .filters-container {
+    margin-top: 8%;
+    margin-bottom: 10%;
   }
-  
-  .filters-container input[type="date"] {
-    width: 200px;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    margin-bottom: 16px;
-    margin-left: 15px;
+}
+
+@media (min-width: 500px) and (max-width: 768px) {
+  .to-subject-teacher {
+    margin-top: 5%;
   }
-  .filters-container select {
-    width: 190px;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    margin-bottom: 16px;
-    margin-left: 15px;
+
+  .filters-container {
+    margin-top: 17%;
+    margin-bottom: 10%;
   }
-  
-  .filters-container button.download-button {
-    background-color: var(--button-color);
-    color: #fff;
-    padding: 10px 10px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-left: 20px;
-  }
-  
-  .filters-container button.download-button:hover{
-    background-color: var(--button-color-hover);
-  }
+}

@@ -224,7 +224,6 @@ export default function ReportsHOD() {
           </div>
         </div>
       </div>
-      <hr />
       <div className="to-subject-teacher" style={{float:'right'}}>
           <p>
              Download reports as subject teacher{' '}

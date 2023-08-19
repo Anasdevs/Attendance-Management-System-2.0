@@ -17,8 +17,9 @@ The primary purpose of implementing the Attendance Management System is to simpl
 ##
 
 > __Frontend and Backend__ by `Anas Saifi & Amit`
->
-> __Android App__ by `Amanjot Singh`
+> __Progressive Web App(PWA)__ by `Anas Saifi`
+
+
 
 ## Installation
 Make sure you have node.js and python installed on your system. 

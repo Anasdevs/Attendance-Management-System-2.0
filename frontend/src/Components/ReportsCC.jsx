@@ -51,9 +51,11 @@ export default function ReportsST() {
           alert('Error occurred while fetching dashboard data.');
         }
       } catch (error) {
-        console.error('Error fetching data:', error);
+        location.reload();
+        alert('Some error occurred');
       }
-    };
+      }
+    
     fetchData();
     setLoadingProgress(100);
   } ,

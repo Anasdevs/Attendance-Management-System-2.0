@@ -52,7 +52,7 @@ export default function ReportsHOD() {
           try {
             const errorResponse = await response.json();
             errorMessage = errorResponse.error || 'An error occurred while fetching class data.';
-          } catch (error) {
+          } catch(error) {
             errorMessage = 'An error occurred while fetching class data.';
           }
           throw new Error(errorMessage);
@@ -64,15 +64,15 @@ export default function ReportsHOD() {
         console.log(data);
         setDepartmentClasses(data.classes);
       })
-      .catch((error) => {
-        alert(error.message);
+      .catch((error) => { // Add parentheses here
+        location.reload();
+        alert('Some error occurred');
       })
       .finally(() => {
         setIsLoading(false);
+        setLoadingProgress(100);
       });
-      setLoadingProgress(100);
-
-  };
+    };
 
   const redirectSubjectTeacher = () => {
     navigate('/reports/subject-teacher')
@@ -160,7 +160,7 @@ export default function ReportsHOD() {
           try {
             const errorResponse = await response.json();
             errorMessage = errorResponse.error || 'An error occurred while generating the report.';
-          } catch (error) {
+          } catch(error) {
             errorMessage = 'An error occurred while generating the report.';
           }
           throw new Error(errorMessage);
@@ -224,6 +224,7 @@ export default function ReportsHOD() {
           </div>
         </div>
       </div>
+      <hr />
       <div className="to-subject-teacher" style={{float:'right'}}>
           <p>
              Download reports as subject teacher{' '}

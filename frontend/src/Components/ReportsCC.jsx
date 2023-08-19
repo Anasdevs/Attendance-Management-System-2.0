@@ -51,9 +51,11 @@ export default function ReportsST() {
           alert('Error occurred while fetching dashboard data.');
         }
       } catch (error) {
-        console.error('Error fetching data:', error);
+        location.reload();
+        alert('Some error occurred');
       }
-    };
+      }
+    
     fetchData();
     setLoadingProgress(100);
   } ,
@@ -179,7 +181,7 @@ export default function ReportsST() {
                   </button>
                 </p>
       </div>
-      <div className="CC-filters-container">
+      <div className="filters-container">
         <label htmlFor="subject">Select Class:</label>
         <select id="subject" value={selectedSubject} onChange={handleSubjectChange}>
   <option value="">Select a Class</option>

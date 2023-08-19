@@ -47,6 +47,9 @@ export default function ReportsST() {
           alert('Error occurred while fetching dashboard data.');
           setIsLoading(false);
         }
+      }catch (error) {
+        location.reload();
+        alert('Some error occurred');
       } finally {
         setIsDataFetched(true);
         setLoadingProgress(100);
@@ -158,7 +161,7 @@ export default function ReportsST() {
         </div>
       </div>
       <hr />
-      <div className="ST-filters-container">
+      <div className="filters-container">
         <label htmlFor="subject">Select Subject:</label>
         <select id="subject" value={selectedSubject} onChange={handleSubjectChange}>
         <option value="">Select a Subject</option>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Offline Page</title>
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background-color: #f0f0f0;
+      position: absolute;
+      text-align: center;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      margin: 0;
+      padding: 50px;
+    }
+    h1 {
+      color: #333;
+    }
+    p {
+      color: #666;
+    }
+    img {
+      width: 150px;
+    }
+  </style>
+</head>
+<body>
+  <img id="offlineImage" alt="offline">
+  <h1>You're offline</h1>
+  <p>Connect to the internet to continue using ams</p>
+  <p>Press Ctrl + R to reload the page</p>
+  <script>
+    window.onload = () => {
+      caches.match('/offlinelogo.svg')
+        .then(response => {
+          if (response) {
+            response.blob().then(blob => {
+              const url = URL.createObjectURL(blob);
+              document.getElementById('offlineImage').src = url;
+            });
+          }
+        });
+    };
+  </script>
+</body>
+</html>

@@ -6,9 +6,17 @@ The Attendance Management System has been specifically designed to automate and 
 ## Purpose
 The primary purpose of implementing the Attendance Management System is to simplify and enhance the attendance tracking process. By adopting this system, we aim to replace the tedious and error-prone manual methods of attendance management with an automated and efficient solution.
 
+## Features
+- Digital attendance tracking and recording.
+- Streamlined attendance monitoring and analysis.
+- Automation of attendance management processes.
+- Faculty can download attendance reports.
+- PWA (Progressive Web App) functionality for easy installation on user's devices.
+
+
 ##
 
-> __Frontend and Backend__ by `Anas Saifi`
+> __Frontend and Backend__ by `Anas Saifi & Amit`
 >
 > __Android App__ by `Amanjot Singh`
 

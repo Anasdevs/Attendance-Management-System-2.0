@@ -23,15 +23,15 @@ export default function ReportsST() {
   const role = useSelector((state) => state.faculty.role);
   const facultyDepartment = useSelector((state) => state.faculty.department);
 
-  
+
   const storedRole = localStorage.getItem('role'); // Get the stored role
 
 
   useEffect(() => {
     if (storedRole !== 'Class Coordinator') {
       alert('You do not have permission to access this page.');
-      navigate('/dashboard'); 
-      return () => {};
+      navigate('/dashboard');
+      return () => { };
     }
     setLoadingProgress(30);
     const fetchData = async () => {
@@ -54,18 +54,18 @@ export default function ReportsST() {
         location.reload();
         alert('Some error occurred');
       }
-      }
-    
+    }
+
     fetchData();
     setLoadingProgress(100);
-  } ,
-   []);
+  },
+    []);
 
 
-   const redirectSubjectTeacher = () => {
+  const redirectSubjectTeacher = () => {
     navigate('/reports/subject-teacher')
   }
-  
+
 
   const handleStartDateChange = (event) => {
     setStartDate(event.target.value);
@@ -172,26 +172,25 @@ export default function ReportsST() {
           </div>
         </div>
       </div>
-      <hr />
-      <div className="to-subject-teacher" style={{float:'right'}}>
-          <p>
-             Download reports as subject teacher{' '}
-                  <button className="link-button" onClick={redirectSubjectTeacher} >
-                    Subject Reports
-                  </button>
-                </p>
+      <div className="to-subject-teacher" style={{ float: 'right' }}>
+        <p>
+          Download reports as subject teacher{' '}
+          <button className="link-button" onClick={redirectSubjectTeacher} >
+            Subject Reports
+          </button>
+        </p>
       </div>
       <div className="CC-filters-container">
         <label htmlFor="subject">Select Class:</label>
         <select id="subject" value={selectedSubject} onChange={handleSubjectChange}>
-  <option value="">Select a Class</option>
-  <option value="All subjects">All Subjects</option>
-  {assignedSubjects.map((course) => (
-    <option key={`${course.course_id}-${course.subject_id}`} value={course.subject}>
-      {`${course.course} - ${course.semester} - ${course.section} - ${course.subject}`}
-    </option>
-  ))}
-</select>
+          <option value="">Select a Class</option>
+          <option value="All subjects">All Subjects</option>
+          {assignedSubjects.map((course) => (
+            <option key={`${course.course_id}-${course.subject_id}`} value={course.subject}>
+              {`${course.course} - ${course.semester} - ${course.section} - ${course.subject}`}
+            </option>
+          ))}
+        </select>
 
         <label htmlFor="start-date">Start Date:</label>
         <input type="date" id="start-date" value={startDate} onChange={handleStartDateChange} />

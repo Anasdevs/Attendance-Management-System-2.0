@@ -48,12 +48,12 @@ export default function Attendance() {
       const timeZone = 'Asia/Kolkata';
       const zonedDate = utcToZonedTime(date, timeZone);
       const formattedDate = format(zonedDate, 'yyyy-MM-dd');
-  
+
       const response = await fetch(`http://localhost:8000/api/take-attendance/?course_id=${courseId}&subject_id=${subjectId}&date=${formattedDate}`, {
         method: 'GET',
         credentials: 'include',
       });
-  
+
       if (response.status === 200) {
         const data = await response.json();
         console.log(data);
@@ -72,12 +72,12 @@ export default function Attendance() {
         setClassName("Class Name Not Found");
         setAttendanceData([]);
         setIsDataFetched(true);
-      } else if(response.status===500){
+      } else if (response.status === 500) {
         navigate('/dashboard');
-      }else {
+      } else {
         window.location.reload();
         alert('Error occurred while fetching student records.');
-        
+
       }
     } catch (error) {
       console.error('Error:', error);
@@ -86,7 +86,7 @@ export default function Attendance() {
     }
     setLoadingProgress(100);
   };
-  
+
 
   const markAttendance = (eno, status) => {
     setAttendanceData((prevAttendanceData) =>
@@ -269,10 +269,10 @@ export default function Attendance() {
       alert('Please select both the start date and end date to download the report.');
       return;
     }
-  
+
     setIsLoading(true);
     const url = `http://localhost:8000/api/attendance/reports/?startDate=${startDate}&endDate=${endDate}&courseId=${courseId}`;
-    
+
     fetch(url)
       .then(async (response) => {
         if (!response.ok) {
@@ -289,12 +289,12 @@ export default function Attendance() {
       })
       .then((blob) => {
         const blobUrl = URL.createObjectURL(blob);
-  
+
         // Create a temporary anchor element
         const anchor = document.createElement('a');
         anchor.href = blobUrl;
         anchor.download = `attendance_report_${startDate}_${endDate}.csv`;
-        
+
         // Programmatically trigger the download
         anchor.click();
         URL.revokeObjectURL(blobUrl);
@@ -306,146 +306,146 @@ export default function Attendance() {
         setIsLoading(false);
       });
   };
-  
+
 
   return (
     <WithRightbarLayout>
-    <div className="page-container">
-      <LoadingBar progress={loadingProgress} color="#111137" height={4} />
-      {showMarkAllAttendanceMessage && (
-        <div className="message-container">
-          <div className="message-popup">
-            <p>Please mark the attendance of all students.</p>
-          </div>
-        </div>
-      )}
-      <div className="attendance-rightside">
-        <div className="image">
-          {facultyImage ? (
-            <img src={facultyImage} alt="Faculty" />
-          ) : (
-            <Skeleton circle height={70} width={70} />
-          )}
-          <div className="faculty-info">
-            {facultyName ? (
-              <p className="faculty-name">{facultyName}</p>
-            ) : (
-              <Skeleton width={150} />
-            )}
-            {role ? (
-              <p className="faculty-role">{role}</p>
-            ) : (
-              <Skeleton width={100} />
-            )}
-            {facultyDepartment ? (
-              <p className="faculty-department">{facultyDepartment}</p>
-            ) : (
-              <Skeleton count={1} />
-            )}
-          </div>
-          <div className="date">
-            {isCurrentDate && <div className="today-date">Today</div>}
-            <div className="today-date">{formattedDate}</div>
-            <div className="date-navigation">
-              <button className="navigation-button" onClick={navigatePreviousDay}>
-                &lt; Prev
-              </button>
-              {!isCurrentDate && (
-                <button className="navigation-button" onClick={navigateNextDay}>
-                  Next &gt;
-                </button>
-              )}
+      <div className="page-container">
+        <LoadingBar progress={loadingProgress} color="#111137" height={4} />
+        {showMarkAllAttendanceMessage && (
+          <div className="message-container">
+            <div className="message-popup">
+              <p>Please mark the attendance of all students.</p>
             </div>
           </div>
-        </div>
-        <hr />
-        <div className="classInfo">
-          <h1>{className}</h1>
-        </div>
-        {isSubmitted && (
-          <div className="success-message">Attendance has been successfully submitted!</div>
         )}
-        <div className="statistics-container">
-        <div className="statistics-card" style={{ background: `linear-gradient(to right, #7e7c80, #97959a ${totalStudentsPercentage}%, transparent 0%)` }}>
-          <h3>Total Students</h3>
-          <p className="statistics-value">{attendanceData.length}</p>
-        </div>
-        <div className="statistics-card" style={{ background: presentColor }}>
-          <h3>Total Present</h3>
-          <p className="statistics-value">{getTotalPresent()}</p>
-        </div>
-        <div className="statistics-card" style={{ background: absentColor }}>
-          <h3>Total Absent</h3>
-          <p className="statistics-value">{getTotalAbsent()}</p>
-        </div>
-      </div>
-        <div className="attendance-container">
-        <div className="table-description">
-            <p>
-              Use keyboard shortcuts: <strong>P</strong> for present, <strong>A</strong> for absent, <strong>U</strong> to move up, <strong>D</strong> to move down.
-            </p>
-          </div>
-          <table className="attendance-table">
-            <thead>
-              <tr>
-                <th>Enrollment No.</th>
-                <th>Student Name</th>
-                <th>Attendance</th>
-              </tr>
-            </thead>
-            {isDataFetched ? (
-            <tbody>
-              {attendanceData.map((student) => (
-                <tr key={student.enrolment_no}id={`attendance-row-${student.enrolment_no}`}
-                className={focusedEno === student.enrolment_no ? 'highlighted' : ''}>
-                  <td>{student.enrolment_no}</td>
-                  <td>{student.name}</td>
-                  <td>
-                    <input
-                      id={`attendance-input-${student.enrolment_no}`}
-                      type="checkbox"
-                      checked={student.attendance__status === 'Present'}
-                      onChange={() =>
-                        markAttendance(
-                          student.enrolment_no,
-                          student.attendance__status === 'Present' ? 'Absent' : 'Present'
-                        )
-                      }
-                      onKeyPress={(event) => handleKeyPress(event, student.enrolment_no)}
-                      data-status={student.attendance__status ? student.attendance__status : 'none'}
-                      onFocus={() => setFocusedEno(student.enrolment_no)}
-                      onBlur={() => setFocusedEno(null)}
-                    />
-                  </td>
-                </tr>
-              ))}
-              {attendanceData.length === 0 && (
-                <tr>
-                  <td colSpan={3} style={{ textAlign: 'center' }}>
-                    No Records Found
-                  </td>
-                </tr>
+        <div className="attendance-rightside">
+          <div className="image">
+            {facultyImage ? (
+              <img src={facultyImage} alt="Faculty" />
+            ) : (
+              <Skeleton circle height={70} width={70} />
+            )}
+            <div className="faculty-info">
+              {facultyName ? (
+                <p className="faculty-name">{facultyName}</p>
+              ) : (
+                <Skeleton width={150} />
               )}
-            </tbody>
-          ) : (
-            <tbody>
-              <tr>
-                <td colSpan={3}>
-                  <Skeleton count={5} height={40} />
-                </td>
-              </tr>
-            </tbody>
+              {role ? (
+                <p className="faculty-role">{role}</p>
+              ) : (
+                <Skeleton width={100} />
+              )}
+              {facultyDepartment ? (
+                <p className="faculty-department">{facultyDepartment}</p>
+              ) : (
+                <Skeleton count={1} />
+              )}
+            </div>
+            <div className="AT-date">
+              {isCurrentDate && <div className="today">Today</div>}
+              <div className="today-date">{formattedDate}</div>
+              <div className="date-navigation">
+                <button className="navigation-button" onClick={navigatePreviousDay}>
+                  &lt; Prev
+                </button>
+                {!isCurrentDate && (
+                  <button className="navigation-button" onClick={navigateNextDay}>
+                    Next &gt;
+                  </button>
+                )}
+              </div>
+            </div>
+          </div>
+          <div className="AT-classInfo">
+            <h1>{className}</h1>
+          </div>
+          {isSubmitted && (
+            <div className="success-message">Attendance has been successfully submitted!</div>
           )}
-        </table>
+          <div className="statistics-container">
+            <div className="statistics-card" style={{ background: `linear-gradient(to right, #7e7c80, #97959a ${totalStudentsPercentage}%, transparent 0%)` }}>
+              <h3>Total Students</h3>
+              <p className="statistics-value">{attendanceData.length}</p>
+            </div>
+            <div className="statistics-card" style={{ background: presentColor }}>
+              <h3>Total Present</h3>
+              <p className="statistics-value">{getTotalPresent()}</p>
+            </div>
+            <div className="statistics-card" style={{ background: absentColor }}>
+              <h3>Total Absent</h3>
+              <p className="statistics-value">{getTotalAbsent()}</p>
+            </div>
+          </div>
+          <div className="attendance-container">
+            <div className="table-description">
+              <p>
+                Use keyboard shortcuts: <strong>P</strong> for present, <strong>A</strong> for absent, <strong>U</strong> to move up, <strong>D</strong> to move down.
+              </p>
+            </div>
+            <table className="attendance-table">
+              <thead>
+                <tr>
+                  <th>Enrollment No.</th>
+                  <th>Student Name</th>
+                  <th>Attendance</th>
+                </tr>
+              </thead>
+              {isDataFetched ? (
+                <tbody>
+                  {attendanceData.map((student) => (
+                    <tr key={student.enrolment_no} id={`attendance-row-${student.enrolment_no}`}
+                      className={focusedEno === student.enrolment_no ? 'highlighted' : ''}>
+                      <td>{student.enrolment_no}</td>
+                      <td>{student.name}</td>
+                      <td>
+                        <input
+                          id={`attendance-input-${student.enrolment_no}`}
+                          type="checkbox"
+                          checked={student.attendance__status === 'Present'}
+                          onChange={() =>
+                            markAttendance(
+                              student.enrolment_no,
+                              student.attendance__status === 'Present' ? 'Absent' : 'Present'
+                            )
+                          }
+                          onKeyPress={(event) => handleKeyPress(event, student.enrolment_no)}
+                          data-status={student.attendance__status ? student.attendance__status : 'none'}
+                          onFocus={() => setFocusedEno(student.enrolment_no)}
+                          onBlur={() => setFocusedEno(null)}
+                        />
+                      </td>
+                    </tr>
+                  ))}
+                  {attendanceData.length === 0 && (
+                    <tr>
+                      <td colSpan={3} style={{ textAlign: 'center' }}>
+                        No Records Found
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              ) : (
+                <tbody>
+                  <tr>
+                    <td colSpan={3}>
+                      <Skeleton count={5} height={40} />
+                    </td>
+                  </tr>
+                </tbody>
+              )}
+            </table>
+          </div>
+          <button
+            className={`submit-button${isSubmitting ? ' submitting' : ''}`}
+            onClick={handleSubmitAttendance}
+            disabled={attendanceData.length === 0 || className === 'Class Name Not Found' || isSubmitting}
+          >
+            {isSubmitting ? 'Submitting...' : 'Submit Attendance'}
+          </button>
+        </div>
       </div>
-      <button
-      className={`submit-button${isSubmitting ? ' submitting' : ''}`}
-      onClick={handleSubmitAttendance}
-      disabled={attendanceData.length === 0 || className === 'Class Name Not Found' || isSubmitting}
-    >
-      {isSubmitting ? 'Submitting...' : 'Submit Attendance'}
-    </button>
-    </div>
-  </div>
-  </WithRightbarLayout>
-)};
+    </WithRightbarLayout>
+  )
+};

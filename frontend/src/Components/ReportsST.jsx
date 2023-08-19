@@ -9,7 +9,7 @@ import 'react-loading-skeleton/dist/skeleton.css';
 import './ReportsST.css';
 
 export default function ReportsST() {
-  
+
   const navigate = useNavigate();
   const [isDataFetched, setIsDataFetched] = useState(false);
   const today = format(new Date(), 'EEE, dd-MMM-yyyy');
@@ -28,7 +28,7 @@ export default function ReportsST() {
   const facultyDepartment = useSelector((state) => state.faculty.department);
 
   useEffect(() => {
-      setLoadingProgress(30); 
+    setLoadingProgress(30);
     const fetchData = async () => {
       try {
         const response = await fetch('http://localhost:8000/api/dashboard-data/', {
@@ -38,7 +38,7 @@ export default function ReportsST() {
 
         if (response.status === 200) {
           const data = await response.json();
-          setAssignedSubjects(data.classes); 
+          setAssignedSubjects(data.classes);
           console.log(data);
           setIsLoading(false);
         } else if (response.status === 302) {
@@ -47,7 +47,7 @@ export default function ReportsST() {
           alert('Error occurred while fetching dashboard data.');
           setIsLoading(false);
         }
-      }catch (error) {
+      } catch (error) {
         location.reload();
         alert('Some error occurred');
       } finally {
@@ -60,8 +60,8 @@ export default function ReportsST() {
     fetchData()
       .then(() => setIsDataFetched(true))
       .catch(() => setIsDataFetched(true));
-  }, 
-  []);
+  },
+    []);
 
   const handleStartDateChange = (event) => {
     setStartDate(event.target.value);
@@ -74,7 +74,7 @@ export default function ReportsST() {
   const handleSubjectChange = (event) => {
     const selectedSubjectValue = event.target.value;
     setSelectedSubject(selectedSubjectValue);
-  
+
     // Find the course_id and subject_id for the selected subject and set them in the state
     const selectedCourse = assignedSubjects.find((course) => course.subject === selectedSubjectValue);
     if (selectedCourse) {
@@ -82,7 +82,7 @@ export default function ReportsST() {
       setSelectedSubjectId(selectedCourse.subject_id); // Assuming subject_id is a property in the class data returned from the API
     }
   };
-  
+
 
   const handleDownloadReports = () => {
     if (!startDate || !endDate || !selectedSubject || !selectedCourseId) {
@@ -160,17 +160,16 @@ export default function ReportsST() {
           </div>
         </div>
       </div>
-      <hr />
       <div className="filters-container">
         <label htmlFor="subject">Select Subject:</label>
         <select id="subject" value={selectedSubject} onChange={handleSubjectChange}>
-        <option value="">Select a Subject</option>
-       {assignedSubjects.map((course) => (
-        <option key={`${course.course_id}-${course.subject_id}`} value={course.subject}>
-        {`${course.course} - ${course.semester} - ${course.section} - ${course.subject}`}
-        </option>
-  ))}
-</select>
+          <option value="">Select a Subject</option>
+          {assignedSubjects.map((course) => (
+            <option key={`${course.course_id}-${course.subject_id}`} value={course.subject}>
+              {`${course.course} - ${course.semester} - ${course.section} - ${course.subject}`}
+            </option>
+          ))}
+        </select>
         <label htmlFor="start-date">Start Date:</label>
         <input type="date" id="start-date" value={startDate} onChange={handleStartDateChange} />
 

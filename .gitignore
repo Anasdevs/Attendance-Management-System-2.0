@@ -26,6 +26,7 @@ yarn-debug.log*
 yarn-error.log*
 
 # Backend specific
+.env
 /env/Scripts/python.exe
 __pycache__
 **/__pycache__/

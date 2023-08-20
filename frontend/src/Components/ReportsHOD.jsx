@@ -27,7 +27,7 @@ export default function ReportsHOD() {
   const role = useSelector((state) => state.faculty.role);
   const facultyDepartment = useSelector((state) => state.faculty.department);
 
-  useEffect (() => {
+  useEffect(() => {
     fetchDepartmentClasses();
   }, []);
 
@@ -36,9 +36,9 @@ export default function ReportsHOD() {
     const storedRole = localStorage.getItem('role'); // Get the stored role
 
     if (!storedDepartment || storedRole !== 'Head Of Department(HOD)') {
-    alert('You do not have permission to access this page.');
-    navigate('/dashboard');
-    return () => {};
+      alert('You do not have permission to access this page.');
+      navigate('/dashboard');
+      return () => { };
     }
 
     setIsLoading(false);
@@ -52,7 +52,7 @@ export default function ReportsHOD() {
           try {
             const errorResponse = await response.json();
             errorMessage = errorResponse.error || 'An error occurred while fetching class data.';
-          } catch(error) {
+          } catch (error) {
             errorMessage = 'An error occurred while fetching class data.';
           }
           throw new Error(errorMessage);
@@ -72,7 +72,7 @@ export default function ReportsHOD() {
         setIsLoading(false);
         setLoadingProgress(100);
       });
-    };
+  };
 
   const redirectSubjectTeacher = () => {
     navigate('/reports/subject-teacher')
@@ -81,7 +81,7 @@ export default function ReportsHOD() {
   const handleSubjectChange = (event) => {
     const selectedSubjectValue = event.target.value;
     setSelectedSubject(selectedSubjectValue);
-    
+
     if (selectedSubjectValue === 'all') {
       setSelectedCourseId(''); // Clear the selectedCourseId
       setSelectedSubjectId(''); // Clear the selectedSubjectId
@@ -89,7 +89,7 @@ export default function ReportsHOD() {
       const selectedSubjectObject = selectedClassSubjects.find(
         (subjectObj) => subjectObj.subject_name === selectedSubjectValue
       );
-    
+
       if (selectedSubjectObject) {
         setSelectedSubjectId(selectedSubjectObject.subject_id);
       } else {
@@ -109,12 +109,12 @@ export default function ReportsHOD() {
   const handleClassChange = (event) => {
     const selectedClassValue = event.target.value;
     setSelectedClass(selectedClassValue);
-  
+
     // Find the class object in departmentClasses
     const selectedClassObject = departmentClasses.find(
       (course) => `${course.course} - ${course.semester} - ${course.section}` === selectedClassValue
     );
-  
+
     if (selectedClassObject) {
       setSelectedClassSubjects(selectedClassObject.subjects);
       setSelectedSubject(''); // Clear the selected subject when class changes
@@ -122,18 +122,18 @@ export default function ReportsHOD() {
       setSelectedSubjectId(''); // Clear the selected subject ID
     }
   };
-  
-  
+
+
   const handleGenerateReport = () => {
     if (!startDate || !endDate) {
       alert('Please select start date and end date to download the report.');
       return;
     }
-  
+
     setIsLoading(true);
-  
+
     let url = `http://localhost:8000/api/attendance/reports-hod/?startDate=${startDate}&endDate=${endDate}`;
-  
+
     if (selectedSubject === 'all') {
       if (selectedClass) {
         const selectedClassObject = departmentClasses.find(
@@ -152,7 +152,7 @@ export default function ReportsHOD() {
         return;
       }
     }
-  
+
     fetch(url)
       .then(async (response) => {
         if (!response.ok) {
@@ -160,23 +160,23 @@ export default function ReportsHOD() {
           try {
             const errorResponse = await response.json();
             errorMessage = errorResponse.error || 'An error occurred while generating the report.';
-          } catch(error) {
+          } catch (error) {
             errorMessage = 'An error occurred while generating the report.';
           }
           throw new Error(errorMessage);
         }
-  
+
         return response.blob();
       })
       .then((blob) => {
         const blobUrl = URL.createObjectURL(blob);
-  
+
         const anchor = document.createElement('a');
         anchor.href = blobUrl;
         anchor.download = selectedSubject === 'all'
           ? `attendance_report_all_subjects_${startDate}_${endDate}.csv`
           : `attendance_report_${selectedSubject}_${startDate}_${endDate}.csv`;
-  
+
         anchor.click();
         URL.revokeObjectURL(blobUrl);
       })
@@ -187,15 +187,15 @@ export default function ReportsHOD() {
         setIsLoading(false);
       });
   };
-  
-  
+
+
 
 
   return (
     <WithRightbarLayout>
       <LoadingBar progress={loadingProgress} color="#111137" height={4} />
       <div className="rightside">
-      <div className="image">
+        <div className="image">
           {facultyImage ? (
             <img src={facultyImage} alt="Faculty" />
           ) : (
@@ -224,46 +224,45 @@ export default function ReportsHOD() {
           </div>
         </div>
       </div>
-      <hr />
-      <div className="to-subject-teacher" style={{float:'right'}}>
-          <p>
-             Download reports as subject teacher{' '}
-                  <button className="link-button" onClick={redirectSubjectTeacher} >
-                    Subject Reports
-                  </button>
-                </p>
+      <div className="to-subject-teacher" style={{ float: 'right' }}>
+        <p>
+          Download reports as subject teacher{' '}
+          <button className="link-button" onClick={redirectSubjectTeacher} >
+            Subject Reports
+          </button>
+        </p>
       </div>
       <div className="filters-container">
-  <label htmlFor="class">Select Class:</label>
-  <select id="class" value={selectedClass} onChange={handleClassChange}>
-    <option value="">Select a Class</option>
-    {Array.from(new Set(departmentClasses.map(course => `${course.course} - ${course.semester} - ${course.section}`))).map(uniqueCourse => (
-      <option key={uniqueCourse} value={uniqueCourse}>
-        {uniqueCourse}
-      </option>
-    ))}
-  </select>
+        <label htmlFor="class">Select Class:</label>
+        <select id="class" value={selectedClass} onChange={handleClassChange}>
+          <option value="">Select a Class</option>
+          {Array.from(new Set(departmentClasses.map(course => `${course.course} - ${course.semester} - ${course.section}`))).map(uniqueCourse => (
+            <option key={uniqueCourse} value={uniqueCourse}>
+              {uniqueCourse}
+            </option>
+          ))}
+        </select>
 
-  <label htmlFor="subject">Select Subject:</label>
-<select id="subject" value={selectedSubject} onChange={handleSubjectChange}> {/* Use selectedSubject here */}
-  <option value="">Select Subject</option>
-  <option value="all">All Subjects</option>
-  {selectedClassSubjects.map((subjectObj) => (
-    <option key={subjectObj.subject_id} value={subjectObj.subject_name}> {/* Use subject_name as value */}
-      {subjectObj.subject_name}
-    </option>
-  ))}
-</select>
+        <label htmlFor="subject">Select Subject:</label>
+        <select id="subject" value={selectedSubject} onChange={handleSubjectChange}> {/* Use selectedSubject here */}
+          <option value="">Select Subject</option>
+          <option value="all">All Subjects</option>
+          {selectedClassSubjects.map((subjectObj) => (
+            <option key={subjectObj.subject_id} value={subjectObj.subject_name}> {/* Use subject_name as value */}
+              {subjectObj.subject_name}
+            </option>
+          ))}
+        </select>
 
-  
-  <label htmlFor="start-date">Start Date:</label>
-  <input type="date" id="start-date" value={startDate} onChange={handleStartDateChange} />
-  <label htmlFor="end-date">End Date:</label>
-  <input type="date" id="end-date" value={endDate} onChange={handleEndDateChange} />
-  <button className="download-button" onClick={handleGenerateReport} disabled={isLoading}>
-    {isLoading ? 'Downloading...' : 'Download Report'}
-  </button>
-</div>
+
+        <label htmlFor="start-date">Start Date:</label>
+        <input type="date" id="start-date" value={startDate} onChange={handleStartDateChange} />
+        <label htmlFor="end-date">End Date:</label>
+        <input type="date" id="end-date" value={endDate} onChange={handleEndDateChange} />
+        <button className="download-button" onClick={handleGenerateReport} disabled={isLoading}>
+          {isLoading ? 'Downloading...' : 'Download Report'}
+        </button>
+      </div>
     </WithRightbarLayout>
   );
 }

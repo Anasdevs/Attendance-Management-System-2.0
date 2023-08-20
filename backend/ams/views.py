@@ -1,4 +1,4 @@
-from django.shortcuts import redirect, get_object_or_404
+from django.shortcuts import redirect
 import string
 import random
 import json
@@ -10,14 +10,11 @@ from django.views.decorators.csrf import csrf_exempt
 from django.core.exceptions import ObjectDoesNotExist
 from django.views.decorators.http import require_POST
 from datetime import datetime
-from django.db.models import Q, Value, Subquery, OuterRef,Count, F
-from django.db.models.functions import Coalesce
+from django.db.models import Q, Subquery, OuterRef, Count
 import csv
 from django.urls import reverse
 import os
 import dotenv
-from datetime import timedelta
-from django.utils import timezone
 from django.conf import settings
 
 dotenv.load_dotenv()
@@ -60,7 +57,7 @@ def send_password(request):
 
 
 def generate_random_password(length=8):
-    # Generate a random password of the specified length
+    # Generate a random password
     chars = string.ascii_letters + string.digits
     return ''.join(random.choice(chars) for _ in range(length))
 
@@ -78,7 +75,6 @@ def send_password_email(email, password):
 @csrf_exempt
 def validate_password(request):
     if request.method == 'POST':
-        # Retrieve JSON data from the request body
         data = json.loads(request.body)
         email = data.get('email')
         password_entered = data.get('password')
@@ -147,6 +143,7 @@ def check_session(request):
         return JsonResponse({'is_authenticated': False}, status=401)
 
 
+#For resetting the password
 @csrf_exempt
 def reset_password(request):
     if request.method == "POST":
@@ -184,7 +181,6 @@ def dashboard_data(request):
             # Get the faculty image URL
             faculty_image_url = faculty.faculty_image.url if faculty.faculty_image else None
 
-            # Build the absolute URL for the faculty image
             if faculty_image_url:
                 faculty_image_url = request.build_absolute_uri(faculty_image_url)
 
@@ -199,7 +195,6 @@ def dashboard_data(request):
             assigned_subjects = Subject.objects.filter(assigned_to=faculty)
             subjects_list = []
 
-
             for assigned_subject in assigned_subjects:
                 class_data = assigned_subject.class_subject
                 class_info = {
@@ -210,6 +205,7 @@ def dashboard_data(request):
                     'subject_id': assigned_subject.subject_id,
                     'subject': assigned_subject.subject_name,
                     }
+                
                 subjects_list.append(class_info)
 
             response_data = {
@@ -224,8 +220,6 @@ def dashboard_data(request):
     except Faculty.DoesNotExist:
         return JsonResponse({'error': 'Faculty not found'}, status=404)
 
-
-from django.db.models import OuterRef, Subquery
 
 def take_attendance(request):
     if request.method == 'GET':
@@ -286,7 +280,7 @@ def take_attendance(request):
     else:
         return JsonResponse({'error': 'User is not authenticated'}, status=302)
 
-
+@require_POST
 @csrf_exempt
 def submit_attendance(request):
     try:
@@ -342,7 +336,7 @@ def submit_attendance(request):
         return JsonResponse({'error': str(e)})
 
     
-
+#Generate attendance report for Subject teacher
 @csrf_exempt
 def generate_attendance_report(request):
     if request.method == 'GET':
@@ -453,14 +447,6 @@ def faculty_profile(request):
 
     return JsonResponse({'error': 'Faculty not found'}, status=404)
 
-@csrf_exempt
-def handle_logout(request):
-    if request.method == 'POST':
-        # Delete the session data
-        request.session.flush()
-        return JsonResponse({'message': 'Logout successful'})
-    return JsonResponse({'error': 'Invalid request'})
-
 
 @csrf_exempt
 def get_classes_by_department(request):
@@ -513,6 +499,8 @@ def get_attendance_and_student_models(course_name):
     }
     return course_student_models.get(course_name, (None, None))
 
+
+#Generate report for all subjects or single subject (HOD and CC)
 @csrf_exempt
 def generate_attendance_report_hod(request):
     if request.method == 'GET':
@@ -604,7 +592,6 @@ def generate_attendance_report_hod(request):
                 # Write header for attendance data
                 header_row = ['S.NO','Enrollment Number', 'Name']
                 above_header_row = ['','','']
-                # below_header_row = ['','','']
                 subject_columns = []
                 for subject in course_subjects:
                     above_header_row.append(f'{class_obj.course}-{subject.subject_id}')
@@ -639,16 +626,13 @@ def generate_attendance_report_hod(request):
                             student=student,
                             
                         )
-                        # print(subject.subject_name)
                         present_days = subject_attendance_data.filter(status='Present').count()
                         total_subject_days = subject_attendance_data.count()
-                        # total_classes_row.append(total_subject_days)
                         subject_dict[subject.subject_name] = total_subject_days
                         student_row.append(present_days)
                         total_present += present_days
                         total_days += total_subject_days
                     student_row.extend([total_present, total_days, "{:.2f}%".format((total_present / total_days) * 100) if total_days > 0 else "0.00%"])
-                    # writer.writerow(student_row)
                     excel_clms.append(student_row)
                 total_classes_row.extend(list(subject_dict.values()))
                 excel_clms.insert(0,total_classes_row)
@@ -660,7 +644,7 @@ def generate_attendance_report_hod(request):
 
     return JsonResponse({'error': 'Invalid request'})
 
-
+#Fetch classes for CC
 @csrf_exempt
 def dashboard_data_CC(request):
     try:
@@ -708,3 +692,12 @@ def dashboard_data_CC(request):
 
     except Faculty.DoesNotExist:
         return JsonResponse({'error': 'Faculty not found'}, status=404)
+
+
+@csrf_exempt
+def handle_logout(request):
+    if request.method == 'POST':
+        # Delete the session data
+        request.session.flush()
+        return JsonResponse({'message': 'Logout successful'})
+    return JsonResponse({'error': 'Invalid request'})

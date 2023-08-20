@@ -43,6 +43,7 @@ export default function Attendance() {
     fetchData(format(currentDate, 'yyyy-MM-dd'));
   }, [currentDate, courseId]);
 
+
   const fetchData = async (date) => {
     try {
       const timeZone = 'Asia/Kolkata';
@@ -56,16 +57,17 @@ export default function Attendance() {
 
       if (response.status === 200) {
         const data = await response.json();
-        console.log(data);
         setClassName(data.class_name);
         setAttendanceData(data.students);
         setIsDataFetched(true);
         const firstStudent = data.students[0];
         if (firstStudent) {
+        setTimeout(() => {
           const inputElement = document.getElementById(`attendance-input-${firstStudent.enrolment_no}`);
           if (inputElement) {
             inputElement.focus();
           }
+        }, 0);
         }
       } else if (response.status === 403) {
         window.location.reload();

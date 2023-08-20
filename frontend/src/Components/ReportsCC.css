@@ -1,16 +1,26 @@
-.CC-filters-container {
+.CC-container {
   position: relative;
-  margin: 5% auto;
+  margin-top: 8%;
   text-align: center;
+  display: grid;
+  justify-items: center;
 }
 
-.CC-filters-container label {
+.HOD-date {
+  flex-grow: 1;
+  font-weight: bolder;
+  font-size: 1rem;
+  color: #00001a;
+  position: absolute;
+  right: 3%;
+}
+
+.CC-container label {
   font-weight: bold;
-  margin-left: 10px;
 }
 
-.CC-filters-container input[type="date"] {
-  width: 200px;
+.CC-container input[type="date"] {
+  width: 48%;
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -18,16 +28,83 @@
   margin-left: 15px;
 }
 
-.CC-filters-container button.download-button {
+.CC-container select {
+  width: 50%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 16px;
+  margin-left: 15px;
+}
+
+.CC-container button.download-button {
   background-color: var(--button-color);
   color: #fff;
   padding: 10px 10px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  margin-left: 20px;
+  width: 40%;
+  font-weight: bold;
 }
 
-.CC-filters-container button.download-button:hover {
+.CC-container button.download-button:hover {
   background-color: var(--button-color-hover);
+}
+
+.link-button {
+  color: red;
+}
+
+.to-subject-teacher {
+  background-color: var(--button-color);
+  color: #fff;
+  border: none;
+  text-align: center;
+  border-radius: 4px;
+  margin-top: -1%;
+  cursor: pointer;
+  position: absolute;
+  font-weight: bold;
+  right: 2%;
+}
+
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .CC-container {
+    margin-top: 8%;
+    margin-bottom: 10%;
+  }
+}
+
+@media (min-width: 500px) and (max-width: 768px) {
+  .CC-container {
+    margin-top: 10%;
+    margin-bottom: 10%;
+  }
+
+  .to-subject-teacher {
+    width: 100%;
+    right: 0%;
+    position: absolute;
+    margin-top: -4%;
+  }
+}
+
+@media (min-width: 300px) and (max-width: 500px) {
+  .HOD-date {
+    display: none;
+  }
+
+  .CC-container {
+    margin-top: 18%;
+    margin-bottom: 10%;
+  }
+
+  .to-subject-teacher {
+    width: 100%;
+    right: 0%;
+    position: absolute;
+    margin-top: -4%;
+  }
 }

@@ -19,10 +19,10 @@ body {
   display: flex;
   margin-top: 50px;
   box-shadow: #2c47e3b5 -5px 5px,
-  #2949ff8c -10px 10px,
-  #2949ff4a -15px 15px,
-  #2949ff2a -20px 20px,
-  #33418f1d -25px 25px;
+    #2949ff8c -10px 10px,
+    #2949ff4a -15px 15px,
+    #2949ff2a -20px 20px,
+    #33418f1d -25px 25px;
 }
 
 .box-right {
@@ -64,14 +64,13 @@ body {
 
 .button-container {
   display: flex;
-  gap: 10px; 
+  gap: 10px;
   /* justify-content: space-between; */
 }
 
 .link-button {
   background: none;
   border: none;
-  color: #583672;
   cursor: pointer;
   font-weight: bold;
 }
@@ -96,7 +95,7 @@ body {
   cursor: pointer;
 }
 
-.code-validate{
+.code-validate {
   display: block;
   position: relative;
   box-shadow: 0 3px 5px #777777, inset 0 0 0px #777777;
@@ -112,7 +111,7 @@ body {
   cursor: pointer;
 }
 
-.get-code:disabled{
+.get-code:disabled {
   cursor: not-allowed;
   background-color: #7b7283;
 }
@@ -132,7 +131,7 @@ body {
 .box-left {
   width: 50%;
   height: 100%;
-  background: linear-gradient(to right, #396afc, #2948ff); 
+  background: linear-gradient(to right, #396afc, #2948ff);
   /* padding: 25px 25px; */
   /* background: linear-gradient(to right, #0b486b, #f56217); */
 }
@@ -172,12 +171,13 @@ body {
   font-weight: 600;
   font-size: 14px;
 }
-.remember-me{
+
+.remember-me {
   display: flex;
   align-items: center;
 }
 
-#rememberMe{
+#rememberMe {
   width: 10%;
 
 }
@@ -210,8 +210,8 @@ body {
   bottom: 0;
   opacity: 0;
   transition: opacity 0.5s ease;
-  background-size: contain; 
-  background-repeat: no-repeat; 
+  background-size: contain;
+  background-repeat: no-repeat;
   background-position: center;
 }
 
@@ -228,7 +228,7 @@ body {
   font-weight: 500;
 }
 
-.mobile-footer{
+.mobile-footer {
   display: none;
 }
 
@@ -239,25 +239,25 @@ body {
     width: 100%;
 
   }
-  .box-left{
+
+  .box-left {
     display: none;
   }
 
-  .box-right{
-    /* box-shadow: rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset; */
+  .box-right {
     width: 100%;
     height: 75%;
     margin-top: 10%;
     background: none;
   }
 
-  .submit{
+  .submit {
     margin-top: 50px
   }
 
-  .mobile-footer{
+  .mobile-footer {
     display: flex;
-    align-items: center; 
+    align-items: center;
     justify-content: center;
     gap: 5px;
     position: fixed;
@@ -270,13 +270,13 @@ body {
     color: #ffffff;
   }
 
-  .mobile-footer p{
+  .mobile-footer p {
     font-weight: 500;
   }
-  .mobile-footer-image{
+
+  .mobile-footer-image {
     height: 30px;
     width: 30px;
   }
 
 }
-

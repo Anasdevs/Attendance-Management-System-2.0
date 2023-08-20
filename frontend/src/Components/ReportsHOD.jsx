@@ -218,17 +218,17 @@ export default function ReportsHOD() {
               <Skeleton count={1} />
             )}
           </div>
-          <div className="dashboard-date">
-            <div className="today-dashboard-date">Today</div>
-            <div className="today-dashboard-date">{today}</div>
+          <div className="HOD-date">
+            <div className="today-date">Today</div>
+            <div className="today-date">{today}</div>
           </div>
         </div>
       </div>
       <div className="to-subject-teacher" style={{ float: 'right' }}>
         <p>
-          Download reports as subject teacher{' '}
+          {' '}
           <button className="link-button" onClick={redirectSubjectTeacher} >
-            Subject Reports
+            Download Reports As Subject Teacher
           </button>
         </p>
       </div>
@@ -253,8 +253,6 @@ export default function ReportsHOD() {
             </option>
           ))}
         </select>
-
-
         <label htmlFor="start-date">Start Date:</label>
         <input type="date" id="start-date" value={startDate} onChange={handleStartDateChange} />
         <label htmlFor="end-date">End Date:</label>

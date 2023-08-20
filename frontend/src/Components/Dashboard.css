@@ -43,7 +43,7 @@
   color: #00001a;
   position: absolute;
   right: 3%;
-  top: 10%;
+  margin-top: -9%;
 }
 
 .dashboard-date .today-dashboard-date {
@@ -57,7 +57,7 @@
   margin-top: 2%;
   font-size: 30px;
   font-weight: bold;
-  width: 100%;
+  width: 95%;
   text-align: center !important;
   color: #333;
   text-transform: uppercase;
@@ -266,7 +266,7 @@
     color: #00001a;
     position: absolute;
     right: 3%;
-    top: 16%;
+    margin-top: -14%;
   }
 
   .table-container {
@@ -300,7 +300,7 @@
     color: #00001a;
     position: absolute;
     right: 3%;
-    top: 18%;
+    margin-top: -10%;
   }
 
   .rightside .image {

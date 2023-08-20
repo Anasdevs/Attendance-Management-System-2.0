@@ -166,7 +166,7 @@ export default function ReportsST() {
               <Skeleton count={1} />
             )}
           </div>
-          <div className="dashboard-date">
+          <div className="HOD-date">
             <div className="today-dashboard-date">Today</div>
             <div className="today-dashboard-date">{today}</div>
           </div>
@@ -174,13 +174,13 @@ export default function ReportsST() {
       </div>
       <div className="to-subject-teacher" style={{ float: 'right' }}>
         <p>
-          Download reports as subject teacher{' '}
+          {' '}
           <button className="link-button" onClick={redirectSubjectTeacher} >
-            Subject Reports
+            Download reports as subject teacher
           </button>
         </p>
       </div>
-      <div className="CC-filters-container">
+      <div className="filters-container">
         <label htmlFor="subject">Select Class:</label>
         <select id="subject" value={selectedSubject} onChange={handleSubjectChange}>
           <option value="">Select a Class</option>

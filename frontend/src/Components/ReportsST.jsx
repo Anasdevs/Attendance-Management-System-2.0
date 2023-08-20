@@ -154,13 +154,13 @@ export default function ReportsST() {
               <Skeleton count={1} />
             )}
           </div>
-          <div className="dashboard-date">
-            <div className="today-dashboard-date">Today</div>
-            <div className="today-dashboard-date">{today}</div>
+          <div className="ST-date">
+            <div className="today-date">Today</div>
+            <div className="today-date">{today}</div>
           </div>
         </div>
       </div>
-      <div className="filters-container">
+      <div className="ST-filters-container">
         <label htmlFor="subject">Select Subject:</label>
         <select id="subject" value={selectedSubject} onChange={handleSubjectChange}>
           <option value="">Select a Subject</option>

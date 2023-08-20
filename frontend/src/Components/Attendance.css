@@ -43,7 +43,7 @@
 
 .AT-date {
   position: absolute;
-  right: 3%;
+  right: 2%;
   font-size: 1rem;
   font-weight: bolder;
   color: #00001a;
@@ -83,13 +83,14 @@
   margin-top: 2%;
   font-size: 30px;
   font-weight: bold;
-  width: 100%;
+  width: 95%;
   text-align: center !important;
   color: #333;
   text-transform: uppercase;
   letter-spacing: 2px;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-  padding: 10px;
+  padding: 1%;
+  margin-left: 1%;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   transition: background-color 0.3s ease;
@@ -316,13 +317,17 @@
     margin-top: 10%;
   }
 
+  .table-description {
+    display: none;
+  }
+
   .AT-date {
     font-size: 1rem;
     font-weight: bolder;
     color: #00001a;
     position: absolute;
     right: 0%;
-    top: 20%;
+    margin-top: 35%;
     flex-grow: 1;
   }
 

@@ -1,16 +1,22 @@
 .filters-container {
   position: relative;
-  margin: 5% auto;
+  margin-top: 8%;
   text-align: center;
   display: grid;
-  justify-items: start;
+  justify-items: center;
+}
+
+.HOD-date {
+  flex-grow: 1;
+  font-weight: bolder;
+  font-size: 1rem;
+  color: #00001a;
+  position: absolute;
+  right: 3%;
 }
 
 .filters-container label {
   font-weight: bold;
-  position: relative;
-  left: 1%;
-  margin-left: 10px;
 }
 
 .filters-container input[type="date"] {
@@ -39,10 +45,7 @@
   border-radius: 4px;
   cursor: pointer;
   width: 40%;
-  left: 3%;
-  position: absolute;
-  top: 100%;
-  margin-left: 20px;
+  font-weight: bold;
 }
 
 .filters-container button.download-button:hover {
@@ -54,25 +57,20 @@
 }
 
 .to-subject-teacher {
-  display: flex;
+  background-color: var(--button-color);
+  color: #fff;
+  border: none;
+  text-align: center;
+  border-radius: 4px;
+  margin-top: -1%;
+  cursor: pointer;
   position: absolute;
-  margin-top: 1%;
-  right: 1%;
-  background-color: var(--button-color-hover);
-  color: white;
-  border: 83%;
-  padding-left: 10px;
-  padding-right: 10px;
-  border-radius: 27px;
-  top: 22%;
+  font-weight: bold;
+  right: 2%;
 }
 
 
 @media (min-width: 768px) and (max-width: 1024px) {
-  .to-subject-teacher {
-    margin-top: 6%;
-  }
-
   .filters-container {
     margin-top: 8%;
     margin-bottom: 10%;
@@ -80,12 +78,33 @@
 }
 
 @media (min-width: 500px) and (max-width: 768px) {
+  .filters-container {
+    margin-top: 10%;
+    margin-bottom: 10%;
+  }
+
   .to-subject-teacher {
-    margin-top: 8%;
+    width: 100%;
+    right: 0%;
+    position: absolute;
+    margin-top: -4%;
+  }
+}
+
+@media (min-width: 300px) and (max-width: 500px) {
+  .HOD-date {
+    display: none;
   }
 
   .filters-container {
-    margin-top: 17%;
+    margin-top: 18%;
     margin-bottom: 10%;
+  }
+
+  .to-subject-teacher {
+    width: 100%;
+    right: 0%;
+    position: absolute;
+    margin-top: -4%;
   }
 }

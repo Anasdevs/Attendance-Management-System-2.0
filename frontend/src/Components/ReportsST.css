@@ -1,7 +1,8 @@
 .ST-filters-container {
   position: relative;
-  margin: 5% auto;
   text-align: center;
+  display: grid;
+  justify-items: center;
 }
 
 .ST-filters-container label {
@@ -10,7 +11,7 @@
 }
 
 .ST-filters-container input[type="date"] {
-  width: 200px;
+  width: 48%;
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -19,7 +20,7 @@
 }
 
 .ST-filters-container select {
-  width: 190px;
+  width: 50%;
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -34,9 +35,25 @@
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  margin-left: 20px;
+  width: 40%;
+  font-weight: bold;
+}
+
+.ST-date {
+  flex-grow: 1;
+  font-weight: bolder;
+  font-size: 1rem;
+  color: #00001a;
+  position: absolute;
+  right: 3%;
 }
 
 .ST-filters-container button.download-button:hover {
   background-color: var(--button-color-hover);
+}
+
+@media (min-width: 300px) and (max-width: 500px) {
+  .ST-date {
+    display: none;
+  }
 }

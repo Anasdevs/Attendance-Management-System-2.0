@@ -14,12 +14,11 @@
   align-items: center;
   padding: 10px;
   font-size: 12px;
-  height: 6%;
   justify-content: center;
 }
 
 .footer p{
-  font-weight: 500;
+  font-weight: bold;
   position: absolute;
 }
 

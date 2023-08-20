@@ -1,7 +1,5 @@
 .example {
-  width: 85%;
   padding: 20px;
-  margin-left: 12%;
   overflow-y: auto;
   text-align: center;
   background: #f5f4fa;
@@ -10,7 +8,6 @@
 @media (min-width:300px) and (max-width: 500px) {
   .example {
     margin-top: 5%;
-    width: 100%;
     text-align: center;
     margin-left: 0%;
   }
@@ -20,7 +17,6 @@
 @media (min-width: 500px) and (max-width: 768px) {
   .example {
     margin-top: 5%;
-    width: 100%;
     text-align: center;
     margin-left: 0%;
   }
@@ -29,7 +25,6 @@
 @media (min-width: 768px) and (max-width: 1024px) {
   .example {
     margin-top: 5%;
-    width: 100%;
     text-align: center;
     margin-left: 0%;
   }

@@ -5,6 +5,28 @@
   overflow-y: auto;
 }
 
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  font-size: 12px;
+  height: 6%;
+  justify-content: center;
+}
+
+.footer p{
+  font-weight: 500;
+  position: absolute;
+}
+
+.footer p a{
+  color:blue;
+}
+
 @media(max-width: 1024px) {
   .rightbar {
     width: 100%;
@@ -12,5 +34,29 @@
     padding-right: 0;
     padding-left: 0;
     padding-bottom: 0;
+  }
+}
+
+@media(min-width:300px) and (max-width: 500px) {
+  .footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    font-size: 12px;
+    height: 6%;
+    justify-content: center;
+  }
+  
+  .footer p{
+    font-weight: 500;
+    position: absolute;
+  }
+  
+  .footer p a{
+    color:blue;
   }
 }

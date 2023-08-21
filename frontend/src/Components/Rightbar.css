@@ -38,24 +38,6 @@
 
 @media(min-width:300px) and (max-width: 500px) {
   .footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    display: flex;
-    align-items: center;
-    padding: 10px;
-    font-size: 12px;
-    height: 6%;
-    justify-content: center;
-  }
-  
-  .footer p{
-    font-weight: 500;
-    position: absolute;
-  }
-  
-  .footer p a{
-    color:blue;
+    color: red;
   }
 }

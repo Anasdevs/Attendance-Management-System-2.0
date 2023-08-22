@@ -175,7 +175,7 @@ export default function ReportsST() {
       <div className="to-subject-teacher" style={{ float: 'right' }}>
         <p>
           {' '}
-          <button className="link-button" onClick={redirectSubjectTeacher} >
+          <button className="HOD-link-button" onClick={redirectSubjectTeacher} >
             Download reports as subject teacher
           </button>
         </p>

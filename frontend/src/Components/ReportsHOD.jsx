@@ -225,12 +225,9 @@ export default function ReportsHOD() {
         </div>
       </div>
       <div className="to-subject-teacher" style={{ float: 'right' }}>
-        <p>
-          {' '}
-          <button className="link-button" onClick={redirectSubjectTeacher} >
+          <button className="HOD-link-button" onClick={redirectSubjectTeacher} >
             Download Reports As Subject Teacher
           </button>
-        </p>
       </div>
       <div className="filters-container">
         <label htmlFor="class">Select Class:</label>

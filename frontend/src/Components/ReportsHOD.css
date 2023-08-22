@@ -52,23 +52,15 @@
   background-color: var(--button-color-hover);
 }
 
-.link-button {
-  color: red;
-}
-
-.to-subject-teacher {
+.HOD-link-button {
   background-color: var(--button-color);
   color: #fff;
+  padding: 10px 10px;
   border: none;
-  text-align: center;
   border-radius: 4px;
-  margin-top: -1%;
   cursor: pointer;
-  position: absolute;
   font-weight: bold;
-  right: 2%;
 }
-
 
 @media (min-width: 768px) and (max-width: 1024px) {
   .filters-container {
@@ -83,7 +75,7 @@
     margin-bottom: 10%;
   }
 
-  .to-subject-teacher {
+  .HOD-link-button {
     width: 100%;
     right: 0%;
     position: absolute;
@@ -101,7 +93,7 @@
     margin-bottom: 10%;
   }
 
-  .to-subject-teacher {
+  .HOD-link-button {
     width: 100%;
     right: 0%;
     position: absolute;

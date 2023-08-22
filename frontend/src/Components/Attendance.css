@@ -8,6 +8,12 @@
   text-decoration-line: underline;
 }
 
+.attendance-table tbody.highlighted {
+  background-color: green;
+  font-weight: bold;
+  font-size: 20px;
+  text-decoration-line: underline;
+}
 .image {
   display: flex;
   align-items: center;
@@ -312,6 +318,21 @@
 }
 
 @media (min-width: 300px) and (max-width: 501px) {
+
+  .attendance-table th:first-child,
+  .attendance-table td:first-child {
+    width: 40px; /* Adjust this value as needed */
+    min-width: 40px; /* Set a minimum width */
+  }
+
+  /* Apply background color to highlighted row */
+  .attendance-table tbody tr.highlighted {
+    background-color: rgba(91, 88, 88, 0.1); /* Set your desired background color with transparency */
+    font-weight: bold;
+    font-size: 20px;
+    text-decoration-line: underline;
+    color: rgb(91, 88, 88); /* Change font color */
+  }
 
   .statistics-container{
     padding: 2px;

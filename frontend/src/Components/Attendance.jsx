@@ -389,7 +389,7 @@ export default function Attendance() {
             <table className="attendance-table">
               <thead>
                 <tr>
-                  <th>Enrollment No.</th>
+                  <th>E.NO.</th>
                   <th>Student Name</th>
                   <th>Attendance</th>
                 </tr>

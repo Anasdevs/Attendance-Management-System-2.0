@@ -72,7 +72,7 @@
 
 .table-container {
   width: 100%;
-  overflow-x: auto;
+  overflow-x: hidden;
   margin-top: 20px;
 }
 
@@ -240,7 +240,8 @@
   }
 
   .table-container {
-    overflow-x: auto;
+    overflow-x: hidden;
+    width: 100%;
   }
 
   .table {
@@ -270,7 +271,8 @@
   }
 
   .table-container {
-    overflow-x: auto;
+    width:100%;
+    overflow-x: hidden;
   }
 
   .table {

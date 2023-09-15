@@ -22,7 +22,7 @@ const App = () => {
     const checkSession = async () => {
       try {
         const response = await fetch('http://localhost:8000/api/check-session/', {
-          credentials: 'include', // Include cookies in the request
+          credentials: 'include',
         });
 
         const data = await response.json();

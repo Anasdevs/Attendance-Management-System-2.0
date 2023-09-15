@@ -38,7 +38,6 @@ const Dashboard = () => {
         if (response.status === 200) {
           const data = await response.json();
           dispatch(setFacultyInfo(data.faculty));
-          console.log(data)
           setFacultyName(data.faculty.name);
           setRole(data.faculty.role);
           setFacultyDepartment(data.faculty.department);

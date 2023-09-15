@@ -12,9 +12,11 @@
   right: 0;
   display: flex;
   align-items: center;
+  background-color: rgb(5, 22, 38);
   padding: 10px;
   font-size: 12px;
   justify-content: center;
+  color: white;
 }
 
 .footer p{
@@ -23,7 +25,7 @@
 }
 
 .footer p a{
-  color:blue;
+  color:rgb(111, 111, 235);
 }
 
 @media(max-width: 1024px) {

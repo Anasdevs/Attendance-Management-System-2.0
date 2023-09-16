@@ -184,10 +184,6 @@ function LoginForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
-  };
-
-  const handleSignUpSubmit = () => {
     if (isPasswordValidated) {
       console.log('SignUp submitted!');
       navigate('/signin');
@@ -195,6 +191,7 @@ function LoginForm() {
       alert('Please validate the password');
     }
   };
+
 
   const handleForgotPassword = () => {
     setIsForgotPassword(true);

@@ -13,19 +13,20 @@
   display: flex;
   align-items: center;
   background-color: rgb(5, 22, 38);
-  padding: 10px;
-  font-size: 12px;
+  padding: 15px;
+  font-size: 10px;
   justify-content: center;
   color: white;
 }
 
 .footer p{
-  font-weight: bold;
+  font-weight: 500;
   position: absolute;
+  text-align: center;
 }
 
 .footer p a{
-  color:rgb(111, 111, 235);
+  color:rgb(108, 108, 205);
 }
 
 @media(max-width: 1024px) {

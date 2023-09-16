@@ -4,6 +4,10 @@
   --rightbar-background: #f5f4fa;
 }
 
+.react-loading-skeleton{
+  z-index: 0 !important;
+}
+
 .custom-loading-spinner {
   position: absolute;
   top: 50%;

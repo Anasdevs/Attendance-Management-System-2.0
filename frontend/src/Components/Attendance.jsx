@@ -8,6 +8,7 @@ import 'react-loading-skeleton/dist/skeleton.css';
 import './Attendance.css';
 import LoadingBar from 'react-top-loading-bar';
 import WithRightbarLayout from './WithRightbarLayout';
+import { Link } from 'react-router-dom';
 
 
 export default function Attendance() {
@@ -323,11 +324,13 @@ export default function Attendance() {
         )}
         <div className="attendance-rightside">
           <div className="image">
-            {facultyImage ? (
-              <img src={facultyImage} alt="Faculty" />
-            ) : (
-              <Skeleton circle height={70} width={70} />
-            )}
+          <Link to="/profile"> {/* Wrap the image with a Link */}
+              {facultyImage ? (
+                <img src={facultyImage} alt="Faculty" />
+              ) : (
+                <Skeleton circle height={70} width={70} />
+              )}
+            </Link>
             <div className="faculty-info">
               {facultyName ? (
                 <p className="faculty-name">{facultyName}</p>

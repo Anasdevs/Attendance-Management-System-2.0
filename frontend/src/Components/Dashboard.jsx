@@ -9,6 +9,7 @@ import { format } from 'date-fns';
 import LoadingBar from 'react-top-loading-bar';
 import WithRightbarLayout from './WithRightbarLayout';
 import Sidebar from './Sidebar';
+import { Link } from 'react-router-dom';
 
 // import defaultFacultyImage from './Images/faculty.png'
 
@@ -90,11 +91,13 @@ const Dashboard = () => {
         <LoadingBar progress={loadingProgress} color="#111137" height={4} />
         <div className="rightside">
           <div className="image">
-            {facultyImage ? (
-              <img src={facultyImage} alt="Faculty" />
-            ) : (
-              <Skeleton circle height={70} width={70} />
-            )}
+          <Link to="/profile"> {/* Wrap the image with a Link */}
+              {facultyImage ? (
+                <img src={facultyImage} alt="Faculty" />
+              ) : (
+                <Skeleton circle height={70} width={70} />
+              )}
+            </Link>
             <div className="faculty-info">
               {facultyName ? (
                 <p className="faculty-name">{facultyName}</p>

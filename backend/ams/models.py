@@ -100,7 +100,7 @@ class Subject(models.Model):
 
 class Bca_Student(models.Model):
     name = models.CharField(max_length=100)
-    enrolment_no = models.CharField(max_length=20)
+    enrolment_no = models.CharField(max_length=20, unique=True)
     class_attendance = models.ForeignKey(Class, on_delete=models.CASCADE, related_name='Bca_students')
 
     def __str__(self):
@@ -130,7 +130,7 @@ class Bca_Attendance(models.Model):
 
 class Bba_Student(models.Model):
     name = models.CharField(max_length=100)
-    enrolment_no = models.CharField(max_length=20)
+    enrolment_no = models.CharField(max_length=20, unique=True)
     class_attendance = models.ForeignKey(Class, on_delete=models.CASCADE, related_name='Bba_students')
 
     def __str__(self):
@@ -159,7 +159,7 @@ class Bba_Attendance(models.Model):
 
 class B_Ed_Student(models.Model):
     name = models.CharField(max_length=100)
-    enrolment_no = models.CharField(max_length=20)
+    enrolment_no = models.CharField(max_length=20, unique=True)
     class_attendance = models.ForeignKey(Class, on_delete=models.CASCADE, related_name='B_Ed_students')
 
     def __str__(self):
@@ -190,7 +190,7 @@ class B_Ed_Attendance(models.Model):
 
 class B_Com_Student(models.Model):
     name = models.CharField(max_length=100)
-    enrolment_no = models.CharField(max_length=20)
+    enrolment_no = models.CharField(max_length=20, unique=True)
     class_attendance = models.ForeignKey(Class, on_delete=models.CASCADE, related_name='B_Com_students')
 
     def __str__(self):
@@ -221,7 +221,7 @@ class B_Com_Attendance(models.Model):
 
 class Mba_Student(models.Model):
     name = models.CharField(max_length=100)
-    enrolment_no = models.CharField(max_length=20)
+    enrolment_no = models.CharField(max_length=20, unique=True)
     class_attendance = models.ForeignKey(Class, on_delete=models.CASCADE, related_name='Mba_students')
 
     def __str__(self):
@@ -252,7 +252,7 @@ class Mba_Attendance(models.Model):
 
 class Law_Student(models.Model):
     name = models.CharField(max_length=100)
-    enrolment_no = models.CharField(max_length=20)
+    enrolment_no = models.CharField(max_length=20, unique=True)
     class_attendance = models.ForeignKey(Class, on_delete=models.CASCADE, related_name='Law_students')
 
     def __str__(self):

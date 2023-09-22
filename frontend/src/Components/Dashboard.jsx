@@ -91,13 +91,15 @@ const Dashboard = () => {
         <LoadingBar progress={loadingProgress} color="#111137" height={4} />
         <div className="rightside">
           <div className="image">
-          <Link to="/profile"> {/* Wrap the image with a Link */}
+            <div className="image-container">
+          <Link to="/profile">
               {facultyImage ? (
                 <img src={facultyImage} alt="Faculty" />
               ) : (
                 <Skeleton circle height={70} width={70} />
               )}
             </Link>
+            </div>
             <div className="faculty-info">
               {facultyName ? (
                 <p className="faculty-name">{facultyName}</p>

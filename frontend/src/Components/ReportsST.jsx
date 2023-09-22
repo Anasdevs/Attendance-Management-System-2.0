@@ -7,6 +7,7 @@ import Skeleton from 'react-loading-skeleton';
 import LoadingBar from 'react-top-loading-bar';
 import 'react-loading-skeleton/dist/skeleton.css';
 import './ReportsST.css';
+import { Link } from 'react-router-dom';
 
 export default function ReportsST() {
 
@@ -132,11 +133,15 @@ export default function ReportsST() {
       <LoadingBar progress={loadingProgress} color="#111137" height={4} />
       <div className="rightside">
         <div className="image">
-          {facultyImage ? (
-            <img src={facultyImage} alt="Faculty" />
-          ) : (
-            <Skeleton circle height={70} width={70} />
-          )}
+          <div className="image-container">
+          <Link to="/profile">
+            {facultyImage ? (
+              <img src={facultyImage} alt="Faculty" />
+            ) : (
+              <Skeleton circle height={70} width={70} />
+            )}
+          </Link>
+          </div>
           <div className="faculty-info">
             {facultyName ? (
               <p className="faculty-name">{facultyName}</p>

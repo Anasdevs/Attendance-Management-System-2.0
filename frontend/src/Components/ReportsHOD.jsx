@@ -7,6 +7,7 @@ import LoadingBar from 'react-top-loading-bar';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 import './ReportsHOD.css';
+import { Link } from 'react-router-dom';
 
 export default function ReportsHOD() {
   const navigate = useNavigate();
@@ -196,11 +197,15 @@ export default function ReportsHOD() {
       <LoadingBar progress={loadingProgress} color="#111137" height={4} />
       <div className="rightside">
         <div className="image">
-          {facultyImage ? (
-            <img src={facultyImage} alt="Faculty" />
-          ) : (
-            <Skeleton circle height={70} width={70} />
-          )}
+          <div className='image-container'>
+          <Link to="/profile">
+            {facultyImage ? (
+              <img src={facultyImage} alt="Faculty" />
+            ) : (
+              <Skeleton circle height={70} width={70} />
+            )}
+          </Link>
+          </div>
           <div className="faculty-info">
             {facultyName ? (
               <p className="faculty-name">{facultyName}</p>
@@ -225,9 +230,9 @@ export default function ReportsHOD() {
         </div>
       </div>
       <div className="to-subject-teacher" style={{ float: 'right' }}>
-          <button className="HOD-link-button" onClick={redirectSubjectTeacher} >
-            Download Reports As Subject Teacher
-          </button>
+        <button className="HOD-link-button" onClick={redirectSubjectTeacher} >
+          Download Reports As Subject Teacher
+        </button>
       </div>
       <div className="filters-container">
         <label htmlFor="class">Select Class:</label>

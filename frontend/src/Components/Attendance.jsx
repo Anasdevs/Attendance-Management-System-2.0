@@ -63,12 +63,12 @@ export default function Attendance() {
         setIsDataFetched(true);
         const firstStudent = data.students[0];
         if (firstStudent) {
-        setTimeout(() => {
-          const inputElement = document.getElementById(`attendance-input-${firstStudent.enrolment_no}`);
-          if (inputElement) {
-            inputElement.focus();
-          }
-        }, 0);
+          setTimeout(() => {
+            const inputElement = document.getElementById(`attendance-input-${firstStudent.enrolment_no}`);
+            if (inputElement) {
+              inputElement.focus();
+            }
+          }, 0);
         }
       } else if (response.status === 403) {
         window.location.reload();
@@ -310,6 +310,11 @@ export default function Attendance() {
       });
   };
 
+  const handleTodayButtonClick = () => {
+    // Set the currentDate to the current date
+    setCurrentDate(new Date());
+  };
+
 
   return (
     <WithRightbarLayout>
@@ -324,7 +329,7 @@ export default function Attendance() {
         )}
         <div className="attendance-rightside">
           <div className="image">
-          <Link to="/profile"> {/* Wrap the image with a Link */}
+            <Link to="/profile"> {/* Wrap the image with a Link */}
               {facultyImage ? (
                 <img src={facultyImage} alt="Faculty" />
               ) : (
@@ -360,6 +365,11 @@ export default function Attendance() {
                     Next &gt;
                   </button>
                 )}
+                {!isCurrentDate && (
+                <button className="navigation-button" onClick={handleTodayButtonClick}>
+                  Today
+                </button>
+              )}
               </div>
             </div>
           </div>

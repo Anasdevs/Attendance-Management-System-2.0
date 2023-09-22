@@ -293,6 +293,9 @@
     padding: 2%;
     margin-top: 6%;
   }
+  .submit-button{
+    margin-bottom: 5%;
+  }
 }
 
 
@@ -314,6 +317,9 @@
     letter-spacing: 2px;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  .submit-button{
+    margin-bottom: 10%;
   }
 }
 
@@ -399,6 +405,6 @@
     display: none;
   }
   .submit-button{
-    margin-bottom: 5%;
+    margin-bottom: 10%;
   }
 }
